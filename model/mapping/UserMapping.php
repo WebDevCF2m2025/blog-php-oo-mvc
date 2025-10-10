@@ -16,6 +16,7 @@ class UserMapping extends AbstractMapping
     protected ?string $user_hidden_id=null;
     protected ?int $user_activate=null;
     protected ?int $user_role_id=null;
+    protected ?array $roles=null;
 
     public function getUserId(): ?int
     {
@@ -105,6 +106,16 @@ class UserMapping extends AbstractMapping
     public function setUserRoleId(?int $user_role_id): void
     {
         $this->user_role_id = $user_role_id;
+    }
+
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(?array $roles): void
+    {
+        $this->roles = $roles;
     }
 
 

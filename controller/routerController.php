@@ -1,7 +1,7 @@
 <?php
 // path: controller/routerController.php
 
-use model\Mapping\UserMapping;
+use model\mapping\UserMapping;
 
 # Connexion PDO
 try {
