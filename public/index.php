@@ -11,7 +11,8 @@ session_start();
 require_once '../config.dev.php';
 
 // Autoload fonctionnel avec les namespaces personnels,
-// ne fonctionne qu'en OO
+// ne fonctionne qu'en Orienté Objet
+// et avec une arborescence de fichiers respectant les namespaces
 spl_autoload_register(function ($class) {
     $class = str_replace('\\', '/', $class);
     require RACINE_PATH.'/' .$class . '.php';

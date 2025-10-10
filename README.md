@@ -15,6 +15,12 @@ composer require "twig/twig:^3.0"
 
 Voir : https://twig.symfony.com/doc/3.x/intro.html#installation
 
+### Configuration de la base de données
+
+Installez Workbench : https://dev.mysql.com/downloads/workbench/
+
+Puis création de la DB suivant le projet.
+
 
 
 ### Remerciements
