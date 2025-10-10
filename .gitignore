@@ -2,3 +2,5 @@
 .idea/
 # Config file
 config.php
+data.sql
+data.sql.mvb.bak

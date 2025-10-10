@@ -16,6 +16,11 @@ try {
     die($e->getMessage());
 }
 
+if (isset($_SESSION['connected'])) {
+    require_once "privateController.php";
+} else {
+    require_once "publicController.php";
+}
 
 include RACINE_PATH."/view/home.html.php";
 
