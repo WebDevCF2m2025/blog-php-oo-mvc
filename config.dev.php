@@ -5,8 +5,8 @@
 const DB_HOST = "localhost";
 const DB_LOGIN = "root";
 const DB_PWD = "";
-const DB_NAME = "testoo_2";
-const DB_PORT = 3307;
+const DB_NAME = "my_blog";
+const DB_PORT = 3306;
 const DB_CHARSET = "utf8mb4";
 
 // paramètres supplémentaires pour PDO
