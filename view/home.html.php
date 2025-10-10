@@ -130,7 +130,9 @@
         </div>
 
 </div>
-
+<?php
+var_dump($user1);
+?>
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5 py-4">
     <div class="container">

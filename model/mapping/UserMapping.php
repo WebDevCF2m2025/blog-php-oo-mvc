@@ -1,7 +1,9 @@
 <?php
 
-namespace model;
+namespace model\mapping;
 
+
+use model\AbstractMapping;
 
 class UserMapping extends AbstractMapping
 {

@@ -1,6 +1,8 @@
 <?php
 // path: controller/routerController.php
 
+use model\Mapping\UserMapping;
+
 # Connexion PDO
 try {
     $connectPDO = new PDO(
@@ -15,8 +17,13 @@ try {
 } catch (Exception $e) {
     die($e->getMessage());
 }
-
+$user1 = new UserMapping([
+    'user_login' => "Mikhawa",
+    'user_real_name'=> "Michaël Pitz",
+]);
 
 include RACINE_PATH."/view/home.html.php";
+
+
 
 $connectPDO = null;
