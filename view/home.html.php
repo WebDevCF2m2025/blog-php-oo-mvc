@@ -131,7 +131,7 @@
 
 </div>
 <?php
-var_dump($user1);
+var_dump($user1,$userManager);
 ?>
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5 py-4">
