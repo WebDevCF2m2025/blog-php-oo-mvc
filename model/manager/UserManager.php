@@ -27,4 +27,14 @@ class UserManager implements ManagerInterface, UserInterface
     {
         // TODO: Implement validatePwd() method.
     }
+
+    public function connect(array $tab): bool
+    {
+        // TODO: Implement connect() method.
+    }
+
+    public function disconnect(): bool
+    {
+        // TODO: Implement disconnect() method.
+    }
 }

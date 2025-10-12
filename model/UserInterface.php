@@ -4,7 +4,10 @@ namespace model;
 
 interface UserInterface
 {
-    public function encodePwd(string $pwd):bool|string;
-    public function validatePwd(string $pwd):bool;
+    function encodePwd(string $pwd):bool|string;
+    function validatePwd(string $pwd):bool;
+    function connect(array $tab):bool;
+    function disconnect():bool;
+
 
 }
