@@ -65,17 +65,17 @@
                     <form action="" method="post" class="needs-validation" novalidate>
                         <!-- Titre de l'article -->
                         <div class="mb-4">
-                            <label for="article_title" class="form-label fw-semibold">
+                            <label for="user_login" class="form-label fw-semibold">
                                 <i class="bi bi-fonts me-1 text-primary"></i>Login
                             </label>
                             <input type="text"
                                    class="form-control form-control-lg"
-                                   id="article_title"
-                                   name="article_title"
-                                   placeholder="Saisissez le titre de votre article..."
+                                   id="user_login"
+                                   name="user_login"
+                                   placeholder="Saisissez votre login..."
                                    required>
                             <div class="invalid-feedback">
-                                Veuillez saisir un titre pour votre article.
+                                Veuillez saisir votre mot de passe
                             </div>
                             <div class="form-text">
                                 <i class="bi bi-info-circle me-1"></i>
@@ -84,15 +84,20 @@
 
                         <!-- Contenu de l'article -->
                         <div class="mb-4">
-                            <label for="article_text" class="form-label fw-semibold">
+                            <label for="user_pwd" class="form-label fw-semibold">
                                 <i class="bi bi-textarea-t me-1 text-primary"></i>Votre mot de passe
                             </label>
-
+                            <input type="password"
+                                   class="form-control form-control-lg"
+                                   id="user_pwd"
+                                   name="user_pwd"
+                                   placeholder="Saisissez votre mot de passe..."
+                                   required>
                             <div class="invalid-feedback">
-                                Veuillez saisir le contenu de votre article.
+                                Veuillez saisir le contenu de votre mot de passe.
                             </div>
                             <div class="form-text">
-                                <i class="bi bi-markdown me-1"></i>Vous pouvez utiliser du HTML dans votre contenu
+                                <i class="bi bi-markdown me-1"></i>
                             </div>
                         </div>
 
