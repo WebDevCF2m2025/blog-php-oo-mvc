@@ -25,6 +25,8 @@ class UserMapping extends AbstractMapping
 
     public function setUserId(?int $user_id): void
     {
+        if(is_null($user_id)) return ;
+        if($user_id<=0) return ;
         $this->user_id = $user_id;
     }
 

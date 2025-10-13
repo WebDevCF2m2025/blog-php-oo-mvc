@@ -1,6 +1,8 @@
 <?php
 // path: controller/routerController.php
 
+
+use model\mapping\RoleMapping;
 use model\mapping\UserMapping;
 use model\manager\UserManager;
 
@@ -20,9 +22,15 @@ try {
     die($e->getMessage());
 }
 $user1 = new UserMapping([
+    'user_id'=>null,
     'user_login' => "Mikhawa",
     'user_real_name'=> "Michaël Pitz",
+    'user_hidden_id'=> uniqid("my_blog",true),
+    'user_activate' => true,
 ]);
+$user2 = new UserMapping([]);
+
+$role1 = new RoleMapping([]);
 
 $userManager = new UserManager($connectPDO);
 
