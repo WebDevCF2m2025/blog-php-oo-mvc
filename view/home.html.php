@@ -30,13 +30,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./?p=admin">
-                        <i class="bi bi-gear me-1"></i>Admin Articles
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./?c=admin">
-                        <i class="bi bi-tags me-1"></i>Admin Catégories
+                    <a class="nav-link" href="./?p=connection">
+                        <i class="bi bi-gear me-1"></i>Connection
                     </a>
                 </li>
             </ul>
