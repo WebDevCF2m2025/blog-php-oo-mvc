@@ -22,13 +22,15 @@ try {
     die($e->getMessage());
 }
 $user1 = new UserMapping([
-    'user_id'=>null,
+
     'user_login' => "Mikhawa",
     'user_real_name'=> "Michaël Pitz",
     'user_hidden_id'=> uniqid("my_blog",true),
     'user_activate' => true,
+    'user_date_inscription'=> date("d-m-Y H:i:s"),
+    'user_role_id'=> 1,
 ]);
-$user2 = new UserMapping([]);
+$user2 = new UserMapping(['user_login' => "Mikhawa2",]);
 
 $role1 = new RoleMapping([]);
 

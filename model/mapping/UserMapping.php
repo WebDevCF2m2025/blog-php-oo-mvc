@@ -4,6 +4,7 @@ namespace model\mapping;
 
 
 use model\AbstractMapping;
+use Exception;
 
 class UserMapping extends AbstractMapping
 {
@@ -25,8 +26,7 @@ class UserMapping extends AbstractMapping
 
     public function setUserId(?int $user_id): void
     {
-        if(is_null($user_id)) return ;
-        if($user_id<=0) return ;
+        if($user_id<=0) throw new Exception("user_id doit être un entier positif");
         $this->user_id = $user_id;
     }
 
@@ -37,7 +37,14 @@ class UserMapping extends AbstractMapping
 
     public function setUserLogin(?string $user_login): void
     {
-        $this->user_login = $user_login;
+        $user_login = strip_tags(trim($user_login));
+        // Ne peut pas commencer par un chiffre, ni contenir des espaces ou des caractères spéciaux
+        if(preg_match('/^[a-zA-Z][a-zA-Z0-9]{2,29}$/',$user_login)){
+            $this->user_login = $user_login;
+        }else{
+            throw new Exception("Votre username doit faire de 3 à 30 caractères, commencer par une lettre et ne contenir que des lettres et des chiffres non accentués");
+        }
+
     }
 
     public function getUserPwd(): ?string
@@ -47,6 +54,7 @@ class UserMapping extends AbstractMapping
 
     public function setUserPwd(?string $user_pwd): void
     {
+        $user_pwd = trim($user_pwd);
         $this->user_pwd = $user_pwd;
     }
 
@@ -57,7 +65,11 @@ class UserMapping extends AbstractMapping
 
     public function setUserMail(?string $user_mail): void
     {
-        $this->user_mail = $user_mail;
+        if(filter_var($user_mail,FILTER_VALIDATE_EMAIL)){
+            $this->user_mail = $user_mail;
+        }else{
+            throw new Exception("Votre email n'est pas valide");
+        }
     }
 
     public function getUserRealName(): ?string
@@ -67,7 +79,9 @@ class UserMapping extends AbstractMapping
 
     public function setUserRealName(?string $user_real_name): void
     {
-        $this->user_real_name = $user_real_name;
+        if(is_null($user_real_name)) return;
+        if(empty($user_real_name)) return;
+        $this->user_real_name = htmlspecialchars(strip_tags(trim($user_real_name)));
     }
 
     public function getUserDateInscription(): ?string
@@ -77,7 +91,10 @@ class UserMapping extends AbstractMapping
 
     public function setUserDateInscription(?string $user_date_inscription): void
     {
-        $this->user_date_inscription = $user_date_inscription;
+        if(is_null($user_date_inscription)) return;
+        $date = date('Y-m-d H:i:s', strtotime($user_date_inscription));
+        if(!$date) throw new Exception("La date d'inscription n'est pas au bon format");
+        $this->user_date_inscription = $date;
     }
 
     public function getUserHiddenId(): ?string
@@ -119,8 +136,6 @@ class UserMapping extends AbstractMapping
     {
         $this->roles = $roles;
     }
-
-
 
 
 }
