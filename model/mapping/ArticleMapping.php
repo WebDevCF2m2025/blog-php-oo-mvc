@@ -103,6 +103,31 @@ class ArticleMapping extends AbstractMapping
         $this->article_visibility = $article_visibility;
     }
 
+    public function getArticleUserId(): ?int
+    {
+        return $this->article_user_id;
+    }
+    public function setArticleUserId(?int $article_user_id): void
+    {
+        if($article_user_id<=0) throw new \Exception("article_user_id doit être un entier positif");
+        $this->article_user_id = $article_user_id;
+    }
+    public function getComments(): ?array
+    {
+        return $this->comments;
+    }
+    public function setComments(?array $comments): void
+    {
+        $this->comments = $comments;
+    }
+    public function getCategories(): ?array
+    {
+        return $this->categories;
+    }
+    public function setCategories(?array $categories): void
+    {
+        $this->categories = $categories;
+    }
 
 
 }
