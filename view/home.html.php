@@ -30,13 +30,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./?p=admin">
-                        <i class="bi bi-gear me-1"></i>Admin Articles
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./?c=admin">
-                        <i class="bi bi-tags me-1"></i>Admin Catégories
+                    <a class="nav-link" href="./?p=connection">
+                        <i class="bi bi-gear me-1"></i>Connexion
                     </a>
                 </li>
             </ul>
@@ -69,7 +64,6 @@
                         <h3 class="text-muted mb-3">Aucun article disponible</h3>
                         <p class="text-muted">Les premiers articles seront bientôt publiés !</p>
                         <a href="./?p=admin" class="btn btn-primary mt-3">
-                            <i class="bi bi-plus-circle me-2"></i>Créer le premier article
                         </a>
                     </div>
                 </div>
@@ -130,13 +124,15 @@
         </div>
 
 </div>
-
+<?php
+var_dump($user1,$userManager);
+?>
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5 py-4">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <p class="mb-0">© <?=date("Y")?> Mon Blog. Tous droits réservés.</p>
+                <p class="mb-0">© <?=date("Y")?> Mon Blog d'exemple. Aucun droit réservé.</p>
             </div>
             <div class="col-md-4 text-md-end">
                 <small class="text-muted">Propulsé par Bootstrap 5</small>
