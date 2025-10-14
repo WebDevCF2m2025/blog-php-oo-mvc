@@ -19,6 +19,7 @@ class RoleMapping extends AbstractMapping
 
     public function setRoleId(?int $role_id): void
     {
+        if(is_null($role_id)) return;
         $this->role_id = $role_id;
     }
 
@@ -47,8 +48,6 @@ class RoleMapping extends AbstractMapping
     {
         if(is_null($role_description)) return;
         $role_description = htmlspecialchars(strip_tags(trim($role_description)));
-        if(empty($role_description))
-            throw new Exception("Description non valide");
         if(strlen($role_description)>500)
             throw new Exception("La description du rôle doit faire moins de 500 caractères");
 

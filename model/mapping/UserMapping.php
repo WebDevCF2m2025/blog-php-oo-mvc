@@ -38,6 +38,10 @@ class UserMapping extends AbstractMapping
     public function setUserLogin(?string $user_login): void
     {
         $user_login = strip_tags(trim($user_login));
+        if(empty($user_login))
+            throw new Exception("Login non valide");
+        if(strlen($user_login)<3 || strlen($user_login)>45)
+            throw new Exception("Le login doit faire entre 3 et 45 caractères");
         // Ne peut pas commencer par un chiffre, ni contenir des espaces ou des caractères spéciaux
         if(preg_match('/^[a-zA-Z][a-zA-Z0-9]{2,29}$/',$user_login)){
             $this->user_login = $user_login;
@@ -52,7 +56,7 @@ class UserMapping extends AbstractMapping
         return $this->user_pwd;
     }
 
-    public function setUserPwd(?string $user_pwd): void
+    public function setUserPwd(string $user_pwd): void
     {
         $user_pwd = trim($user_pwd);
         $this->user_pwd = $user_pwd;
@@ -80,8 +84,11 @@ class UserMapping extends AbstractMapping
     public function setUserRealName(?string $user_real_name): void
     {
         if(is_null($user_real_name)) return;
+        $user_real_name = htmlspecialchars(strip_tags(trim($user_real_name)));
         if(empty($user_real_name)) return;
-        $this->user_real_name = htmlspecialchars(strip_tags(trim($user_real_name)));
+        if(strlen($user_real_name)>150)
+            throw new Exception("Le nom complet doit faire moins de 150 caractères");
+        $this->user_real_name = $user_real_name;
     }
 
     public function getUserDateInscription(): ?string
@@ -104,6 +111,8 @@ class UserMapping extends AbstractMapping
 
     public function setUserHiddenId(?string $user_hidden_id): void
     {
+        if(is_null($user_hidden_id))
+            throw new Exception("hidden_id non valide");
         $this->user_hidden_id = $user_hidden_id;
     }
 

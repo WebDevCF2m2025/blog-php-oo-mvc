@@ -27,7 +27,7 @@ class ArticleMapping extends AbstractMapping
 
     public function setArticleId(?int $article_id): void
     {
-        if($article_id<=0) throw new \Exception("article_id doit être un entier positif");
+        if($article_id<=0) throw new Exception("article_id doit être un entier positif");
         $this->article_id = $article_id;
     }
 
@@ -97,6 +97,7 @@ class ArticleMapping extends AbstractMapping
     }
     public function setArticleVisibility(?int $article_visibility): void
     {
+        if(is_null($article_visibility)) return;
         if(!in_array($article_visibility,[0,1,2,3])){
             throw new Exception("La visibilité de l'article doit être 0 à 3");
         }

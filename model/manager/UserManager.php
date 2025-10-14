@@ -37,4 +37,9 @@ class UserManager implements ManagerInterface, UserInterface
     {
         // TODO: Implement disconnect() method.
     }
+
+    function generateHiddenId(): string
+    {
+        // TODO: Implement generateHiddenId() method.
+    }
 }

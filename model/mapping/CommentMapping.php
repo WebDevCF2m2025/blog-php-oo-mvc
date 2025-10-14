@@ -36,6 +36,8 @@ class CommentMapping extends AbstractMapping
         $comment_text = htmlspecialchars(strip_tags(trim($comment_text)));
         if(empty($comment_text))
             throw new Exception("Texte non valide");
+        if(strlen($comment_text)<3 || strlen($comment_text)>600)
+            throw new Exception("Le texte du commentaire doit faire entre 3 et 600 caractères");
         $this->comment_text = $comment_text;
     }
 
@@ -46,6 +48,8 @@ class CommentMapping extends AbstractMapping
 
     public function setCommentCreate(?string $comment_create): void
     {
+        if(is_null($comment_create)) return;
+        $comment_create = date('Y-m-d H:i:s', strtotime($comment_create));
         $this->comment_create = $comment_create;
     }
 
@@ -74,8 +78,9 @@ class CommentMapping extends AbstractMapping
         return $this->comment_article_id;
     }
 
-    public function setCommentArticleId(?int $comment_article_id): void
+    public function setCommentArticleId(int $comment_article_id): void
     {
+        if($comment_article_id<=0) throw new Exception("article_id doit être un entier positif");
         $this->comment_article_id = $comment_article_id;
     }
 
@@ -84,8 +89,9 @@ class CommentMapping extends AbstractMapping
         return $this->comment_user_id;
     }
 
-    public function setCommentUserId(?int $comment_user_id): void
+    public function setCommentUserId(int $comment_user_id): void
     {
+        if($comment_user_id<=0) throw new Exception("user_id doit être un entier positif");
         $this->comment_user_id = $comment_user_id;
     }
 
