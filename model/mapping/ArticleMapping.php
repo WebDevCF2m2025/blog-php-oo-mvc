@@ -98,7 +98,7 @@ class ArticleMapping extends AbstractMapping
     public function setArticleVisibility(?int $article_visibility): void
     {
         if(!in_array($article_visibility,[0,1,2,3])){
-            throw new Exception("La visibilité de l'article doit être 0 ou 1");
+            throw new Exception("La visibilité de l'article doit être 0 à 3");
         }
         $this->article_visibility = $article_visibility;
     }
@@ -109,7 +109,7 @@ class ArticleMapping extends AbstractMapping
     }
     public function setArticleUserId(?int $article_user_id): void
     {
-        if($article_user_id<=0) throw new \Exception("article_user_id doit être un entier positif");
+        if($article_user_id<=0) throw new Exception("article_user_id doit être un entier positif");
         $this->article_user_id = $article_user_id;
     }
     public function getComments(): ?array
