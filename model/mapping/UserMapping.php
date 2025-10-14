@@ -17,7 +17,6 @@ class UserMapping extends AbstractMapping
     protected ?string $user_hidden_id=null;
     protected ?int $user_activate=null;
     protected ?int $user_role_id=null;
-    protected ?array $roles=null;
 
     public function getUserId(): ?int
     {
@@ -111,7 +110,7 @@ class UserMapping extends AbstractMapping
 
     public function setUserHiddenId(?string $user_hidden_id): void
     {
-        if(is_null($user_hidden_id))
+        if(empty($user_hidden_id))
             throw new Exception("hidden_id non valide");
         $this->user_hidden_id = $user_hidden_id;
     }
@@ -123,6 +122,10 @@ class UserMapping extends AbstractMapping
 
     public function setUserActivate(?int $user_activate): void
     {
+        if(is_null($user_activate)) return;
+        if(!in_array($user_activate,[0,1,2,3,4]))
+            throw new Exception("L'état de l'utilisateur doit être 0 à 4");
+
         $this->user_activate = $user_activate;
     }
 
@@ -131,20 +134,11 @@ class UserMapping extends AbstractMapping
         return $this->user_role_id;
     }
 
-    public function setUserRoleId(?int $user_role_id): void
+    public function setUserRoleId(int $user_role_id): void
     {
+        if($user_role_id<=0) throw new Exception("role_id doit être un entier positif");
         $this->user_role_id = $user_role_id;
     }
 
-    public function getRoles(): ?array
-    {
-        return $this->roles;
-    }
-
-    public function setRoles(?array $roles): void
-    {
-        $this->roles = $roles;
-    }
-
-
 }
+
