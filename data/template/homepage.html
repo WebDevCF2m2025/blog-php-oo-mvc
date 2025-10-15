@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Modifier l'Article - Mon Blog</title>
+    <title>Mon Blog - Accueil</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-<!-- Navigation pour articles avec thème primary -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+<!-- Navigation moderne pour articles -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold" href="./">
-            <i class="bi bi-pencil-square me-2"></i>Modifier l'Article
+            <i class="bi bi-newspaper me-2"></i>Mon Blog
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -23,18 +23,18 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="./">
+                    <a class="nav-link active" href="./">
                         <i class="bi bi-house-door me-1"></i>Accueil
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./?p=admin">
-                        <i class="bi bi-gear me-1"></i>Administration
+                        <i class="bi bi-gear me-1"></i>Admin Articles
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?p=create">
-                        <i class="bi bi-plus-circle me-1"></i>Nouvel Article
+                    <a class="nav-link" href="./?c=admin">
+                        <i class="bi bi-tags me-1"></i>Admin Catégories
                     </a>
                 </li>
             </ul>
@@ -42,145 +42,138 @@
     </div>
 </nav>
 
-<!-- Header Section -->
-<div class="bg-primary text-white py-4">
+<!-- Hero Section -->
+<div class="bg-primary text-white py-5 mb-5">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1 class="h2 mb-0">
-                    <i class="bi bi-file-earmark-text me-2"></i>Modifier l'Article
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="bi bi-journal-text me-3"></i>Bienvenue sur Mon Blog
                 </h1>
-                <p class="mb-0 opacity-75">Modifiez et mettez à jour votre contenu</p>
+                <p class="lead">Découvrez nos derniers articles et contenus exclusifs</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Section des articles avec compteur -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h2 class="fw-bold text-primary mb-0">
+                    <i class="bi bi-collection me-2"></i>Nos Articles
+                </h2>
+                <span class="badge bg-primary rounded-pill fs-6">
+                        2 articles                    </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid des articles -->
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-header bg-white border-0 pb-0">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="badge bg-primary">Article #1</span>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar me-1"></i>2025-09-09 08:36:54                            </small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title text-primary fw-bold mb-3">
+                        MongoDB                        </h4>
+                    <p class="card-text text-muted">
+                        MongoDB (de l&#039;anglais humongous qui peut être traduit par « énorme ») est un système de gestion de base de données orienté documents, répartissable sur un nombre quelconque d&#039                                                            <span class="text-primary">... Lire la suite</span>
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-light text-primary">
+                                <i class="bi bi-eye me-1"></i>
+                                Publié                            </span>
+                        <small class="text-muted">
+                            <i class="bi bi-clock me-1"></i>Lecture rapide
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-header bg-white border-0 pb-0">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="badge bg-primary">Article #2</span>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar me-1"></i>2025-08-20 11:10:02                            </small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title text-primary fw-bold mb-3">
+                        Structured Query Language                        </h4>
+                    <p class="card-text text-muted">
+                        SQL (sigle de Structured Query Language, en français langage de requête structurée) est un langage informatique normalisé servant à exploiter des bases de données relationnelles. La partie langa                                                            <span class="text-primary">... Lire la suite</span>
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-light text-primary">
+                                <i class="bi bi-eye me-1"></i>
+                                Publié                            </span>
+                        <small class="text-muted">
+                            <i class="bi bi-clock me-1"></i>Lecture rapide
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-header bg-white border-0 pb-0">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="badge bg-primary">Article #3</span>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar me-1"></i>2025-08-14 17:08:27                            </small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title text-primary fw-bold mb-3">
+                        Propriétés ACID                        </h4>
+                    <p class="card-text text-muted">
+                        En informatique, les propriétés ACID (atomicité, cohérence, isolation et durabilité) sont un ensemble de propriétés qui garantissent qu&#039;une transaction informatique est exécutée de f                                                            <span class="text-primary">... Lire la suite</span>
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-light text-primary">
+                                <i class="bi bi-eye me-1"></i>
+                                Publié                            </span>
+                        <small class="text-muted">
+                            <i class="bi bi-clock me-1"></i>Lecture rapide
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white mt-5 py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <p class="mb-0">© 2025 Mon Blog. Tous droits réservés.</p>
             </div>
             <div class="col-md-4 text-md-end">
-                    <span class="badge bg-light text-primary fs-6">
-                        ID: #3                    </span>
+                <small class="text-muted">Propulsé par Bootstrap 5</small>
             </div>
         </div>
     </div>
-</div>
-
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">
-                        <i class="bi bi-pencil-square me-2"></i>Formulaire de Modification
-                    </h4>
-                </div>
-                <div class="card-body p-4">
-                    <form action="" method="post" class="needs-validation" novalidate>
-                        <input type="hidden" name="id" value="3">
-
-                        <!-- Titre de l'article -->
-                        <div class="mb-4">
-                            <label for="article_title" class="form-label fw-semibold">
-                                <i class="bi bi-fonts me-1 text-primary"></i>Titre de l'article
-                            </label>
-                            <input type="text"
-                                   class="form-control form-control-lg"
-                                   id="article_title"
-                                   name="article_title"
-                                   value="MongoDB"
-                                   required>
-                            <div class="invalid-feedback">
-                                Veuillez saisir un titre pour votre article.
-                            </div>
-                        </div>
-
-                        <!-- Contenu de l'article -->
-                        <div class="mb-4">
-                            <label for="article_text" class="form-label fw-semibold">
-                                <i class="bi bi-textarea-t me-1 text-primary"></i>Contenu de l'article
-                            </label>
-                            <textarea class="form-control"
-                                      id="article_text"
-                                      name="article_text"
-                                      rows="12"
-                                      required>MongoDB (de l&#039;anglais humongous qui peut être traduit par « énorme ») est un système de gestion de base de données orienté documents, répartissable sur un nombre quelconque d&#039;ordinateurs et ne nécessitant pas de schéma prédéfini des données. Il est écrit en C++. Le serveur et les outils sont distribués sous licence SSPL, les pilotes sous licence Apache et la documentation sous licence Creative Commons. Il fait partie de la mouvance NoSQL.
-
-MongoDB est développé depuis 2007 par MongoDB. Cette entreprise travaillait alors sur un système de Cloud computing, informatique à données largement réparties, similaire au service Google App Engine de Google.
-
-Il est depuis devenu un des SGBD les plus utilisés, notamment pour les sites web de Craigslist, eBay, Foursquare, SourceForge.net, Viacom, pagesjaunes et le New York Times.
-
-MongoDB permet de manipuler des objets structurés au format BSON (JSON binaire), sans schéma prédéterminé. En d&#039;autres termes, des clés peuvent être ajoutées à tout moment « à la volée », sans reconfiguration de la base.
-
-Les données prennent la forme de documents enregistrés eux-mêmes dans des collections, une collection contenant un nombre quelconque de documents. Les collections sont comparables aux tables, et les documents aux enregistrements des bases de données relationnelles. Contrairement aux bases de données relationnelles, les champs d&#039;un enregistrement sont libres et peuvent être différents d&#039;un enregistrement à un autre au sein d&#039;une même collection. Le seul champ commun et obligatoire est le champ de clé principale («id»). Par ailleurs, MongoDB ne permet ni les requêtes très complexes standardisées, ni les JOIN, mais permet de programmer des requêtes spécifiques en JavaScript.</textarea>
-                            <div class="invalid-feedback">
-                                Veuillez saisir le contenu de votre article.
-                            </div>
-                        </div>
-
-                        <!-- Date de l'article -->
-                        <div class="mb-4">
-                            <label for="article_date" class="form-label fw-semibold">
-                                <i class="bi bi-calendar me-1 text-primary"></i>Date de publication
-                            </label>
-                            <input type="datetime-local"
-                                   class="form-control"
-                                   id="article_date"
-                                   name="article_date"
-                                   value="2025-09-09 08:36:54"
-                                   required>
-                            <div class="invalid-feedback">
-                                Veuillez saisir une date de publication.
-                            </div>
-                        </div>
-
-                        <!-- Visibilité -->
-                        <div class="mb-4">
-                            <label for="article_visibility" class="form-label fw-semibold">
-                                <i class="bi bi-eye me-1 text-primary"></i>Statut de publication
-                            </label>
-                            <select class="form-select" id="article_visibility" name="article_visibility" required>
-                                <option value="1" >
-                                    <i class="bi bi-eye"></i> Publié
-                                </option>
-                                <option value="0" selected>
-                                    <i class="bi bi-eye-slash"></i> Brouillon
-                                </option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Veuillez choisir un statut de publication.
-                            </div>
-                        </div>
-
-                        <!-- Boutons d'action -->
-                        <div class="d-flex gap-3 pt-3 border-top">
-                            <button type="submit" class="btn btn-primary btn-lg flex-fill">
-                                <i class="bi bi-check-circle me-2"></i>Mettre à Jour
-                            </button>
-                            <a href="./?p=admin" class="btn btn-outline-secondary btn-lg">
-                                <i class="bi bi-arrow-left me-2"></i>Retour
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</footer>
 
 <!-- Bootstrap 5 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Validation Bootstrap
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            var forms = document.getElementsByClassName('needs-validation');
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
 </body>
 </html>

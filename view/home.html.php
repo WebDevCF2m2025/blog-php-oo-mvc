@@ -35,11 +35,11 @@
                     </a>
                 </li>
                 <?php
-                foreach ($categories as $category) :
+                foreach ($categoriesMenu as $category) :
                 ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="./?pg=category&slug=<?=$category['category_slug']?>">
-                        <?=$category['category_title']?>
+                    <a class="nav-link" href="./?pg=category&slug=<?=$category->getCategorySlug()?>">
+                        <?=$category->getCategoryTitle()?>
                     </a>
                 <?php
                 endforeach;
@@ -70,6 +70,9 @@
 
 <div class="container">
 
+    <?php
+    if(empty($articles)):
+    ?>
         <!-- État vide avec style moderne -->
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
@@ -84,7 +87,11 @@
                 </div>
             </div>
         </div>
-
+    <?php
+    else:
+    $nbArticles = count($articles);
+    $pluriel = ($nbArticles>1) ? "s" : "";
+    ?>
         <!-- Section des articles avec compteur -->
         <div class="row mb-4">
             <div class="col-12">
@@ -93,41 +100,38 @@
                         <i class="bi bi-collection me-2"></i>Nos Articles
                     </h2>
                     <span class="badge bg-primary rounded-pill fs-6">
-                        0 Article
+                        <?=$nbArticles?> Article<?=$pluriel?>
                     </span>
                 </div>
             </div>
         </div>
-
-        <!-- Grid des articles -->
-        <div class="row g-4">
+    <!-- Grid des articles -->
+    <div class="row g-4">
+        <?php
+        foreach ($articles as $article) :
+        ?>
 
                 <div class="col-lg-6">
                     <div class="card h-100 border-0 shadow-sm hover-card">
                         <div class="card-header bg-white border-0 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
-                                <span class="badge bg-primary">Article #</span>
+                                <span class="badge bg-primary"><?=html_entity_decode($article->getArticleTitle())?></span>
                                 <small class="text-muted">
-                                    <i class="bi bi-calendar me-1"></i>
-                                </small>
+                                    <i class="bi bi-calendar me-1"></i>2025-09-09 08:36:54</small>
                             </div>
                         </div>
                         <div class="card-body">
                             <h4 class="card-title text-primary fw-bold mb-3">
-
-                            </h4>
+                                <?=html_entity_decode($article->getArticleTitle())?></h4>
                             <p class="card-text text-muted">
-
-                                    <span class="text-primary">... Lire la suite</span>
-
+                                MongoDB (de l&#039;anglais humongous qui peut être traduit par « énorme ») est un système de gestion de base de données orienté documents, répartissable sur un nombre quelconque d&#039                                                            <span class="text-primary">... Lire la suite</span>
                             </p>
                         </div>
                         <div class="card-footer bg-white border-0">
                             <div class="d-flex justify-content-between align-items-center">
                             <span class="badge bg-light text-primary">
                                 <i class="bi bi-eye me-1"></i>
-                                0 vue
-                            </span>
+                                Publié                            </span>
                                 <small class="text-muted">
                                     <i class="bi bi-clock me-1"></i>Lecture rapide
                                 </small>
@@ -136,12 +140,15 @@
                     </div>
                 </div>
 
+    <?php
+        endforeach;
+    endif;
+    ?>
+<?php
+var_dump($articles);
+?>
         </div>
 
-</div>
-<?php
-var_dump($listArticles);
-?>
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5 py-4">
     <div class="container">

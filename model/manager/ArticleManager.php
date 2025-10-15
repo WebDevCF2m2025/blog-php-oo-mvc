@@ -3,17 +3,23 @@
 namespace model\manager;
 
 use model\ManagerInterface;
+use model\mapping\ArticleMapping;
+use model\mapping\CategoryMapping;
+use model\mapping\UserMapping;
 use PDO;
 
 class ArticleManager implements ManagerInterface
 {
 
     private PDO $db;
+
     public function __construct(PDO $connect)
     {
         $this->db = $connect;
     }
-    public function getArticles(): array
+
+    // Articles visibles (article_visibility = 2), pour la homepage
+    public function getArticlesHomepage(): array
     {
         $sql = "SELECT a.`article_id`, a.`article_title`, a.`article_slug`, a.`article_text`,  a.`article_date_publish`,a.`article_user_id`,
                        u.`user_id`, u.`user_login`, u.`user_real_name`,
@@ -27,6 +33,29 @@ class ArticleManager implements ManagerInterface
                 ORDER BY a.`article_date_publish` DESC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        $listArticles = [];
+        foreach ($articles as $article) {
+            $art = new ArticleMapping($article);
+            // gestion de l'auteur de l'article
+            $user = new UserMapping($article);
+            $art->setUser($user);
+            // gestion des catégories de l'article
+            $cats = [];
+            if (isset($article['category_slug'])) {
+                $arrSlug = explode("|||", $article['category_slug']);
+                $arrTitle = explode("|||", $article['category_title']);
+                for ($i = 0; $i < count($arrSlug); $i++) {
+                    $c = new CategoryMapping([]);
+                    $c->setCategorySlug($arrSlug[$i]);
+                    $c->setCategoryTitle($arrTitle[$i]);
+                    $cats[] = $c;
+                }
+                $art->setCategories($cats);
+            }
+            $listArticles[] = $art;
+        }
+        return $listArticles;
     }
 }
