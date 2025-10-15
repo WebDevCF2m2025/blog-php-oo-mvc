@@ -45,7 +45,7 @@
                 endforeach;
                 ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="./?pg=connection">
+                    <a class="nav-link" href="./connection/">
                         <i class="bi bi-gear me-1"></i>Connexion
                     </a>
                 </li>

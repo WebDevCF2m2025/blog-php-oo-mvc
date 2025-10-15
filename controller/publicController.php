@@ -23,14 +23,17 @@ if(empty($_GET['pg'])){
     switch ($page) {
         case "category":
             // page catégorie
+            echo "<h2>Nous serons sur la page d'une catégorie</h2>";
             var_dump($_GET);
             break;
         case "article":
             // page article
+            echo "<h2>Nous serons sur la page d'un article</h2>";
             var_dump($_GET);
             break;
         case "connection":
             // page connexion
+            echo "<h2>Nous serons sur la page de connexion</h2>";
             var_dump($_GET);
             break;
         default:
