@@ -23,19 +23,20 @@ if(empty($_GET['pg'])){
     switch ($page) {
         case "category":
             // page catégorie
-            require_once RACINE_PATH."/controller/categoryController.php";
+            var_dump($_GET);
             break;
         case "article":
             // page article
-            require_once RACINE_PATH."/controller/articleController.php";
+            var_dump($_GET);
             break;
         case "connection":
             // page connexion
-            require_once RACINE_PATH."/controller/connectionController.php";
+            var_dump($_GET);
             break;
         default:
             // page 404
-            require_once RACINE_PATH."/view/404.html.php";
+            echo "<h1>404 - Page non trouvée</h1>";
+            var_dump($_GET);
             break;
     }
 

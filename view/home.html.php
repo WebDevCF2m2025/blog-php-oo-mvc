@@ -38,7 +38,7 @@
                 foreach ($categoriesMenu as $category) :
                 ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="./?pg=category&slug=<?=$category->getCategorySlug()?>">
+                    <a class="nav-link" href="./category/<?=$category->getCategorySlug()?>">
                         <?=$category->getCategoryTitle()?>
                     </a>
                 <?php
@@ -122,7 +122,7 @@
                                 if(!empty($categories)):
                                     foreach ($categories as $category):
                                 ?>
-                                <span class="badge bg-primary  "><a class="text-white" href="./?pg=category&slug=<?=$category->getCategorySlug()?>">
+                                <span class="badge bg-primary  "><a class="text-white" href="./category/<?=$category->getCategorySlug()?>">
                                         <?=$category->getCategoryTitle()?></a></span>
                                 <?php
                                     endforeach;
@@ -137,7 +137,7 @@
                             <h4 class="card-title text-primary fw-bold mb-3">
                                 <?=html_entity_decode($article->getArticleTitle())?></h4>
                             <p class="card-text text-muted">
-                                <?=html_entity_decode($article->getArticleText())?><span class="text-primary"> <a href="./?pg=article&slug=<?=$article->getArticleSlug()?>">Lire la suite</a></span>
+                                <?=html_entity_decode($article->getArticleText())?><span class="text-primary"> <a href="./article/<?=$article->getArticleSlug()?>">Lire la suite</a></span>
                             </p>
                         </div>
                         <div class="card-footer bg-white border-0">
