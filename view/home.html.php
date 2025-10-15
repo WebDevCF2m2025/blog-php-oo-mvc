@@ -30,8 +30,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-tags me-1"></i>Catégories
+                    <a class="nav-link disabled text-white" href="#">
+                        <i class="bi bi-tags me-1"></i>Catégories :
                     </a>
                 </li>
                 <?php
@@ -140,7 +140,7 @@
 
 </div>
 <?php
-var_dump($categories,$listCategories);
+var_dump($listArticles);
 ?>
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5 py-4">

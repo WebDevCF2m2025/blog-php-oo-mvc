@@ -5,6 +5,7 @@ namespace model\mapping;
 use Exception;
 use model\AbstractMapping;
 use model\StringTrait;
+use model\mapping\UserMapping;
 
 class ArticleMapping extends AbstractMapping
 {
@@ -18,6 +19,8 @@ class ArticleMapping extends AbstractMapping
     protected ?int $article_user_id = null;
     protected ?array $comments = null;
     protected ?array $categories = null;
+
+    protected ?UserMapping $user = null;
 
     use StringTrait;
     public function getArticleId(): ?int
@@ -128,6 +131,14 @@ class ArticleMapping extends AbstractMapping
     public function setCategories(?array $categories): void
     {
         $this->categories = $categories;
+    }
+    public function getUser(): ?UserMapping
+    {
+        return $this->user;
+    }
+    public function setUser(?UserMapping $user): void
+    {
+        $this->user = $user;
     }
 
 
