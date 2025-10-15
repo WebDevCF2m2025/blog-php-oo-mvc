@@ -2,10 +2,6 @@
 // path: controller/routerController.php
 
 
-use model\mapping\RoleMapping;
-use model\mapping\UserMapping;
-use model\manager\UserManager;
-
 
 # Connexion PDO
 try {
@@ -21,22 +17,17 @@ try {
 } catch (Exception $e) {
     die($e->getMessage());
 }
-$user1 = new UserMapping([
+if(isset($_SESSION["user_id"],$_SESSION["role"])){
 
-    'user_login' => "Mikhawa",
-    'user_real_name'=> "Michaël Pitz",
-    'user_hidden_id'=> uniqid("my_blog",true),
-    'user_activate' => true,
-    'user_date_inscription'=> date("d-m-Y H:i:s"),
-    'user_role_id'=> 1,
-]);
-$user2 = new UserMapping(['user_login' => "Mikhawa2",]);
+    if($_SESSION["role"] === "admin"){
 
-$role1 = new RoleMapping([]);
+    }elseif ($_SESSION["role"] === "user"){
 
-$userManager = new UserManager($connectPDO);
-
-include RACINE_PATH."/view/home.html.php";
+    }
+}else{
+    // Contrôleur partie publique
+    require_once RACINE_PATH . "/controller/publicController.php";
+}
 
 
 

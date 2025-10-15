@@ -30,7 +30,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./?p=connection">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-tags me-1"></i>Catégories
+                    </a>
+                </li>
+                <?php
+                foreach ($categories as $category) :
+                ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="./?pg=category&slug=<?=$category['category_slug']?>">
+                        <?=$category['category_title']?>
+                    </a>
+                <?php
+                endforeach;
+                ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="./?pg=connection">
                         <i class="bi bi-gear me-1"></i>Connexion
                     </a>
                 </li>
@@ -125,7 +140,7 @@
 
 </div>
 <?php
-var_dump($user1,$user2,$role1,$userManager);
+var_dump($categories,$listCategories);
 ?>
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5 py-4">
