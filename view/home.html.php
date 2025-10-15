@@ -115,23 +115,36 @@
                     <div class="card h-100 border-0 shadow-sm hover-card">
                         <div class="card-header bg-white border-0 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
-                                <span class="badge bg-primary"><?=html_entity_decode($article->getArticleTitle())?></span>
+                                <div>
+                                <?php
+                                // affichage des catégories de l'article
+                                $categories = $article->getCategories();
+                                if(!empty($categories)):
+                                    foreach ($categories as $category):
+                                ?>
+                                <span class="badge bg-primary  "><a class="text-white" href="./?pg=category&slug=<?=$category->getCategorySlug()?>">
+                                        <?=$category->getCategoryTitle()?></a></span>
+                                <?php
+                                    endforeach;
+                                endif;
+                                ?>
+                                </div>
                                 <small class="text-muted">
-                                    <i class="bi bi-calendar me-1"></i>2025-09-09 08:36:54</small>
+                                    <i class="bi bi-calendar me-1"></i><?=$article->getArticleDatePublish()?></small>
                             </div>
                         </div>
                         <div class="card-body">
                             <h4 class="card-title text-primary fw-bold mb-3">
                                 <?=html_entity_decode($article->getArticleTitle())?></h4>
                             <p class="card-text text-muted">
-                                MongoDB (de l&#039;anglais humongous qui peut être traduit par « énorme ») est un système de gestion de base de données orienté documents, répartissable sur un nombre quelconque d&#039                                                            <span class="text-primary">... Lire la suite</span>
+                                <?=html_entity_decode($article->getArticleText())?><span class="text-primary"> <a href="./?pg=article&slug=<?=$article->getArticleSlug()?>">Lire la suite</a></span>
                             </p>
                         </div>
                         <div class="card-footer bg-white border-0">
                             <div class="d-flex justify-content-between align-items-center">
                             <span class="badge bg-light text-primary">
                                 <i class="bi bi-eye me-1"></i>
-                                Publié                            </span>
+                                Publié par <?php echo $article->getUser()->getUserRealName() ?? $article->getUser()->getUserLogin()?></span>
                                 <small class="text-muted">
                                     <i class="bi bi-clock me-1"></i>Lecture rapide
                                 </small>
