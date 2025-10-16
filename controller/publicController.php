@@ -16,7 +16,19 @@ if(empty($_GET['pg'])){
     $articles = $articleManager->getArticlesHomepage();
 
     // appel de la vue
-    require_once RACINE_PATH."/view/home.html.php";
+    // require_once RACINE_PATH."/view/home.html.php";
+
+    echo $twig->render('homepage.html.twig',
+    [
+        // mes catégories pour le menu
+        'categories' => $categoriesMenu,
+    ]);
+    /*
+    // exemple d'utilisation basique de twig
+    echo $twig->render('index.html.twig', [
+        'name' => 'Michaël',
+        'articles'=> $articles]);
+    */
 }else{
     // autres pages
     $page = $_GET['pg'];

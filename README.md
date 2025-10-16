@@ -21,6 +21,8 @@ composer require "twig/twig:^3.0"
 
 Voir : https://twig.symfony.com/doc/3.x/intro.html#installation
 
+et Packagist : https://packagist.org/packages/twig/twig
+
 ### Création des modèles
 
 Créer les classes dans le dossier model.
