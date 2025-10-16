@@ -69,7 +69,7 @@
 </div>
 
 <div class="container">
-
+<!-- Vérification si la liste des articles est vide -->
     <?php
     if(empty($articles)):
     ?>
@@ -162,8 +162,9 @@
 <?php
 //var_dump($articles);
 ?>
-        </div>
 
+    </div>
+</div>
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5 py-4">
     <div class="container">

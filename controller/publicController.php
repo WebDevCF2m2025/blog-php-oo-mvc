@@ -22,6 +22,8 @@ if(empty($_GET['pg'])){
     [
         // mes catégories pour le menu
         'categories' => $categoriesMenu,
+        // mes articles pour la homepage
+        'articles'=> $articles,
     ]);
     /*
     // exemple d'utilisation basique de twig
