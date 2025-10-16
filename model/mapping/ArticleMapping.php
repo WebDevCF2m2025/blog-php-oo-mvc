@@ -67,7 +67,7 @@ class ArticleMapping extends AbstractMapping
     }
     public function getArticleText(): ?string
     {
-        return $this->article_text;
+        return html_entity_decode($this->article_text);
     }
     public function setArticleText(?string $article_text): void
     {

@@ -1,0 +1,102 @@
+{% extends "template.front.html.twig" %}
+
+{% block title %}{{ parent()}} | Connexion {% endblock %}
+
+    {% block hero_title %}Connexion{% endblock %}
+    {% block hero_text %}Merci de vous connecter{% endblock %}
+
+{% block main %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="bi bi-pencil-square me-2"></i>Formulaire de connexion
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="" method="post" class="needs-validation" novalidate>
+                            <!-- Titre de l'article -->
+                            <div class="mb-4">
+                                <label for="user_login" class="form-label fw-semibold">
+                                    <i class="bi bi-fonts me-1 text-primary"></i>Login
+                                </label>
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="user_login"
+                                       name="user_login"
+                                       placeholder="Saisissez votre login..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez saisir votre mot de passe
+                                </div>
+                                <div class="form-text">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                </div>
+                            </div>
+
+                            <!-- Contenu de l'article -->
+                            <div class="mb-4">
+                                <label for="user_pwd" class="form-label fw-semibold">
+                                    <i class="bi bi-textarea-t me-1 text-primary"></i>Votre mot de passe
+                                </label>
+                                <input type="password"
+                                       class="form-control form-control-lg"
+                                       id="user_pwd"
+                                       name="user_pwd"
+                                       placeholder="Saisissez votre mot de passe..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez saisir le contenu de votre mot de passe.
+                                </div>
+                                <div class="form-text">
+                                    <i class="bi bi-markdown me-1"></i>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Boutons d'action -->
+                            <div class="d-flex gap-3 pt-3 border-top">
+                                <button type="submit" class="btn btn-primary btn-lg flex-fill">
+                                    <i class="bi bi-check-circle me-2"></i>Se connecter
+                                </button>
+                                <a href="./" class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-arrow-left me-2"></i>Retour
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Aperçu des informations -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card border-0 bg-light">
+                            <div class="card-body text-center">
+                                <i class="bi bi-lightbulb text-warning fs-1 mb-2"></i>
+                                <h6 class="text-muted">Conseil</h6>
+                                <small class="text-muted">
+                                    Un bon titre est accrocheur et descriptif
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 bg-light">
+                            <div class="card-body text-center">
+                                <i class="bi bi-clock text-info fs-1 mb-2"></i>
+                                <h6 class="text-muted">Sauvegarde</h6>
+                                <small class="text-muted">
+                                    La date sera automatiquement définie
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
