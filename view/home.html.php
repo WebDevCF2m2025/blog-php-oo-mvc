@@ -144,7 +144,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                             <span class="badge bg-light text-primary">
                                 <i class="bi bi-eye me-1"></i>
-                                Publié par <?php echo $article->getUser()->getUserRealName() ?? $article->getUser()->getUserLogin()?></span>
+                                Publié par <?php
+                                // affichage du UserRealName, si null (??) on affiche UserLogin
+                                echo $article->getUser()->getUserRealName() ?? $article->getUser()->getUserLogin()?></span>
                                 <small class="text-muted">
                                     <i class="bi bi-clock me-1"></i>Lecture rapide
                                 </small>
@@ -158,7 +160,7 @@
     endif;
     ?>
 <?php
-var_dump($articles);
+//var_dump($articles);
 ?>
         </div>
 

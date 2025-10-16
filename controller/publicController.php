@@ -15,7 +15,7 @@ if(empty($_GET['pg'])){
     $articleManager = new ArticleManager($connectPDO);
     $articles = $articleManager->getArticlesHomepage();
 
-
+    // appel de la vue
     require_once RACINE_PATH."/view/home.html.php";
 }else{
     // autres pages

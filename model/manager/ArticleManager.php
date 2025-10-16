@@ -26,8 +26,11 @@ class ArticleManager implements ManagerInterface
     // Articles visibles (article_visibility = 2), pour la homepage
     public function getArticlesHomepage(): array
     {
-        $sql = "SELECT a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,150) AS article_text,  a.`article_date_publish`,a.`article_user_id`,
+        $sql = "SELECT 
+    a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,150) AS article_text,  a.`article_date_publish`,a.`article_user_id`,
+    
                        u.`user_id`, u.`user_login`, u.`user_real_name`,
+    
                        GROUP_CONCAT(c.`category_slug` SEPARATOR '|||') AS category_slug, GROUP_CONCAT(c.`category_title` SEPARATOR '|||') AS category_title
                 FROM `article` a 
                 INNER JOIN `user` u ON a.`article_user_id`=u.`user_id`

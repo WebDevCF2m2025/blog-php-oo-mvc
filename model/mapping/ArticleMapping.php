@@ -9,6 +9,7 @@ use model\mapping\UserMapping;
 
 class ArticleMapping extends AbstractMapping
 {
+    // champs du mapping
     protected ?int $article_id = null;
     protected ?string $article_title = null;
     protected ?string $article_slug = null;
@@ -17,12 +18,16 @@ class ArticleMapping extends AbstractMapping
     protected ?string $article_date_publish = null;
     protected ?int $article_visibility = null;
     protected ?int $article_user_id = null;
+    // champs de jointures
     protected ?array $comments = null;
     protected ?array $categories = null;
 
     protected ?UserMapping $user = null;
 
+    // utilisation du trait
     use StringTrait;
+
+    // getters and setters
     public function getArticleId(): ?int
     {
         return $this->article_id;
