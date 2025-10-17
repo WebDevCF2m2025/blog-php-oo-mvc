@@ -48,6 +48,10 @@ if(empty($_GET['pg'])){
             var_dump($_GET);
             break;
         case "connection":
+            // si on tente de se connecter
+            if(isset($_POST['user_login'],$_POST['user_pwd'])){
+                var_dump($_POST);
+            }
             // page connexion
             echo $twig->render('connection.html.twig',
                 [
