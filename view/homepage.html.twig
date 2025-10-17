@@ -37,7 +37,7 @@
             {% set categories = article.getCategories() %}
                         {% for category in categories %}
 
-                        <span class="badge bg-primary  "><a class="text-white" href="./category/{{ category.getCategorySlug()|e }}">
+                        <span class="badge bg-primary  "><a class="text-white" href="{{ racineURL }}category/{{ category.getCategorySlug()|e }}">
                                 {{ category.getCategoryTitle()|e }}</a></span>
                         {% endfor %}
                     </div>
@@ -49,7 +49,7 @@
                 <h4 class="card-title text-primary fw-bold mb-3">
                     {{ article.getArticleTitle|raw }}</h4>
                 <p class="card-text text-muted">
-                    {{ article.getArticleText|e }}<span class="text-primary"> <a href="./article/{{ article.getArticleSlug }}">Lire la suite</a></span>
+                    {{ article.getArticleText|e }}<span class="text-primary"> <a href="{{ racineURL }}article/{{ article.getArticleSlug }}">Lire la suite</a></span>
                 </p>
             </div>
             <div class="card-footer bg-white border-0">
@@ -76,7 +76,7 @@
                             <i class="bi bi-file-text display-1 text-muted mb-4"></i>
                             <h3 class="text-muted mb-3">Aucun article disponible</h3>
                             <p class="text-muted">Les premiers articles seront bientôt publiés !</p>
-                            <a href="./?p=admin" class="btn btn-primary mt-3">
+                            <a href="{{ racineURL }}" class="btn btn-primary mt-3">
                             </a>
                         </div>
                     </div>

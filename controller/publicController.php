@@ -20,6 +20,8 @@ if(empty($_GET['pg'])){
 
     echo $twig->render('homepage.html.twig',
     [
+        // racine URL pour les liens
+        'racineURL' => RACINE_URL,
         // mes catégories pour le menu
         'categories' => $categoriesMenu,
         // mes articles pour la homepage
@@ -49,6 +51,8 @@ if(empty($_GET['pg'])){
             // page connexion
             echo $twig->render('connection.html.twig',
                 [
+                    // racine URL pour les liens
+                    'racineURL' => RACINE_URL,
                     // mes catégories pour le menu
                     'categories' => $categoriesMenu,
                 ]);
