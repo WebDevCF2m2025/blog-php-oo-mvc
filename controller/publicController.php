@@ -2,17 +2,21 @@
 
 use model\manager\CategoryManager;
 use model\manager\ArticleManager;
+use model\Manager\UserManager;
+
+// création des managers utiles
+$categoryManager = new CategoryManager($connectPDO);
+$articleManager = new ArticleManager($connectPDO);
+$userManager = new UserManager($connectPDO);
 
 
 // récupération des catégories pour le menu public
-$categoryManager = new CategoryManager($connectPDO);
 $categoriesMenu = $categoryManager->getCategoriesPublicMenu();
 
 // homepage
 if(empty($_GET['pg'])){
 
     // récupération des articles pour la homepage
-    $articleManager = new ArticleManager($connectPDO);
     $articles = $articleManager->getArticlesHomepage();
 
     // appel de la vue
@@ -50,8 +54,10 @@ if(empty($_GET['pg'])){
         case "connection":
             // si on tente de se connecter
             if(isset($_POST['user_login'],$_POST['user_pwd'])){
-                var_dump($_POST);
+                $connection = $userManager->connect($_POST);
+
             }
+            var_dump($_SESSION);
             // page connexion
             echo $twig->render('connection.html.twig',
                 [

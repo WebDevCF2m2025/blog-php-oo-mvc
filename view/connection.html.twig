@@ -1,6 +1,6 @@
 {% extends "template.front.html.twig" %}
 
-{% block title %}{{ parent()}} | Connexion {% endblock %}
+{% block title %}{{ parent() }} | Connexion {% endblock %}
 
     {% block hero_title %}Connexion{% endblock %}
     {% block hero_text %}Merci de vous connecter{% endblock %}
@@ -40,7 +40,8 @@
                             <!-- Contenu de l'article -->
                             <div class="mb-4">
                                 <label for="user_pwd" class="form-label fw-semibold">
-                                    <i class="bi bi-textarea-t me-1 text-primary"></i>Votre mot de passe (le même que le login pour cet exercice !)
+                                    <i class="bi bi-textarea-t me-1 text-primary"></i>Votre mot de passe (le même que le
+                                    login pour cet exercice !)
                                 </label>
                                 <input type="password"
                                        class="form-control form-control-lg"
@@ -97,4 +98,4 @@
             </div>
         </div>
     </div>
-    {% endblock %}
+{% endblock %}
