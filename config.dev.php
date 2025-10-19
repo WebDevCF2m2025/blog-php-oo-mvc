@@ -16,4 +16,5 @@ const DB_TYPE = "mysql"; // valable pour MySQL et/ou MariaDB
 const RACINE_PATH = __DIR__;
 // URL racine de notre site pour le navigateur (jusqu'au dossier public)
 // évite les problèmes de chemins relatifs si on utilise Twig ou des redirections
-const RACINE_URL = "http://web2025/blog-php-perm-comment/public/";
+#const RACINE_URL = "http://web2025/blog-php-perm-comment/public/";
+const RACINE_URL = "http://global-2025/blog-php-oo-mvc/public/";
