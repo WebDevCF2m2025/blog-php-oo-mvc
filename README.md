@@ -9,6 +9,18 @@ Installez Workbench : https://dev.mysql.com/downloads/workbench/
 
 Puis création de la DB suivant le projet.
 
+### Base de donnée 
+
+Pour l'exemple, chargez la base de donnée `my_blog` depuis le fichier `data/my_blog_v2.sql`
+
+Pour se connecter chaque mot de passe est haché. Pour l'exercice, il suffit d'utiliser le login comme login ET mdp :
+
+- admin : admin
+- editor : editor
+- user1 : user1
+- user2 : user2
+
+
 ### Installation
 
 Installez composer si ce n'est pas déjà fait : https://getcomposer.org/download/
