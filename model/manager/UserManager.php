@@ -30,7 +30,50 @@ class UserManager implements ManagerInterface, UserInterface
 
     public function connect(array $tab): bool
     {
-        // TODO: Implement connect() method.
+        // si on a pas ce qu'il faut pour se connecter
+        if (!isset($tab['user_login'], $tab['user_pwd']))
+            return false;
+
+            // création d'un usermapping
+            // pour protéger via les setters
+            $user = new UserMapping($tab);
+
+            // préparation de la requête
+            $sql = "SELECT u.* , r.`role_name`
+                FROM `user` u
+                    INNER JOIN `role` r
+                    ON u.`user_role_id` = r.`role_id`
+                WHERE u.`user_login` = ? AND u.`user_activate` = 1 ;
+                ";
+            $stmt = $this->connect->prepare($sql);
+            try {
+                // on cherche via le login
+                $stmt->execute([
+                    $user->getUserLogin(),
+                ]);
+                // si on trouve pas, on renvoie false
+                if ($stmt->rowCount() != 1)
+                    return false;
+
+                // on tansforme le resultat en tableau
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt->closeCursor();
+
+                // vérification des mots de passe
+                if (password_verify($user->getUserPwd(), $result['user_pwd'])) {
+                    $_SESSION = $result;
+                    return true;
+                    // pas de correspondance
+                } else {
+                    return false;
+                }
+
+
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                return false;
+            }
+
     }
 
     public function disconnect(): bool
