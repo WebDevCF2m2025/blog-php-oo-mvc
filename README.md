@@ -46,7 +46,11 @@ et Packagist : https://packagist.org/packages/twig/twig
 
 ### Création des modèles
 
-Créer les classes dans le dossier model.
+Créez les classes dans le dossier model. Un fichier par table, ces classes doivent hériter de `AbstractMapping.php`
+
+### Création des manageurs
+
+
 
 
 ### Remerciements

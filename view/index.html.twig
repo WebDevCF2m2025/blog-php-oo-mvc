@@ -9,9 +9,6 @@
 </head>
 <body>
 <h1>{{ name }}</h1>
-{% for item in articles %}
-{{ item.getArticleTitle() }}
-    {% if not loop.last %} | {% endif %}
-{% endfor %}
+
 </body>
 </html>

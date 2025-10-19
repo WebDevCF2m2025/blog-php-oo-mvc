@@ -14,7 +14,8 @@ use Twig\Environment;
 require_once '../config.dev.php';
 
 // Autoload fonctionnel avec les namespaces personnels,
-// ne fonctionne qu'en Orienté Objet
+// ne fonctionne qu'en PHP Orienté Objet (fait main, on pourrait
+// utiliser Composer pour y ajouter nos dépendances)
 // et avec une arborescence de fichiers respectant les namespaces
 spl_autoload_register(function ($class) {
     $class = str_replace('\\', '/', $class);
@@ -33,6 +34,7 @@ $twig = new Environment($loader, [
     //'cache' => '/path/to/compilation_cache',
 ]);
 
+// exemple d'un template simple
 //echo $twig->render('index.html.twig', ['name' => 'Fabien']);
 
 // chargement du router
