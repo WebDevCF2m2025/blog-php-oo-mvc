@@ -9,6 +9,15 @@ Installez Workbench : https://dev.mysql.com/downloads/workbench/
 
 Puis création de la DB suivant le projet.
 
+### Fichier de configuration
+
+```php
+// path: config_dev.php
+// ...
+// mettez votre url dans cette constante pour la réécriture d'URLs
+const RACINE_URL = "http://chemin.vers.dossier.public";
+```
+
 ### Base de donnée 
 
 Pour l'exemple, chargez la base de donnée `my_blog` depuis le fichier `data/my_blog_v2.sql`
