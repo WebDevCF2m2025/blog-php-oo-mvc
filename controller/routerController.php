@@ -2,7 +2,6 @@
 // path: controller/routerController.php
 
 
-
 # Connexion PDO
 try {
     $connectPDO = new PDO(

@@ -58,7 +58,7 @@ et Packagist : https://packagist.org/packages/twig/twig
 
 Créez les classes dans le dossier model. Un fichier par table, ces classes doivent hériter de `AbstractMapping.php`.
 
-La sécurisation se fera au niveau des `setters` de ces mapping.
+**La sécurisation se fera au niveau des `setters` de ces mapping.**
 
 ### Création des manageurs
 
@@ -66,10 +66,16 @@ Créez les classes de type `Manager`, elles doivent implémenter au moins `imple
 
 Vous pouvez utiliser le trait `model/StringTrait.php` au besoin.
 
-Toutes les requêtes devront être préparées et sécurisées.
+**Toutes les requêtes devront être préparées et sécurisées.**
+
+### Création des controllers
+
+La connexion `PDO` se fait dans `controller/routerController.php`, c'est lui qui redirigera vers les différentes parties du site.
+
+- **publicController** servira à la partie publique du site.
 
 
 ### Remerciements
-Merci à Massine pour son design que nous utiliserons dans ce projet :
+Merci à [Massine2k1](https://github.com/Massine2k1) pour son design que nous utiliserons dans ce projet :
 
 https://github.com/WebDevCF2m2025/PHP8-OO/tree/main/classe1/Massine/07-avance/view

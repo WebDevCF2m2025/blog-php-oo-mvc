@@ -18,15 +18,6 @@ class UserManager implements ManagerInterface, UserInterface
         $this->connect = $connect;
     }
 
-    public function encodePwd(string $pwd): bool|string
-    {
-        // TODO: Implement encodePwd() method.
-    }
-
-    public function validatePwd(string $pwd): bool
-    {
-        // TODO: Implement validatePwd() method.
-    }
 
     public function connect(array $tab): bool
     {
@@ -62,6 +53,7 @@ class UserManager implements ManagerInterface, UserInterface
                 // vérification des mots de passe
                 if (password_verify($user->getUserPwd(), $result['user_pwd'])) {
                     $_SESSION = $result;
+                    // on efface les variables de sessions inutiles
                     return true;
                     // pas de correspondance
                 } else {
