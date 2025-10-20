@@ -1,19 +1,20 @@
 # blog-php-oo-mvc
-Blog fait en PHP8 - MySQL en MVC - OO
+**Blog fait en PHP8 - MySQL en MVC - POO (Orienté Objet)**
 
-## Avec Twig comme moteur de template
+**Avec Twig comme moteur de template**
 
 ### Configuration de la base de données
 
 Installez Workbench : https://dev.mysql.com/downloads/workbench/
 
-Puis création de la DB suivant votre choix de projet.
+Puis création de la DB suivant votre choix de projet (voir `data/MyModel.mwb` pour le fichier vu en classe).
 
 ### Fichier de configuration
 
-Dupliquez le fichier `config.dev.php` et nommez la copie en `config.php`
+Dupliquez le fichier `config.dev.php` et nommez la copie en `config.php`. Réglez les paramètres de connexion à votre base de données (voir le fichier `data/my_blog_v2.sql` si vous souhaitez utiliser celle vue au cours).
 
-Changez-y
+Changez-y le chemin de la constante `RACINE_URL` vers l'URL de votre dossier public, pour que la réécriture sous forme de dossier, soit correcte (voir le fichier `public/.htaccess`).
+
 ```php
 // path: config.php
 // ...
@@ -43,19 +44,29 @@ On va ensuite installer Twig via composer :
 composer require "twig/twig:^3.0"
 ```
 
+Il suffira depuis un autre poste de travail de taper cette commande à la racine du projet :
+
+```bash
+composer install
+```
+
 Voir : https://twig.symfony.com/doc/3.x/intro.html#installation
 
 et Packagist : https://packagist.org/packages/twig/twig
 
 ### Création des modèles
 
-Créez les classes dans le dossier model. Un fichier par table, ces classes doivent hériter de `AbstractMapping.php`
+Créez les classes dans le dossier model. Un fichier par table, ces classes doivent hériter de `AbstractMapping.php`.
+
+La sécurisation se fera au niveau des `setters` de ces mapping.
 
 ### Création des manageurs
 
 Créez les classes de type `Manager`, elles doivent implémenter au moins `implements ManagerInterface`. Le `UserManager` doit également implémenter `UserInterface`. 
 
 Vous pouvez utiliser le trait `model/StringTrait.php` au besoin.
+
+Toutes les requêtes devront être préparées et sécurisées.
 
 
 ### Remerciements
