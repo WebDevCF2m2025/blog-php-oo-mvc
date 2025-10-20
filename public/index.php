@@ -10,8 +10,14 @@ session_start();
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
-// inclusion du fichier de configuration
-require_once '../config.dev.php';
+// inclusion du fichier de configuration si config existe
+if(file_exists("../config.php")){
+    require_once "../config.php";
+// sinon on prend la configuration originale
+} else {
+    require_once "../config.dev.php";
+}
+
 
 // Autoload fonctionnel avec les namespaces personnels,
 // ne fonctionne qu'en PHP Orienté Objet (fait main, on pourrait
