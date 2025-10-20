@@ -57,17 +57,23 @@ if(empty($_GET['pg'])){
             $error = "";
             // si on tente de se connecter
             if(isset($_POST['user_login'],$_POST['user_pwd'])){
-                $connection = $userManager->connect($_POST);
-                if($connection===true){
-                    header("Location: ".RACINE_URL);
-                    exit();
-                }else{
-                    $error = "Login et ou mot de passe non valide !";
+                // on tente de se connecter
+                try {
+                    $connection = $userManager->connect($_POST);
+                    // si on est connecté
+                    if($connection===true){
+                        // redirection vers la page d'accueil
+                        header("Location: ".RACINE_URL);
+                        exit();
+                    }else{
+                        $error = "Login et ou mot de passe non valide !";
+                    }
+                }catch (Exception $e){
+                    $error = $e->getMessage();
                 }
-
             }
 
-            // page connexion
+            // vue Twig de la page de connexion
             echo $twig->render('connection.html.twig',
                 [
                     // racine URL pour les liens
