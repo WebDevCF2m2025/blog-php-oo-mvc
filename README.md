@@ -7,12 +7,15 @@ Blog fait en PHP8 - MySQL en MVC - OO
 
 Installez Workbench : https://dev.mysql.com/downloads/workbench/
 
-Puis création de la DB suivant le projet.
+Puis création de la DB suivant votre choix de projet.
 
 ### Fichier de configuration
 
+Dupliquez le fichier `config.dev.php` et nommez la copie en `config.php`
+
+Changez-y
 ```php
-// path: config_dev.php
+// path: config.php
 // ...
 // mettez votre url dans cette constante pour la réécriture d'URLs
 const RACINE_URL = "http://chemin.vers.dossier.public";
@@ -50,7 +53,9 @@ Créez les classes dans le dossier model. Un fichier par table, ces classes doiv
 
 ### Création des manageurs
 
+Créez les classes de type `Manager`, elles doivent implémenter au moins `implements ManagerInterface`. Le `UserManager` doit également implémenter `UserInterface`. 
 
+Vous pouvez utiliser le trait `model/StringTrait.php` au besoin.
 
 
 ### Remerciements
