@@ -16,13 +16,22 @@ try {
 } catch (Exception $e) {
     die($e->getMessage());
 }
-if(isset($_SESSION["user_id"],$_SESSION["role"])){
+// si l'utilisateur est connecté
+if(isset($_SESSION["user_id"],$_SESSION["role_name"])){
 
-    if($_SESSION["role"] === "admin"){
+    // et que c'est un admin
+    if($_SESSION["role_name"] === "Admin"){
 
-    }elseif ($_SESSION["role"] === "user"){
+        // Contrôleur partie admin
+        require_once RACINE_PATH . "/controller/adminController.php";
+
+        // sinon TO DO
+    }else {
+
+        var_dump($_SESSION);
 
     }
+
 }else{
     // Contrôleur partie publique
     require_once RACINE_PATH . "/controller/publicController.php";
