@@ -51,13 +51,22 @@ if(empty($_GET['pg'])){
             echo "<h2>Nous serons sur la page d'un article</h2>";
             var_dump($_GET);
             break;
+        // on veut se connecter
         case "connection":
+            // message d'erreur
+            $error = "";
             // si on tente de se connecter
             if(isset($_POST['user_login'],$_POST['user_pwd'])){
                 $connection = $userManager->connect($_POST);
+                if($connection===true){
+                    header("Location: ".RACINE_URL);
+                    exit();
+                }else{
+                    $error = "Login et ou mot de passe non valide !";
+                }
 
             }
-            var_dump($_SESSION);
+
             // page connexion
             echo $twig->render('connection.html.twig',
                 [
@@ -65,6 +74,8 @@ if(empty($_GET['pg'])){
                     'racineURL' => RACINE_URL,
                     // mes catégories pour le menu
                     'categories' => $categoriesMenu,
+                    // message d'erreur
+                    'error' => $error,
                 ]);
             break;
         default:

@@ -52,11 +52,11 @@
                                 <div class="invalid-feedback">
                                     Veuillez saisir le contenu de votre mot de passe.
                                 </div>
-                                <div class="form-text">
-                                    <i class="bi bi-markdown me-1"></i>
-                                </div>
-                            </div>
 
+                            </div>
+                            {% if error %}
+                                <div class="alert-danger">{{ error }}</div>
+                            {% endif %}
                             <!-- Boutons d'action -->
                             <div class="d-flex gap-3 pt-3 border-top">
                                 <button type="submit" class="btn btn-primary btn-lg flex-fill">
