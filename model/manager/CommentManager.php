@@ -30,7 +30,7 @@ class CommentManager implements ManagerInterface
                 FROM `comment` c
                 INNER JOIN `user` u ON c.comment_user_id = u.user_id
                 WHERE c.comment_article_id = :articleId AND c.comment_visibility = 1
-                ORDER BY c.comment_date_publish ASC";
+                ORDER BY c.comment_create ASC";
         $prepare = $this->db->prepare($sql);
         try {
             $prepare->bindValue(':articleId', $articleId, PDO::PARAM_INT);

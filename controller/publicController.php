@@ -2,12 +2,14 @@
 
 use model\manager\CategoryManager;
 use model\manager\ArticleManager;
-use model\Manager\UserManager;
+use model\manager\UserManager;
+use model\manager\CommentManager;
 
 // création des managers utiles
 $categoryManager = new CategoryManager($connectPDO);
 $articleManager = new ArticleManager($connectPDO);
 $userManager = new UserManager($connectPDO);
+$commentManager = new CommentManager($connectPDO);
 
 
 // récupération des catégories pour le menu public
@@ -52,6 +54,10 @@ if(empty($_GET['pg'])){
                 // récupération d'un article via son slug
                 $article = $articleManager->getArticleBySlug($_GET['slug']);
                 if($article!==null) {
+                    // Récupération des commentaires pour cet article
+                    $comments = $commentManager->getAllCommentsByArticleId($article->getArticleId());
+                    $article->setComments($comments);
+
                     // appel de la vue
                     // require_once RACINE_PATH."/view/article.html.php";
 
@@ -63,6 +69,8 @@ if(empty($_GET['pg'])){
                             'categories' => $categoriesMenu,
                             // mon article
                             'article' => $article,
+                            // la session pour savoir si l'utilisateur est connecté
+                            'session' => $_SESSION ?? [],
                         ]);
                 }
             }else{
