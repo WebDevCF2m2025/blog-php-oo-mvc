@@ -54,7 +54,7 @@ class CommentManager implements ManagerInterface
     public function insertComment(CommentMapping $comment): bool
     {
         $sql = "INSERT INTO `comment` (comment_text, comment_article_id, comment_user_id, comment_create, comment_visibility) 
-                VALUES (:text, :article_id, :user_id, NOW(), 0)"; // Set visibility to 0 (pending) by default
+                VALUES (:text, :article_id, :user_id, NOW(), 0)"; // visibilité à 0 (en attente) par défaut
         $prepare = $this->db->prepare($sql);
         try {
             $prepare->bindValue(':text', $comment->getCommentText(), PDO::PARAM_STR);
