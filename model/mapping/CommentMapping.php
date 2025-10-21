@@ -5,6 +5,8 @@ namespace model\mapping;
 use model\AbstractMapping;
 use Exception;
 
+
+
 class CommentMapping extends AbstractMapping
 {
 
@@ -15,6 +17,7 @@ class CommentMapping extends AbstractMapping
     protected ?int $comment_visibility = null;
     protected ?int $comment_article_id = null;
     protected ?int $comment_user_id = null;
+    protected ?UserMapping $user = null;
 
     public function getCommentId(): ?int
     {
@@ -95,5 +98,15 @@ class CommentMapping extends AbstractMapping
         $this->comment_user_id = $comment_user_id;
     }
 
+
+    public function getUser(): ?UserMapping
+    {
+        return $this->user;
+    }
+
+    public function setUser(?UserMapping $user): void
+    {
+        $this->user = $user;
+    }
 
 }
