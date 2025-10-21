@@ -30,8 +30,10 @@ class ArticleManager implements ManagerInterface
     a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,150) AS article_text,  a.`article_date_publish`,a.`article_user_id`,
     
                        u.`user_id`, u.`user_login`, u.`user_real_name`,
+                       (SELECT COUNT(comment.`comment_id`) FROM `comment` WHERE comment.`comment_article_id` = a.`article_id`) AS comment_count,
     
-                       GROUP_CONCAT(c.`category_slug` SEPARATOR '|||') AS category_slug, GROUP_CONCAT(c.`category_title` SEPARATOR '|||') AS category_title
+                       GROUP_CONCAT(c.`category_slug` SEPARATOR '|||') AS category_slug, 
+                       GROUP_CONCAT(c.`category_title` SEPARATOR '|||') AS category_title
                 FROM `article` a 
                 INNER JOIN `user` u ON a.`article_user_id`=u.`user_id`
                 LEFT JOIN `article_has_category` h on a.article_id = h.article_article_id    
@@ -46,6 +48,7 @@ class ArticleManager implements ManagerInterface
             $stmt->closeCursor();
             $listArticles = [];
             foreach ($articles as $article) {
+                // création d'un article
                 $art = new ArticleMapping($article);
                 // on coupe le texte de l'article à 140 caractères sans couper les mots
                 // et on ajoute des points de suspension
@@ -53,6 +56,8 @@ class ArticleManager implements ManagerInterface
                 // gestion de l'auteur de l'article
                 $user = new UserMapping($article);
                 $art->setUser($user);
+                // gestion du nombre de commentaires de l'article
+                $art->setComments(['comment_count' => $article['comment_count']]);
                 // gestion des catégories de l'article
                 $cats = [];
                 if (isset($article['category_slug'])) {

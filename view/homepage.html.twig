@@ -61,7 +61,8 @@
                                 {% else %} {{ article.getUser.getUserLogin }}
                                 {% endif %}</span>
                     <small class="text-muted">
-                        <i class="bi bi-clock me-1"></i>Lecture rapide
+                        <i class="bi bi-clock me-1"></i>Nombre de commentaires :
+                        {{ article.getComments.comment_count }}
                     </small>
                 </div>
             </div>
