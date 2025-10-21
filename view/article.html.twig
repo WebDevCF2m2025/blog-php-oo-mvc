@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="fw-bold">{{ comment.user.getUserLogin() }}</div>
-                                    <p class="text-muted small mb-1">{{ comment.getCommentDate()|date('d/m/Y à H:i') }}</p>
+                                    <p class="text-muted small mb-1">{{ comment.getCommentCreate()|date('d/m/Y à H:i') }}</p>
                                     <p class="mb-0">{{ comment.getCommentText()|nl2br }}</p>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                     {# Formulaire pour ajouter un commentaire #}
                     {% if session.user_id %}
                         <h5>Laissez votre commentaire</h5>
-                        <form method="POST" action="{{ racineURL }}comment/add/{{ article.getArticleId() }}">
+                        <form method="POST" action="{{ racineURL }}comment/{{ article.getArticleId() }}/{{ article.getArticleSlug() }}">
                             <div class="mb-3">
                                 <label for="comment" class="form-label visually-hidden">Votre commentaire</label>
                                 <textarea class="form-control" id="comment" name="comment" rows="4" placeholder="Écrivez votre commentaire ici..." required></textarea>
@@ -87,7 +87,7 @@
                             <button type="submit" class="btn btn-primary">Envoyer le commentaire</button>
                         </form>
                     {% else %}
-                        <p class="text-center">Vous devez être <a href="{{ racineURL }}user/login">connecté</a> pour laisser un commentaire.</p>
+                        <p class="text-center">Vous devez être <a href="{{ racineURL }}connection">connecté</a> pour laisser un commentaire.</p>
                     {% endif %}
                 </div>
             </div>

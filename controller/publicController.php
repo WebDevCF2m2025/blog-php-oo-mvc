@@ -4,6 +4,7 @@ use model\manager\CategoryManager;
 use model\manager\ArticleManager;
 use model\manager\UserManager;
 use model\manager\CommentManager;
+use model\mapping\CommentMapping;
 
 // création des managers utiles
 $categoryManager = new CategoryManager($connectPDO);
@@ -116,6 +117,7 @@ if(empty($_GET['pg'])){
                     'error' => $error,
                 ]);
             break;
+
         default:
             // page 404
             echo "<h1>404 - Page non trouvée</h1>";
