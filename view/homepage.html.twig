@@ -56,10 +56,10 @@
                 <div class="d-flex justify-content-between align-items-center">
                             <span class="badge bg-light text-primary">
                                 <i class="bi bi-eye me-1"></i>
-                                Publié par
+                                Publié par <a  class="text-primary" href="{{ racineURL }}user/{{ article.getUser.getUserLogin }}">
                                 {% if article.getUser.getUserRealName %} {{ article.getUser.getUserRealName }}
                                 {% else %} {{ article.getUser.getUserLogin }}
-                                {% endif %}</span>
+                                {% endif %}</a></span>
                     <small class="text-muted">
                         <i class="bi bi-clock me-1"></i>Nombre de commentaires :
                         {{ article.getComments.comment_count }}

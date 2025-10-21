@@ -51,6 +51,11 @@ if(empty($_GET['pg'])){
             echo "<h2>Nous serons sur la page d'un article</h2>";
             var_dump($_GET);
             break;
+        case "user":
+            // page utilisateur
+            echo "<h2>Nous serons sur la page d'un auteur</h2>";
+            var_dump($_GET);
+            break;
         // on veut se connecter
         case "connection":
             // message d'erreur
