@@ -18,6 +18,8 @@
                                     <span class="badge bg-primary  "><a class="text-white"
                                                                         href="{{ racineURL }}category/{{ category.getCategorySlug()|e }}">
                                 {{ category.getCategoryTitle()|e }}</a></span>
+                                    {% else %}
+                                    Pas de rubrique.
                                 {% endfor %}
                             </div>
                             <small class="text-muted">
@@ -25,9 +27,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <h4 class="card-title text-primary fw-bold mb-3">
-                            {{ article.getArticleTitle|raw }}</h4>
+                    <div class="card-body pt-0">
                         <p class="card-text text-muted">
                             {{ article.getArticleText|nl2br }}
                         </p>
@@ -41,10 +41,7 @@
                                 {% if article.getUser.getUserRealName %} {{ article.getUser.getUserRealName }}
                                 {% else %} {{ article.getUser.getUserLogin }}
                                 {% endif %}</a></span>
-                            <small class="text-muted">
-                                <i class="bi bi-clock me-1"></i>Nombre de commentaires :
-                                {{ article.getComments.comment_count }}
-                            </small>
+
                         </div>
                     </div>
                 </div>
