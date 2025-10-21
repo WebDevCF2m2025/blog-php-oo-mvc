@@ -48,8 +48,27 @@ if(empty($_GET['pg'])){
             break;
         case "article":
             // page article
-            echo "<h2>Nous serons sur la page d'un article</h2>";
-            var_dump($_GET);
+            if(isset($_GET['slug'])) {
+                // récupération d'un article via son slug
+                $article = $articleManager->getArticleBySlug($_GET['slug']);
+                if($article!==null) {
+                    // appel de la vue
+                    // require_once RACINE_PATH."/view/article.html.php";
+
+                    echo $twig->render('article.html.twig',
+                        [
+                            // racine URL pour les liens
+                            'racineURL' => RACINE_URL,
+                            // mes catégories pour le menu
+                            'categories' => $categoriesMenu,
+                            // mon article
+                            'article' => $article,
+                        ]);
+                }
+            }else{
+                echo "<h2>Slug manquant</h2>";
+            }
+
             break;
         case "user":
             // page utilisateur

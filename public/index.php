@@ -9,6 +9,8 @@ session_start();
 
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+// pour le debug de Twig
+use Twig\Extension\DebugExtension;
 
 // inclusion du fichier de configuration si config existe
 if(file_exists("../config.php")){
@@ -37,8 +39,13 @@ $loader = new FilesystemLoader(RACINE_PATH.'/view'); // dans view
 // On lance le système de template de
 // Twig en instanciant son environment
 $twig = new Environment($loader, [
+    // mode de débogage activé
+    'debug' => true,
     //'cache' => '/path/to/compilation_cache',
 ]);
+// on ajoute l'extension de debug
+$twig->addExtension(new DebugExtension());
+
 
 // exemple d'un template simple
 //echo $twig->render('index.html.twig', ['name' => 'Fabien']);

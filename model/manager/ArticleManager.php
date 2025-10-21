@@ -79,4 +79,51 @@ class ArticleManager implements ManagerInterface
             return [];
         }
     }
+
+    // Nous recherchons un article via son slug
+    public function getArticleBySlug(string $slug): ?ArticleMapping
+    {
+
+        $sql = "SELECT a.*,
+                       u.`user_id`, u.`user_login`, u.`user_real_name`,
+                       GROUP_CONCAT(c.`category_slug` SEPARATOR '|||') AS category_slug, 
+                       GROUP_CONCAT(c.`category_title` SEPARATOR '|||') AS category_title
+                FROM `article` a 
+                INNER JOIN `user` u ON a.`article_user_id`=u.`user_id`
+                LEFT JOIN `article_has_category` h on a.article_id = h.article_article_id    
+                LEFT JOIN `category` c ON h.`category_category_id`= c.`category_id`
+                WHERE a.article_visibility = 2 AND a.article_slug = ?
+                GROUP BY a.`article_id`
+                ORDER BY a.`article_date_publish` DESC";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute([$slug]);
+            $article = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            if(empty($article))
+                return null;
+            // création d'un article
+            $art = new ArticleMapping($article);
+            // gestion de l'auteur de l'article
+            $user = new UserMapping($article);
+            $art->setUser($user);
+            // gestion des catégories de l'article
+            $cats = [];
+            if (isset($article['category_slug'])) {
+                $arrSlug = explode("|||", $article['category_slug']);
+                $arrTitle = explode("|||", $article['category_title']);
+                for ($i = 0; $i < count($arrSlug); $i++) {
+                    $c = new CategoryMapping([]);
+                    $c->setCategorySlug($arrSlug[$i]);
+                    $c->setCategoryTitle($arrTitle[$i]);
+                    $cats[] = $c;
+                }
+                $art->setCategories($cats);
+            }
+            return $art;
+        }catch (Exception $e) {
+            echo "Erreur lors de la récupération de l'article par son slug : " . $e->getMessage();
+            return null;
+        }
+    }
 }
