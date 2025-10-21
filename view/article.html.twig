@@ -7,7 +7,7 @@
     <div>
         <div class="row justify-content-center">
             <div class="col-md-12 text-left">
-                <div class="card border-0 shadow-sm">
+                <div class="card shadow-sm">
                     <div class="card-body py-5">
                         <h3 class="text-muted mb-3">{{ article.getArticleTitle }}</h3>
                         <div class="d-flex align-items-center justify-content-between">
@@ -44,6 +44,51 @@
 
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Espace commentaires #}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Espace commentaires</h4>
+
+                    {# Affichage des commentaires existants #}
+                    {% if article.getComments() is not empty %}
+                        {% for comment in article.getComments() %}
+                            <div class="d-flex mb-4">
+                                <div class="flex-shrink-0">
+                                    <i class="bi bi-person-circle fs-2 text-muted"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="fw-bold">{{ comment.user.getUserLogin() }}</div>
+                                    <p class="text-muted small mb-1">{{ comment.getCommentDate()|date('d/m/Y à H:i') }}</p>
+                                    <p class="mb-0">{{ comment.getCommentText()|nl2br }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">Il n'y a pas encore de commentaires. Soyez le premier à en écrire un !</p>
+                    {% endif %}
+
+                    <hr class="my-4">
+
+                    {# Formulaire pour ajouter un commentaire #}
+                    {% if session.user_id %}
+                        <h5>Laissez votre commentaire</h5>
+                        <form method="POST" action="{{ racineURL }}comment/add/{{ article.getArticleId() }}">
+                            <div class="mb-3">
+                                <label for="comment" class="form-label visually-hidden">Votre commentaire</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="4" placeholder="Écrivez votre commentaire ici..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Envoyer le commentaire</button>
+                        </form>
+                    {% else %}
+                        <p class="text-center">Vous devez être <a href="{{ racineURL }}user/login">connecté</a> pour laisser un commentaire.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
