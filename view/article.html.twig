@@ -23,7 +23,7 @@
                                 {% endfor %}
                             </div>
                             <small class="text-muted">
-                                <i class="bi bi-calendar me-1"></i>{{ article.getArticleDatePublish()|date('Y-m-d H:i') }}
+                                <i class="bi bi-calendar me-1"></i>Le {{ article.getArticleDatePublish()|date('d/m/H \à H\\hi') }}
                             </small>
                         </div>
                     </div>

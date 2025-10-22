@@ -69,6 +69,9 @@ if(empty($_GET['pg'])){
                             // la session pour savoir si l'utilisateur est connecté
                             'session' => $_SESSION ?? [],
                         ]);
+                }else{
+                    // TO DO (404)
+                    echo "<h2>Article introuvable</h2>";
                 }
             }else{
                 echo "<h2>Slug manquant</h2>";

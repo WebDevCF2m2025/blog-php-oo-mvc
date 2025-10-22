@@ -2,9 +2,13 @@
 
 {% block title %}{{ parent()}} | Homepage {% endblock %}
 {% block main %}
+    {# on compte le nombre d'article #}
     {% set nbArticles = articles|length %}
+{# si on en a au mois 1 #}
 {% if nbArticles !=0 %}
+    {# si plus qu'1 #}
     {% if nbArticles > 1 %}
+        {# création d'une variable pour le pluriel #}
         {% set pluriel = 's' %}
     {% else %}
         {% set pluriel = '' %}
@@ -27,6 +31,7 @@
 {% block aside %}
 <!-- Grid des articles -->
 <div class="row g-4">
+    {# tant que l'on a des articles #}
     {% for article in articles %}
 
     <div class="col-lg-6">
@@ -34,20 +39,25 @@
             <div class="card-header bg-white border-0 pb-0">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
+            {# on compte le nombre de catégories de cet article#}
             {% set categories = article.getCategories() %}
+                        {# si on en a on affiche #}
                         {% for category in categories %}
 
                         <span class="badge bg-primary  "><a class="text-white" href="{{ racineURL }}category/{{ category.getCategorySlug()|e }}">
                                 {{ category.getCategoryTitle()|e }}</a></span>
+                            {# si on en a pas on ne fait rien (else inutile) #}
                         {% endfor %}
                     </div>
                     <small class="text-muted">
-                        <i class="bi bi-calendar me-1"></i>{{ article.getArticleDatePublish()|date('Y-m-d H:i') }}</small>
+                        {# version française de la date#}
+                        <i class="bi bi-calendar me-1"></i>Le {{ article.getArticleDatePublish()|date('d/m/H \à H\\hi') }}</small>
                 </div>
             </div>
             <div class="card-body">
                 <h4 class="card-title text-primary fw-bold mb-3">
-                    {{ article.getArticleTitle|raw }}</h4>
+                    <a href="{{ racineURL }}article/{{ article.getArticleSlug }}">{{ article.getArticleTitle|raw }}</a>
+                </h4>
                 <p class="card-text text-muted">
                     {{ article.getArticleText|e }}<span class="text-primary"> <a href="{{ racineURL }}article/{{ article.getArticleSlug }}">Lire la suite</a></span>
                 </p>
@@ -57,7 +67,9 @@
                             <span class="badge bg-light text-primary">
                                 <i class="bi bi-eye me-1"></i>
                                 Publié par <a  class="text-primary" href="{{ racineURL }}user/{{ article.getUser.getUserLogin }}">
+                                {# si le userRealName n'est pas null#}
                                 {% if article.getUser.getUserRealName %} {{ article.getUser.getUserRealName }}
+                                    {# sinon affichage du login #}
                                 {% else %} {{ article.getUser.getUserLogin }}
                                 {% endif %}</a></span>
                     <small class="text-muted">
@@ -68,6 +80,7 @@
             </div>
         </div>
     </div>
+        {# si nous n'avons pas d'articles #}
         {% else %}
             <!-- État vide avec style moderne -->
             <div class="row justify-content-center">
