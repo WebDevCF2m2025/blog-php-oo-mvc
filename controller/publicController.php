@@ -25,7 +25,6 @@ if(empty($_GET['pg'])){
 
     // appel de la vue
     // require_once RACINE_PATH."/view/home.html.php";
-
     echo $twig->render('homepage.html.twig',
     [
         // racine URL pour les liens
@@ -37,7 +36,7 @@ if(empty($_GET['pg'])){
         // la session pour savoir si l'utilisateur est connecté
         'session' => $_SESSION ?? [],
     ]);
-
+// autres pages
 }else{
     // autres pages
     $page = $_GET['pg'];
@@ -148,6 +147,7 @@ if(empty($_GET['pg'])){
                     'error' => $error,
                 ]);
             break;
+
         // on veut se déconnecter
         case "disconnection":
             $disconnection = $userManager->disconnect();

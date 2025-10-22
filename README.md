@@ -72,7 +72,8 @@ Vous pouvez utiliser le trait `model/StringTrait.php` au besoin.
 
 La connexion `PDO` se fait dans `controller/routerController.php`, c'est lui qui redirigera vers les différentes parties du site.
 
-- **publicController** servira à la partie publique du site.
+- **publicController** servira à la partie publique du site, nous pourrons y accéder même connecté, par exemple pour poster des messages.
+- **adminController** servira à la partie administrateur du site, uniquement accessible aux administrateurs, éditeurs et rédacteurs.
 
 
 ### Remerciements
