@@ -44,8 +44,34 @@ if(empty($_GET['pg'])){
     switch ($page) {
         case "category":
             // page catégorie
-            echo "<h2>Nous serons sur la page d'une catégorie</h2>";
-            var_dump($_GET);
+            if(isset($_GET['slug'])) {
+                // récupération d'une catégorie via son slug
+                $category = $categoryManager->getCategoryBySlug($_GET['slug']);
+                //var_dump($category);
+                if($category!==null) {
+                    // récupération
+                    // TO DO $articles = $articleManager->getArticlesByCategoryId($category->getCategoryId());
+                    $articles = [];
+                    // appel de la vue
+                    echo  $twig->render("category.html.twig",[
+                        // racine URL pour les liens
+                        'racineURL' => RACINE_URL,
+                        // mes catégories pour le menu
+                        'categories' => $categoriesMenu,
+                        // la catégorie
+                        'category' => $category,
+                        // mes articles
+                        'articles' => $articles,
+                        // la session pour savoir si l'utilisateur est connecté
+                        'session' => $_SESSION ?? [],
+                    ]);
+                }else{
+                    // TO DO (404)
+                    echo "<h2>Catégorie introuvable</h2>";
+                }
+            }else{
+                echo "<h2>Slug manquant</h2>";
+            }
             break;
         case "article":
             // page article

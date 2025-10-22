@@ -126,4 +126,11 @@ class ArticleManager implements ManagerInterface
             return null;
         }
     }
+    // récupération des articles par l'id de la catégorie
+    public function getArticlesByCategoryId(int $id): array
+    {
+        $sql = "SELECT 
+    a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,150) 
+    ";
+    }
 }

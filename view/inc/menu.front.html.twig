@@ -19,36 +19,34 @@
                         <i class="bi bi-tags me-1"></i>Catégories :
                     </a>
                 </li>
-                {# A la place du foreach #}
-                {#<?php
-                foreach ($categoriesMenu as $category) :
-                ?>
-                #}
+                {# A la place du foreach, tant qu'on a des catégories #}
                 {% for item in categories %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ racineURL }}category/{{ item.getCategorySlug() }}">
                             {{ item.getCategoryTitle() }}
                         </a>
                     </li>
+                    {# si pas de catégories #}
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Pas encore de catégorie
+                            </a>
+                        </li>
                 {% endfor %}
-                {# A la place du foreach #}
-                {#
-                <?php
-    endforeach;
-    ?>#}
                 {# Si on est connecté #}
                 {% if session.user_id %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ racineURL }}disconnection/">
-                        <i class="bi bi-gear me-1"></i>Déconnexion
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ racineURL }}disconnection/">
+                            <i class="bi bi-gear me-1"></i>Déconnexion
+                        </a>
+                    </li>
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ racineURL }}connection/">
-                        <i class="bi bi-gear me-1"></i>Connexion
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ racineURL }}connection/">
+                            <i class="bi bi-gear me-1"></i>Connexion
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
