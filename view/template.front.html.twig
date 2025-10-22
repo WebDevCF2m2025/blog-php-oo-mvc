@@ -34,16 +34,7 @@
     {% endblock %}
     <!-- Footer -->
     {% block footer %}
-        <footer class="bg-light text-center text-lg-start mt-5">
-            <div class="text-center p-3 border-top">
-                &copy; {{ "now"|date("Y") }} Mon Blog. Tous droits réservés.
-            </div>
-        </footer>
-        {# si on a une session active #}
-        {% if session %}
-            {# debug de la session #}
-            {{ dump(session) }}
-        {% endif %}
+        {{ include('inc/footer.html.twig') }}
     {% endblock %}
 {% endblock %}
 {% block javascript %}<!-- Bootstrap 5 JS -->
