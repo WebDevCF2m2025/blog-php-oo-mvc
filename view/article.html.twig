@@ -76,7 +76,7 @@
 
                     <hr class="my-4">
 
-                    {# Formulaire pour ajouter un commentaire #}
+                    {# Si on est connecté, Formulaire pour ajouter un commentaire #}
                     {% if session.user_id %}
                         <h5>Laissez votre commentaire</h5>
                         <form method="POST" action="{{ racineURL }}comment/{{ article.getArticleId() }}/{{ article.getArticleSlug() }}">

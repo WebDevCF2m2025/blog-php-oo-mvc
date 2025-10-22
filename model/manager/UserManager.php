@@ -72,10 +72,28 @@ class UserManager implements ManagerInterface, UserInterface
 
     }
 
+    // destruction de la session
     public function disconnect(): bool
     {
-        // TODO: Implement disconnect() method.
+        // destruction des variables de session
+        session_unset();
+        // destruction du cookie
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        // succès de la déconnexion
+        if(session_destroy()){
+            return true;
+        }else{
+            return false;
+        }
+
     }
+
 
     function generateHiddenId(): string
     {

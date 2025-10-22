@@ -33,6 +33,8 @@ if(empty($_GET['pg'])){
         'categories' => $categoriesMenu,
         // mes articles pour la homepage
         'articles'=> $articles,
+        // la session pour savoir si l'utilisateur est connecté
+        'session' => $_SESSION ?? [],
     ]);
     /*
     // exemple d'utilisation basique de twig
@@ -86,6 +88,12 @@ if(empty($_GET['pg'])){
             break;
         // on veut se connecter
         case "connection":
+            // si on est déjà connecté
+            if(isset($_SESSION['user_id'])){
+                // redirection vers la page d'accueil
+                header("Location: ".RACINE_URL);
+                exit();
+            }
             // message d'erreur
             $error = "";
             // si on tente de se connecter
@@ -116,6 +124,15 @@ if(empty($_GET['pg'])){
                     // message d'erreur
                     'error' => $error,
                 ]);
+            break;
+        // on veut se déconnecter
+        case "disconnection":
+            $disconnection = $userManager->disconnect();
+            if($disconnection===true){
+                // redirection vers la page d'accueil
+                header("Location: ".RACINE_URL);
+                exit();
+            }
             break;
 
         default:
