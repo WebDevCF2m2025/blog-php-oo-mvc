@@ -39,6 +39,11 @@
                 &copy; {{ "now"|date("Y") }} Mon Blog. Tous droits réservés.
             </div>
         </footer>
+        {# si on a une session active #}
+        {% if session %}
+            {# debug de la session #}
+            {{ dump(session) }}
+        {% endif %}
     {% endblock %}
 {% endblock %}
 {% block javascript %}<!-- Bootstrap 5 JS -->

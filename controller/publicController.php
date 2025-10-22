@@ -1,5 +1,6 @@
 <?php
 
+// chemin vers les dépendances
 use model\manager\CategoryManager;
 use model\manager\ArticleManager;
 use model\manager\UserManager;
@@ -36,12 +37,7 @@ if(empty($_GET['pg'])){
         // la session pour savoir si l'utilisateur est connecté
         'session' => $_SESSION ?? [],
     ]);
-    /*
-    // exemple d'utilisation basique de twig
-    echo $twig->render('index.html.twig', [
-        'name' => 'Michaël',
-        'articles'=> $articles]);
-    */
+
 }else{
     // autres pages
     $page = $_GET['pg'];
@@ -59,11 +55,9 @@ if(empty($_GET['pg'])){
                 if($article!==null) {
                     // Récupération des commentaires pour cet article
                     $comments = $commentManager->getAllCommentsByArticleId($article->getArticleId());
+                    // Ajout des commentaires à l'article
                     $article->setComments($comments);
-
                     // appel de la vue
-                    // require_once RACINE_PATH."/view/article.html.php";
-
                     echo $twig->render('article.html.twig',
                         [
                             // racine URL pour les liens
