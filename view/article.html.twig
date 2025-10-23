@@ -3,6 +3,14 @@
 {% block title %}{{ parent() }} | Article : {{ article.getArticleTitle }} {% endblock %}
 {% block hero_title %}Article : <small>{{ article.getArticleTitle }}</small>{% endblock %}
 {% block hero_text %}{% endblock %}
+{% block main %}
+    {% if comment == 'success' %}
+        <div class="alert alert-success">Votre commentaire a bien été ajouté ! Il devra être validé par un administrateur.</div>
+    {% endif %}
+    {% if comment == 'error' %}
+        <div class="alert alert-danger">Votre commentaire n'est pas au format requis</div>
+    {% endif %}
+{% endblock %}
 {% block aside %}
     <div>
         <div class="row justify-content-center">
@@ -65,7 +73,7 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="fw-bold">{{ comment.user.getUserLogin() }}</div>
-                                    <p class="text-muted small mb-1">{{ comment.getCommentCreate()|date('d/m/Y à H:i') }}</p>
+                                    <p class="text-muted small mb-1">Le {{ comment.getCommentCreate()|date('d/m/Y à H:i') }}</p>
                                     <p class="mb-0">{{ comment.getCommentText()|raw|nl2br }}</p>
                                 </div>
                             </div>

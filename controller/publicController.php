@@ -95,6 +95,7 @@ if(empty($_GET['pg'])){
                     $comments = $commentManager->getAllCommentsByArticleId($article->getArticleId());
                     // Ajout des commentaires à l'article
                     $article->setComments($comments);
+
                     // appel de la vue
                     echo $twig->render('article.html.twig',
                         [
@@ -106,6 +107,8 @@ if(empty($_GET['pg'])){
                             'article' => $article,
                             // la session pour savoir si l'utilisateur est connecté
                             'session' => $_SESSION ?? [],
+                            // on a posté un commentaire
+                            'comment' => $_GET['comment'] ?? null,
                         ]);
                 }else{
                     // message d'erreur
