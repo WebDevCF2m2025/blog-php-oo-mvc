@@ -66,7 +66,7 @@
                                 <div class="ms-3">
                                     <div class="fw-bold">{{ comment.user.getUserLogin() }}</div>
                                     <p class="text-muted small mb-1">{{ comment.getCommentCreate()|date('d/m/Y à H:i') }}</p>
-                                    <p class="mb-0">{{ comment.getCommentText()|nl2br }}</p>
+                                    <p class="mb-0">{{ comment.getCommentText()|raw|nl2br }}</p>
                                 </div>
                             </div>
                         {% endfor %}
@@ -79,10 +79,12 @@
                     {# Si on est connecté, Formulaire pour ajouter un commentaire #}
                     {% if session.user_id %}
                         <h5>Laissez votre commentaire</h5>
-                        <form method="POST" action="{{ racineURL }}comment/{{ article.getArticleId() }}/{{ article.getArticleSlug() }}">
+                        <form method="POST" action="{{ racineURL }}comment/{{ article.getArticleSlug }}/{{ article.getArticleId }}/">
                             <div class="mb-3">
                                 <label for="comment" class="form-label visually-hidden">Votre commentaire</label>
-                                <textarea class="form-control" id="comment" name="comment" rows="4" placeholder="Écrivez votre commentaire ici..." required></textarea>
+                                <textarea class="form-control" id="comment" name="comment_text" rows="4" placeholder="Écrivez votre commentaire ici..." required></textarea>
+                                <input type="hidden" name="comment_article_id" value="{{ article.getArticleId }}">
+                                <input type="hidden" name="comment_user_id" value="{{ session.user_id }}">
                             </div>
                             <button type="submit" class="btn btn-primary">Envoyer le commentaire</button>
                         </form>

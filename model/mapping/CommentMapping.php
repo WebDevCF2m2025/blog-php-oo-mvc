@@ -31,7 +31,7 @@ class CommentMapping extends AbstractMapping
 
     public function getCommentText(): ?string
     {
-        return $this->comment_text;
+        return html_entity_decode($this->comment_text);
     }
 
     public function setCommentText(?string $comment_text): void

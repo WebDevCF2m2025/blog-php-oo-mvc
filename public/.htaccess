@@ -5,7 +5,11 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-# Règle pour nos différentes variables get :
+# Règle pour les URLs avec 3 variables get :
+# ?pg=article&slug=slug-de-l-article pourra s'écire /article/slug-de-l-article
+RewriteRule ^([\w-]+)/([\w-]+)/([\w-]+)/?$ index.php?pg=$1&slug=$2&id=$3 [QSA,L]
+
+# Règle pour les URLs avec deux variables get :
 # ?pg=article&slug=slug-de-l-article pourra s'écire /article/slug-de-l-article
 RewriteRule ^([\w-]+)/([\w-]+)/?$ index.php?pg=$1&slug=$2 [QSA,L]
 

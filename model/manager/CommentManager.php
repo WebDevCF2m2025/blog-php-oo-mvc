@@ -63,14 +63,25 @@ class CommentManager implements ManagerInterface
     // insertion d'un commentaire
     public function insertComment(CommentMapping $comment): bool
     {
+        // si l'utilisateur n'est pas connecté
+        if(!isset($_SESSION['user_id']))
+            throw new Exception("Vous devez être connecté pour poster un commentaire");
+
+        $visibility = 0; // par défaut en attente de validation
+
+        // si l'utilisateur est Admin ou Editor, on peut publier directement
+        if(isset($_SESSION['role_name']) && in_array($_SESSION['role_name'],['Admin','Editor']))
+            $visibility = 1; // publié directement
+
         // préparation de la requête
-        $sql = "INSERT INTO `comment` (comment_text, comment_article_id, comment_user_id, comment_create, comment_visibility) 
-                VALUES (:text, :article_id, :user_id, NOW(), 0)"; // visibilité à 0 (en attente) TO DO
+        $sql = "INSERT INTO `comment` (comment_text, comment_article_id, comment_user_id, comment_visibility) 
+                VALUES (:text, :article_id, :user_id, :visibility)";
         $prepare = $this->db->prepare($sql);
         try {
-            $prepare->bindValue(':text', $comment->getCommentText(), PDO::PARAM_STR);
+            $prepare->bindValue(':text', $comment->getCommentText());
             $prepare->bindValue(':article_id', $comment->getCommentArticleId(), PDO::PARAM_INT);
             $prepare->bindValue(':user_id', $comment->getCommentUserId(), PDO::PARAM_INT);
+            $prepare->bindValue(':visibility', $visibility, PDO::PARAM_INT);
             $prepare->execute();
             return true;
         } catch (Exception $e) {

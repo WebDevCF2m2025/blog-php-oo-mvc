@@ -90,6 +90,7 @@ if(empty($_GET['pg'])){
                 // récupération d'un article via son slug
                 $article = $articleManager->getArticleBySlug($_GET['slug']);
                 if($article!==null) {
+
                     // Récupération des commentaires pour cet article
                     $comments = $commentManager->getAllCommentsByArticleId($article->getArticleId());
                     // Ajout des commentaires à l'article
@@ -120,6 +121,41 @@ if(empty($_GET['pg'])){
             }
 
             break;
+
+        // on veut envoyer un commentaire
+        case "comment":
+
+            // on vérifie que l'utilisateur est connecté
+            if(isset($_SESSION['user_id'])
+            // et qu'il n'usurpe pas l'identité d'un autre utilisateur
+            && $_SESSION['user_id']==$_POST['comment_user_id']
+            // et qu'il poste un commentaire sur l'article affiché
+            && $_POST['comment_article_id']==$_GET['id']
+            ) {
+                // tout est ok, on peut continuer
+
+                // on hydrate le commentaire
+                $newComment = new CommentMapping($_POST);
+                // insertion du commentaire en base de données
+                $insertComment = $commentManager->insertComment($newComment);
+
+                if ($insertComment === true) {
+                    // redirection vers la page de l'article avec un message de succès
+                    header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success");
+                    exit();
+                } else {
+                    // redirection vers la page de l'article avec un message d'erreur
+                    header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=error");
+                    exit();
+                }
+            }else{
+                // redirection vers la page de l'article avec un message d'erreur
+                header("Location: ".RACINE_URL."article/".$_GET['slug']."/?comment=error");
+                exit();
+            }
+            
+            break;
+
         case "user":
             // page utilisateur
             echo "<h2>Nous serons sur la page d'un auteur</h2>";
