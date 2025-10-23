@@ -1,0 +1,17 @@
+{% extends 'template.back.html.twig' %}
+{% block title %}{{ parent() }} | Tableau de bord {% endblock %}
+{% block hero_title %}Tableau de bord{% endblock %}
+{% block hero_text %}Bienvenue dans votre espace administrateur{% endblock %}
+{% block main %}
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-primary h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-journal-text display-4 mb-3"></i>
+                    <h5 class="card-title">Articles</h5>
+                    <p class="card-text fs-4">{{ articleCount }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
