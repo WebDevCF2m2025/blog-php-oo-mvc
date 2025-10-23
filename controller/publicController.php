@@ -1,4 +1,5 @@
 <?php
+// path : controller/publicController.php
 
 // chemin vers les dépendances
 use model\manager\CategoryManager;
@@ -38,11 +39,15 @@ if(empty($_GET['pg'])){
     ]);
 // autres pages
 }else{
-    // autres pages
-    $page = $_GET['pg'];
+    // récupération de la page demandée via $_GET['pg']
+    $page = trim($_GET['pg']);
+
+    // gestion des pages
     switch ($page) {
+
+        // pages de type catégorie
         case "category":
-            // page catégorie
+
             if(isset($_GET['slug'])) {
                 // récupération d'une catégorie via son slug
                 $category = $categoryManager->getCategoryBySlug($_GET['slug']);
@@ -65,15 +70,23 @@ if(empty($_GET['pg'])){
                         'session' => $_SESSION ?? [],
                     ]);
                 }else{
-                    // TO DO (404)
-                    echo "<h2>Catégorie introuvable</h2>";
+
+                    // message d'erreur
+                    $error = "Catégorie introuvable";
+                    // appel de la vue 404
+                    echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
                 }
             }else{
-                echo "<h2>Slug manquant</h2>";
+                // message d'erreur
+                $error = "Slug manquant";
+                // appel de la vue 404
+                echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
             }
             break;
+
+        // page de type article
         case "article":
-            // page article
+
             if(isset($_GET['slug'])) {
                 // récupération d'un article via son slug
                 $article = $articleManager->getArticleBySlug($_GET['slug']);
@@ -95,11 +108,16 @@ if(empty($_GET['pg'])){
                             'session' => $_SESSION ?? [],
                         ]);
                 }else{
-                    // TO DO (404)
-                    echo "<h2>Article introuvable</h2>";
+                    // message d'erreur
+                    $error= "Article introuvable";
+                    // appel de la vue 404
+                    echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
                 }
             }else{
-                echo "<h2>Slug manquant</h2>";
+                // message d'erreur
+                $error ="Slug manquant";
+                // appel de la vue 404
+                echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
             }
 
             break;
@@ -129,9 +147,11 @@ if(empty($_GET['pg'])){
                         header("Location: ".RACINE_URL);
                         exit();
                     }else{
+                        // sinon création d'un message d'erreur
                         $error = "Login et ou mot de passe non valide !";
                     }
                 }catch (Exception $e){
+                    // sinon on récupère le message d'erreur
                     $error = $e->getMessage();
                 }
             }
@@ -160,8 +180,9 @@ if(empty($_GET['pg'])){
 
         default:
             // page 404
-            echo "<h1>404 - Page non trouvée</h1>";
-            var_dump($_GET);
+            $error = "Page non trouvée";
+            // appel de la vue 404
+            echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
             break;
     }
 

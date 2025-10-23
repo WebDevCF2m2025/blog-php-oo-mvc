@@ -12,7 +12,7 @@ use Twig\Environment;
 // pour le debug de Twig
 use Twig\Extension\DebugExtension;
 
-// inclusion du fichier de configuration si config existe
+// inclusion du fichier de configuration si config.php existe
 if(file_exists("../config.php")){
     require_once "../config.php";
 // sinon on prend la configuration originale

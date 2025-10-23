@@ -1,0 +1,22 @@
+{% extends "template.front.html.twig" %}
+
+{% block title %}{{ parent() }} | Erreur 404 : {{ error }} {% endblock %}
+{% block hero_title %}Erreur 404 : <small>{{ error }}</small>{% endblock %}
+{% block hero_text %}Erreur 404 : <small>{{ error }}</small>{% endblock %}
+{% block aside %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 text-center">
+            <div class="card shadow-sm">
+                <div class="card-body py-5">
+                    <h3 class="text-muted mb-3">Oups ! La page que vous recherchez est introuvable.</h3>
+                    <p class="card-text text-muted">
+                        Il semble que la page que vous essayez d'accéder n'existe pas ou ait été déplacée.
+                    </p>
+                    <a href="{{ racineURL }}" class="btn btn-primary mt-3">
+                        Retour à la page d'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -20,5 +20,5 @@ try {
 // Pour le moment, nous chargeons toujours le contrôleur public
 require_once RACINE_PATH . "/controller/publicController.php";
 
-
+// Bonne pratique
 $connectPDO = null;
