@@ -53,9 +53,8 @@ if(empty($_GET['pg'])){
                 $category = $categoryManager->getCategoryBySlug($_GET['slug']);
                 //var_dump($category);
                 if($category!==null) {
-                    // récupération
-                    // TO DO $articles = $articleManager->getArticlesByCategoryId($category->getCategoryId());
-                    $articles = [];
+                    // récupération des articles d'une catégorie
+                    $articles = $articleManager->getArticlesByCategoryId($category->getCategoryId());
                     // appel de la vue
                     echo  $twig->render("category.html.twig",[
                         // racine URL pour les liens
