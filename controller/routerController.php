@@ -17,8 +17,13 @@ try {
     die($e->getMessage());
 }
 
-// Pour le moment, nous chargeons toujours le contrôleur public
-require_once RACINE_PATH . "/controller/publicController.php";
-
+// si nous sommes connecté en tant qu'administrateur et que nous avons cliqué sur la partie administration
+if (isset($_SESSION['role_name']) && $_SESSION['role_name'] === 'Admin' && isset($_GET['pg']) && $_GET['pg'] === 'admin') {
+    // on charge le contrôleur admin
+    require_once RACINE_PATH . "/controller/adminController.php";
+}else{
+    // Pour le moment, nous chargeons toujours le contrôleur public
+    require_once RACINE_PATH . "/controller/publicController.php";
+}
 // Bonne pratique
 $connectPDO = null;
