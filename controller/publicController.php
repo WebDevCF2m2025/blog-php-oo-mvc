@@ -139,18 +139,25 @@ if(empty($_GET['pg'])){
 
                 // on hydrate le commentaire
                 $newComment = new CommentMapping($_POST);
-                // insertion du commentaire en base de données
-                $insertComment = $commentManager->insertComment($newComment);
+                try {
+                    // insertion du commentaire en base de données
+                    $insertComment = $commentManager->insertComment($newComment);
 
-                if ($insertComment === true) {
-                    // redirection vers la page de l'article avec un message de succès
-                    header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success");
-                    exit();
-                } else {
+                    if ($insertComment === true) {
+                        // redirection vers la page de l'article avec un message de succès
+                        header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success");
+                        exit();
+                    } else {
+                        // redirection vers la page de l'article avec un message d'erreur
+                        header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=error");
+                        exit();
+                    }
+                }catch (Exception $e){
                     // redirection vers la page de l'article avec un message d'erreur
-                    header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=error");
+                    header("Location: ".RACINE_URL."article/".$_GET['slug']."/?comment=error");
                     exit();
                 }
+
             }else{
                 // redirection vers la page de l'article avec un message d'erreur
                 header("Location: ".RACINE_URL."article/".$_GET['slug']."/?comment=error");

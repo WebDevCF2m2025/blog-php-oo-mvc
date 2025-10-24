@@ -30,7 +30,7 @@ class ArticleManager implements ManagerInterface
     a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,150) AS article_text,  a.`article_date_publish`,a.`article_user_id`,
     
                        u.`user_id`, u.`user_login`, u.`user_real_name`,
-                       (SELECT COUNT(comment.`comment_id`) FROM `comment` WHERE comment.`comment_article_id` = a.`article_id`) AS comment_count,
+                       (SELECT COUNT(comment.`comment_id`) FROM `comment` WHERE comment.`comment_article_id` = a.`article_id` AND comment.`comment_visibility` = 1) AS comment_count,
     
                        GROUP_CONCAT(c.`category_slug` SEPARATOR '|||') AS category_slug, 
                        GROUP_CONCAT(c.`category_title` SEPARATOR '|||') AS category_title
@@ -136,7 +136,7 @@ class ArticleManager implements ManagerInterface
                 -- user
                 u.`user_id`, u.`user_login`, u.`user_real_name`,
                 -- comment
-                (SELECT COUNT(comment.`comment_id`) FROM `comment` WHERE comment.`comment_article_id` = a.`article_id`
+                (SELECT COUNT(comment.`comment_id`) FROM `comment` WHERE comment.`comment_article_id` = a.`article_id` AND comment.`comment_visibility` = 1
                 ) AS comment_count,
                 -- category
                 (SELECT GROUP_CONCAT(c.`category_slug`, '|||', c.`category_title` SEPARATOR '----')  FROM category c 
