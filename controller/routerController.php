@@ -22,7 +22,7 @@ if (isset($_SESSION['role_name']) && $_SESSION['role_name'] === 'Admin' && isset
     // on charge le contrôleur admin
     require_once RACINE_PATH . "/controller/adminController.php";
 }else{
-    // Accès public
+    // on charge le contrôleur public
     require_once RACINE_PATH . "/controller/publicController.php";
 }
 // Bonne pratique
