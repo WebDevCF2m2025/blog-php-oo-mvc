@@ -145,8 +145,13 @@ if(empty($_GET['pg'])){
 
                     if ($insertComment === true) {
                         // redirection vers la page de l'article avec un message de succès
-                        header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success");
-                        exit();
+                        if(isset($_SESSION['role_name']) && ($_SESSION['role_name'] === 'Admin' || $_SESSION['role_name'] === 'Editor')){
+                            header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success_auto_approved");
+                            exit();
+                        }else{
+                            header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success_pending_approval");
+                            exit();
+                        }
                     } else {
                         // redirection vers la page de l'article avec un message d'erreur
                         header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=error");

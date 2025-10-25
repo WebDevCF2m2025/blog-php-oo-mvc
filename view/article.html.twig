@@ -4,7 +4,10 @@
 {% block hero_title %}Article : <small>{{ article.getArticleTitle }}</small>{% endblock %}
 {% block hero_text %}{% endblock %}
 {% block main %}
-    {% if comment == 'success' %}
+    {% if comment == 'success_auto_approved' %}
+        <div class="alert alert-success">Votre commentaire a bien été ajouté !</div>
+    {% endif %}
+    {% if comment == 'success_pending_approval' %}
         <div class="alert alert-success">Votre commentaire a bien été ajouté ! Il devra être validé par un administrateur.</div>
     {% endif %}
     {% if comment == 'error' %}
