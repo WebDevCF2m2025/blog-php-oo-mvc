@@ -168,8 +168,37 @@ if(empty($_GET['pg'])){
 
         case "user":
             // page utilisateur
-            echo "<h2>Nous serons sur la page d'un auteur</h2>";
-            var_dump($_GET);
+            if(isset($_GET['slug'])) {
+                // récupération d'un utilisateur via son slug
+                $user = $userManager->getUserByLogin($_GET['slug']);
+                if($user!==null) {
+                    // récupération des articles d'un utilisateur
+                    $articles = $articleManager->getArticlesByUserId($user->getUserId());
+                    // appel de la vue
+                    echo  $twig->render("user.html.twig",[
+                        // racine URL pour les liens
+                        'racineURL' => RACINE_URL,
+                        // mes catégories pour le menu
+                        'categories' => $categoriesMenu,
+                        // l'utilisateur
+                        'user' => $user,
+                        // ses articles
+                        'articles' => $articles,
+                        // la session pour savoir si l'utilisateur est connecté
+                        'session' => $_SESSION ?? [],
+                    ]);
+                }else{
+                    // message d'erreur
+                    $error = "Utilisateur introuvable";
+                    // appel de la vue 404
+                    echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
+                }
+            }else{
+                // message d'erreur
+                $error = "Slug manquant";
+                // appel de la vue 404
+                echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
+            }
             break;
         // on veut se connecter
         case "connection":
