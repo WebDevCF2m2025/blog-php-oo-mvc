@@ -97,7 +97,7 @@
                             <button type="submit" class="btn btn-primary">Envoyer le commentaire</button>
                         </form>
                     {% else %}
-                        <p class="text-center">Vous devez être <a href="{{ racineURL }}connection">connecté</a> pour laisser un commentaire.</p>
+                        <p class="text-center">Vous devez être <a href="{{ racineURL }}connection/?redirect={{ article.getArticleSlug }}">connecté</a> pour laisser un commentaire.</p>
                     {% endif %}
                 </div>
             </div>

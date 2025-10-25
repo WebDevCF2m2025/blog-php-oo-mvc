@@ -226,6 +226,7 @@ class ArticleManager implements ManagerInterface
             $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
             $listArticles = [];
+            // tant que l'on a des articles
             foreach ($articles as $article) {
                 // création d'un article
                 $art = new ArticleMapping($article);

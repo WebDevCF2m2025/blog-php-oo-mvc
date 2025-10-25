@@ -166,8 +166,9 @@ if(empty($_GET['pg'])){
             
             break;
 
+        // page utilisateur
         case "user":
-            // page utilisateur
+
             if(isset($_GET['slug'])) {
                 // récupération d'un utilisateur via son slug
                 $user = $userManager->getUserByLogin($_GET['slug']);
@@ -217,6 +218,12 @@ if(empty($_GET['pg'])){
                     $connection = $userManager->connect($_POST);
                     // si on est connecté
                     if($connection===true){
+                        // si on a une redirection
+                        if(isset($_POST['redirect'])){
+                            // redirection vers la page de l'article
+                            header("Location: ".RACINE_URL."article/".$_POST['redirect']);
+                            exit();
+                        }
                         // redirection vers la page d'accueil
                         header("Location: ".RACINE_URL);
                         exit();
@@ -239,6 +246,8 @@ if(empty($_GET['pg'])){
                     'categories' => $categoriesMenu,
                     // message d'erreur
                     'error' => $error,
+                    // redirection
+                    'redirect' => $_GET['redirect'] ?? null,
                 ]);
             break;
 
