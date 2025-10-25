@@ -90,13 +90,40 @@ class UserManager implements ManagerInterface, UserInterface
             return true;
         }else{
             return false;
+                }
+        
+            }
+        
+            // récupération d'un utilisateur par son login
+            public function getUserByLogin(string $login): ?UserMapping
+            {
+                // préparation de la requête
+                $sql = "SELECT u.* , r.`role_name`
+                        FROM `user` u
+                            INNER JOIN `role` r
+                            ON u.`user_role_id` = r.`role_id`
+                        WHERE u.`user_login` = ? AND u.`user_activate` = 1 ; ";
+                $stmt = $this->connect->prepare($sql);
+                try {
+                    $stmt->execute([$login]);
+                    if ($stmt->rowCount() != 1)
+                        return null;
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $stmt->closeCursor();
+                    // on efface les champs non désirés
+                    unset($result['user_pwd'], $result['user_activate'], $result['user_hidden_id']);
+                    // on retourne un objet UserMapping
+                    return new UserMapping($result);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                    return null;
+                }
+            }
+        
+        
+            function generateHiddenId(): string
+            {
+                // TODO: Implement generateHiddenId() method.
+            }
         }
-
-    }
-
-
-    function generateHiddenId(): string
-    {
-        // TODO: Implement generateHiddenId() method.
-    }
-}
+        

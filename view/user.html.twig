@@ -1,0 +1,108 @@
+{% extends "template.front.html.twig" %}
+
+{% block title %}{{ parent() }} | Auteur : {{ user.getUserRealName | default(user.getUserLogin) }} {% endblock %}
+{% block hero_title %}Auteur : <small>{{ user.getUserRealName | default(user.getUserLogin) }}</small>{% endblock %}
+{% block hero_text %}Retrouvez ici tous les articles rédigés par {{ user.getUserRealName | default(user.getUserLogin) }}.{% endblock %}
+{% block main %}
+    {# on compte le nombre d'article #}
+    {% set nbArticles = articles|length %}
+    {# si on en a au mois 1 #}
+    {% if nbArticles !=0 %}
+        {# si plus qu'1 #}
+        {% if nbArticles > 1 %}
+            {# création d'une variable pour le pluriel #}
+            {% set pluriel = 's' %}
+        {% else %}
+            {% set pluriel = '' %}
+        {% endif %}
+        <!-- Section des articles avec compteur -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h2 class="fw-bold text-primary mb-0">
+                        <i class="bi bi-collection me-2"></i>Ses Articles
+                    </h2>
+                    <span class="badge bg-primary rounded-pill fs-6">
+                        {{ nbArticles }} Article{{ pluriel }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block aside %}
+    <!-- Grid des articles -->
+    <div class="row g-4">
+        {# tant que l'on a des articles #}
+        {% for article in articles %}
+
+            <div class="col-lg-6">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-header bg-white border-0 pb-0">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                {# on compte le nombre de catégories de cet article #}
+                                {% set categories = article.getCategories() %}
+                                {# si on en a on affiche #}
+                                {% for category in categories %}
+
+                                    <span class="badge bg-primary  "><a class="text-white"
+                                                                        href="{{ racineURL }}category/{{ category.getCategorySlug()|e }}">
+                                {{ category.getCategoryTitle()|e }}</a></span>
+                                    {# si on en a pas on ne fait rien (else inutile) #}
+                                {% endfor %}
+                            </div>
+                            <small class="text-muted">
+                                {# version française de la date #}
+                                <i class="bi bi-calendar me-1"></i>Le {{ article.getArticleDatePublish()|date('d/m/Y à H\\hi') }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title text-primary fw-bold mb-3">
+                            <a href="{{ racineURL }}article/{{ article.getArticleSlug }}">{{ article.getArticleTitle|raw }}</a>
+                        </h4>
+                        <p class="card-text text-muted">
+                            {{ article.getArticleText|e }}<span class="text-primary"> <a
+                                        href="{{ racineURL }}article/{{ article.getArticleSlug }}">Lire la suite</a></span>
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-light text-primary">
+                                <i class="bi bi-eye me-1"></i>
+                                Publié par <a class="text-primary"
+                                              href="{{ racineURL }}user/{{ article.getUser.getUserLogin }}">
+                                {# si le userRealName n'est pas null #}
+                                    {% if article.getUser.getUserRealName %} {{ article.getUser.getUserRealName }}
+                                        {# sinon affichage du login #}
+                                    {% else %} {{ article.getUser.getUserLogin }}
+                                    {% endif %}</a></span>
+                            <small class="text-muted">
+                                <i class="bi bi-clock me-1"></i>Nombre de commentaires :
+                                {{ article.getComments.comment_count }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# si nous n'avons pas d'articles #}
+        {% else %}
+            <!-- État vide avec style moderne -->
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body py-5">
+                            <i class="bi bi-file-text display-1 text-muted mb-4"></i>
+                            <h3 class="text-muted mb-3">Cet auteur n'a pas encore publié d'article.</h3>
+                            <p class="text-muted">Revenez plus tard !</p>
+                            <a href="{{ racineURL }}" class="btn btn-primary mt-3">
+                                Retour à l'accueil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

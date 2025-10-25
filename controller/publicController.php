@@ -145,8 +145,13 @@ if(empty($_GET['pg'])){
 
                     if ($insertComment === true) {
                         // redirection vers la page de l'article avec un message de succès
-                        header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success");
-                        exit();
+                        if(isset($_SESSION['role_name']) && ($_SESSION['role_name'] === 'Admin' || $_SESSION['role_name'] === 'Editor')){
+                            header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success_auto_approved");
+                            exit();
+                        }else{
+                            header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=success_pending_approval");
+                            exit();
+                        }
                     } else {
                         // redirection vers la page de l'article avec un message d'erreur
                         header("Location: " . RACINE_URL . "article/" . $_GET['slug'] . "/?comment=error");
@@ -166,10 +171,40 @@ if(empty($_GET['pg'])){
             
             break;
 
+        // page utilisateur
         case "user":
-            // page utilisateur
-            echo "<h2>Nous serons sur la page d'un auteur</h2>";
-            var_dump($_GET);
+
+            if(isset($_GET['slug'])) {
+                // récupération d'un utilisateur via son slug
+                $user = $userManager->getUserByLogin($_GET['slug']);
+                if($user!==null) {
+                    // récupération des articles d'un utilisateur
+                    $articles = $articleManager->getArticlesByUserId($user->getUserId());
+                    // appel de la vue
+                    echo  $twig->render("user.html.twig",[
+                        // racine URL pour les liens
+                        'racineURL' => RACINE_URL,
+                        // mes catégories pour le menu
+                        'categories' => $categoriesMenu,
+                        // l'utilisateur
+                        'user' => $user,
+                        // ses articles
+                        'articles' => $articles,
+                        // la session pour savoir si l'utilisateur est connecté
+                        'session' => $_SESSION ?? [],
+                    ]);
+                }else{
+                    // message d'erreur
+                    $error = "Utilisateur introuvable";
+                    // appel de la vue 404
+                    echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
+                }
+            }else{
+                // message d'erreur
+                $error = "Slug manquant";
+                // appel de la vue 404
+                echo $twig->render("error.404.html.twig",['racineURL' => RACINE_URL,'categories' => $categoriesMenu,'session' => $_SESSION ?? [],'error' => $error]);
+            }
             break;
         // on veut se connecter
         case "connection":
@@ -188,6 +223,12 @@ if(empty($_GET['pg'])){
                     $connection = $userManager->connect($_POST);
                     // si on est connecté
                     if($connection===true){
+                        // si on a une redirection
+                        if(isset($_POST['redirect'])){
+                            // redirection vers la page de l'article
+                            header("Location: ".RACINE_URL."article/".$_POST['redirect']);
+                            exit();
+                        }
                         // redirection vers la page d'accueil
                         header("Location: ".RACINE_URL);
                         exit();
@@ -210,6 +251,8 @@ if(empty($_GET['pg'])){
                     'categories' => $categoriesMenu,
                     // message d'erreur
                     'error' => $error,
+                    // redirection
+                    'redirect' => $_GET['redirect'] ?? null,
                 ]);
             break;
 

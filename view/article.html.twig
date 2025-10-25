@@ -4,7 +4,10 @@
 {% block hero_title %}Article : <small>{{ article.getArticleTitle }}</small>{% endblock %}
 {% block hero_text %}{% endblock %}
 {% block main %}
-    {% if comment == 'success' %}
+    {% if comment == 'success_auto_approved' %}
+        <div class="alert alert-success">Votre commentaire a bien été ajouté !</div>
+    {% endif %}
+    {% if comment == 'success_pending_approval' %}
         <div class="alert alert-success">Votre commentaire a bien été ajouté ! Il devra être validé par un administrateur.</div>
     {% endif %}
     {% if comment == 'error' %}
@@ -97,7 +100,7 @@
                             <button type="submit" class="btn btn-primary">Envoyer le commentaire</button>
                         </form>
                     {% else %}
-                        <p class="text-center">Vous devez être <a href="{{ racineURL }}connection">connecté</a> pour laisser un commentaire.</p>
+                        <p class="text-center">Vous devez être <a href="{{ racineURL }}connection/?redirect={{ article.getArticleSlug }}">connecté</a> pour laisser un commentaire.</p>
                     {% endif %}
                 </div>
             </div>
