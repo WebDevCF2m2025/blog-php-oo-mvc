@@ -19,13 +19,15 @@
                         <i class="bi bi-speedometer2 me-1"></i>Accueil de l'administration
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link" href="#">- {% if session.user_real_name %}{{ session.user_real_name }}{% else %}{{ session.user_login }}{% endif %}
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ racineURL }}disconnection/">
                         <i class="bi bi-gear me-1"></i>Déconnexion
                     </a>
                 </li>
-
             </ul>
         </div>
     </div>
