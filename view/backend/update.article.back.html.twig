@@ -1,0 +1,68 @@
+{% extends 'template.back.html.twig' %}
+
+{% block title %}{{ parent() }} | Modification d'un article{% endblock %}
+
+{% block hero_title %}Modifier un article{% endblock %}
+{% block hero_text %}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success">Actions Rapides</h5>
+                    <a href="{{ racineURL }}admin/" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à l'administration
+                    </a>
+                    <a href="{{ racineURL }}admin/article/" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à la liste d'articles
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Modification de l'article : {{ article.articleTitle }}</h5>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        <div class="mb-3">
+                            <label for="article_title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="article_title" name="article_title" value="{{ article.articleTitle }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="article_text" class="form-label">Texte</label>
+                            <textarea class="form-control" id="article_text" name="article_text" rows="10" required>{{ article.articleText }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category_category_id" class="form-label">Catégories</label>
+                            <select class="form-select" id="category_category_id" name="category_category_id[]" multiple>
+                                {% for category in categories %}
+                                    <option value="{{ category.categoryId }}" {% if category.categoryId in article.categories %}selected{% endif %}>{{ category.categoryTitle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="article_user_id" class="form-label">Auteur</label>
+                            <select class="form-select" id="article_user_id" name="article_user_id" required>
+                                {% for user in users %}
+                                    <option value="{{ user.userId }}" {% if article.user.userId == user.userId %}selected{% endif %}>{{ user.userLogin }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="article_visibility" class="form-label">Visibilité</label>
+                            <select class="form-select" id="article_visibility" name="article_visibility" required>
+                                <option value="1" {% if article.articleVisibility == 1 %}selected{% endif %}>Privé</option>
+                                <option value="2" {% if article.articleVisibility == 2 %}selected{% endif %}>Public</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Modifier l'article</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

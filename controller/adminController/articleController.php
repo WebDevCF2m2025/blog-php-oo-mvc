@@ -100,6 +100,20 @@ switch($action){
             echo $twig->render("backend/error.404.back.html.twig", ['racineURL' => RACINE_URL, 'session' => $_SESSION ?? [], 'error' => $error]);
         }
         break;
+        // modification d'un article
+    case 'update':
+        // si on a soumis le formulaire
+        if(!empty($_POST)) {
+
+        }else{
+            // on récupère l'id de l'article
+            $id = $_GET['ident'];
+            // on récupère l'article
+            $article = $articleManager->getArticleById($id);
+            var_dump($article);
+
+        }
+
 
     // par défaut, on affiche la liste des articles
     default:
