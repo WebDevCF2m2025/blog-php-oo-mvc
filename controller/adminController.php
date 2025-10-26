@@ -15,33 +15,45 @@ $userManager = new UserManager($connectPDO);
 $commentManager = new CommentManager($connectPDO);
 
 
-// récupération de la page demandée via $_GET['pg']
-$page = trim($_GET['pg']);
+// page d'accueil de l'administration
+if (empty($_GET['slug'])) {
 
-// gestion des pages
-switch ($page) {
     // admin homepage
-    case "admin":
-        echo $twig->render('backend/homepage.back.html.twig', [
-            // racine URL pour les liens
-            'racineURL' => RACINE_URL,
-            // la session pour savoir si l'utilisateur est connecté
-            'session' => $_SESSION ?? [],
-        ]);
-        break;
-    // Pages des listes
-    # liste des articles
-    case "articles":
-        break;
-    # liste des catégories
-    case "categories":
-        break;
-    # liste des commentaires
-    case "commentaires":
-        break;
-    # liste des utilisateurs
-    case "users":
-        break;
-    default:
+    echo $twig->render('backend/homepage.back.html.twig', [
+        // racine URL pour les liens
+        'racineURL' => RACINE_URL,
+        // la session pour savoir si l'utilisateur est connecté
+        'session' => $_SESSION ?? [],
+    ]);
 
+// autre page de l'administration
+} else {
+
+    // récupération de la page demandée via $_GET['slug']
+    $page = trim($_GET['slug']);
+    switch ($page) {
+
+        # gestion des articles
+        case "article":
+            require_once RACINE_PATH . "/controller/adminController/articleController.php";
+            break;
+        # gestion des catégories
+        case "categorie":
+            require_once RACINE_PATH . "/controller/adminController/categoryController.php";
+            break;
+        # gestion des commentaires
+        case "commentaire":
+            require_once RACINE_PATH . "/controller/adminController/commentController.php";
+            break;
+        # gestion des utilisateurs
+        case "user":
+            require_once RACINE_PATH . "/controller/adminController/userController.php";
+            break;
+        default:
+            // page 404
+            $error = "Page non trouvée";
+            // appel de la vue 404
+            echo $twig->render("error.404.html.twig", ['racineURL' => RACINE_URL, 'categories' => $categoriesMenu, 'session' => $_SESSION ?? [], 'error' => $error]);
+
+    }
 }
