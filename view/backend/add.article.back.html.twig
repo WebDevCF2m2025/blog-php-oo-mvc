@@ -7,7 +7,21 @@
 
 {% block main %}
     <div class="row">
+        <div class="col-lg-12">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success">Actions Rapides</h5>
+                    <a href="{{ racineURL }}admin/" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à l'administration
+                    </a>
+                    <a href="{{ racineURL }}admin/article/" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à la liste d'articles
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="col-md-12">
+
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Nouvel article</h5>
