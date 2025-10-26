@@ -119,7 +119,27 @@ class UserManager implements ManagerInterface, UserInterface
                     return null;
                 }
             }
-        
+
+            // récupération de tous les utilisateurs
+            public function getAllUsers(): array
+            {
+            $sql = "SELECT u.user_id, u.user_login, u.user_real_name FROM `user` u WHERE u.`user_activate` = 1 ORDER BY u.`user_login`";
+            $stmt = $this->connect->prepare($sql);
+            try {
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $stmt->closeCursor();
+                $listUsers = [];
+                foreach ($result as $user) {
+                    $listUsers[] = new UserMapping($user);
+                    }
+                return $listUsers;
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                    return [];
+                }
+            }
+
         
             function generateHiddenId(): string
             {

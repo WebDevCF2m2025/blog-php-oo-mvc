@@ -63,4 +63,30 @@ class CategoryManager implements ManagerInterface
             return null;
         }
     }
+
+    // Récupération de toutes les catégories
+    public function getAllCategories(): array
+    {
+        $sql = "SELECT c.`category_id`, c.`category_title`, c.`category_slug`
+                FROM `category` c
+                ORDER BY c.`category_title` ASC";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute();
+            $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            // transformation des catégories en objets CategoryMapping
+            $listCategories = [];
+            foreach($categories as $category){
+                $cat = new CategoryMapping($category);
+                $listCategories[] = $cat;
+            }
+            return $listCategories;
+        }catch (Exception $e){
+            echo "Erreur lors de la récupération des catégories pour le menu public : " . $e->getMessage();
+            return [];
+        }
+
+    }
+
 }
