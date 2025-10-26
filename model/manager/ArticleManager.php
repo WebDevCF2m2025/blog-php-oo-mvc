@@ -87,7 +87,7 @@ class ArticleManager implements ManagerInterface
                     -- articles
                     a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,100) AS article_text,  a.`article_date_publish`, a.`article_date_create`,a.`article_visibility`,
                     -- user
-                        u.`user_login`,
+                        u.`user_id`, u.`user_login`, u.`user_real_name`, 
                     -- comment
                        (SELECT COUNT(co.`comment_id`) FROM `comment` co WHERE co.`comment_article_id` = a.`article_id`) AS comment_count,
                     -- category
@@ -181,6 +181,7 @@ class ArticleManager implements ManagerInterface
 
         $sql = "SELECT a.*,
                        u.`user_id`, u.`user_login`, u.`user_real_name`,
+                       GROUP_CONCAT(c.`category_id` SEPARATOR '|||') AS category_id, 
                        GROUP_CONCAT(c.`category_slug` SEPARATOR '|||') AS category_slug, 
                        GROUP_CONCAT(c.`category_title` SEPARATOR '|||') AS category_title
                 FROM `article` a 
@@ -204,10 +205,12 @@ class ArticleManager implements ManagerInterface
             // gestion des catégories de l'article
             $cats = [];
             if (isset($article['category_slug'])) {
+                $arrId = explode("|||", $article['category_id']);
                 $arrSlug = explode("|||", $article['category_slug']);
                 $arrTitle = explode("|||", $article['category_title']);
                 for ($i = 0; $i < count($arrSlug); $i++) {
                     $c = new CategoryMapping([]);
+                    $c->setCategoryId($arrId[$i]);
                     $c->setCategorySlug($arrSlug[$i]);
                     $c->setCategoryTitle($arrTitle[$i]);
                     $cats[] = $c;

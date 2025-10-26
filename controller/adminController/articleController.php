@@ -139,6 +139,14 @@ switch($action){
             // on récupère tous les utilisateurs
             $users = $userManager->getAllUsers();
 
+            // on crée un tableau avec les id des catégories de l'article
+            $articleCategories = [];
+            if($article->getCategories()){
+                foreach($article->getCategories() as $category){
+                    $articleCategories[] = $category->getCategoryId();
+                }
+            }
+
             // on récupère la vue
             echo $twig->render("backend/update.article.back.html.twig", [
                 'racineURL' => RACINE_URL,
@@ -146,6 +154,7 @@ switch($action){
                 'categories' => $categories,
                 'users' => $users,
                 'session' => $_SESSION ?? [],
+                'articleCategories' => $articleCategories,
                 ]);
 
         }
