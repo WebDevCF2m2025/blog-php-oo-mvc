@@ -76,6 +76,31 @@ switch($action){
             'session' => $_SESSION,
         ]);
         break;
+    // suppresion d'un article
+    case 'delete':
+        if(isset($_GET['ident'])) {
+            // on récupère l'id de l'article
+            $id = $_GET['ident'];
+            // on supprime l'article
+            $delete = $articleManager->deleteArticle($id);
+            if($delete){
+                // on redirige vers la liste des articles
+                header("Location: " . RACINE_URL . "admin/article/?comment=success");
+                exit();
+            }else{
+                // message d'erreur
+                $error = "Erreur lors de la suppression de l'article";
+                echo $twig->render("backend/error.404.back.html.twig", ['racineURL' => RACINE_URL, 'session' => $_SESSION ?? [], 'error' => $error]);
+            }
+
+        }else{
+            // message d'erreur
+            $error = "Erreur lors de la suppression de l'article";
+
+            echo $twig->render("backend/error.404.back.html.twig", ['racineURL' => RACINE_URL, 'session' => $_SESSION ?? [], 'error' => $error]);
+        }
+        break;
+
     // par défaut, on affiche la liste des articles
     default:
         // TODO : créer la vue et la logique pour lister les articles

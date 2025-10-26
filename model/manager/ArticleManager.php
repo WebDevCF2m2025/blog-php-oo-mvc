@@ -95,6 +95,7 @@ class ArticleManager implements ManagerInterface
 
                 FROM `article` a 
                 INNER JOIN `user` u ON a.`article_user_id`=u.`user_id`
+                -- WHERE a.article_id =500
                 ORDER BY a.`article_date_publish` DESC;";
         $stmt = $this->db->prepare($sql);
         try {
@@ -358,4 +359,21 @@ class ArticleManager implements ManagerInterface
             return false;
         }
     }
+    // supprimer l'article via son id
+    public function deleteArticle(int $id): bool
+    {
+        $sql = "UPDATE `article` SET `article_visibility` = 3 WHERE `article_id` =  ?";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute([$id]);
+            return true;
+            } catch (Exception $e) {
+            echo "Erreur lors de la suppression de l'article : " . $e->getMessage();
+            return false;
+        }
+
+
+    }
+
+
 }

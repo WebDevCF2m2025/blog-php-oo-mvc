@@ -142,7 +142,7 @@
                                     <button type="button"
                                             class="btn btn-outline-danger"
                                             title="Supprimer"
-                                            onclick="confirmerSuppression('57a0-mon-titre-d-article', 4)">
+                                            onclick="confirmerSuppression('{{ article.getArticleSlug }}', {{ article.getArticleId }})">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -205,7 +205,7 @@
 <script>
     function confirmerSuppression(slug, id) {
     document.getElementById('articleName').textContent = slug;
-    document.getElementById('confirmDelete').href = '?p=delete&id=' + id;
+    document.getElementById('confirmDelete').href = '{{ racineURL }}admin/article/delete/' + id;
     new bootstrap.Modal(document.getElementById('deleteModal')).show();
 }
 </script>
