@@ -422,4 +422,55 @@ class ArticleManager implements ManagerInterface
     }
 
 
+    // mise à jour d'un article
+    public function updateArticle(ArticleMapping $article): bool
+    {
+        // on va utiliser une transaction pour modifier l'article et ses catégories
+        $this->db->beginTransaction();
+        try {
+            // on crée le slug de l'article
+            $slug = $this->slugify($article->getArticleTitle());
+
+            // on prépare la requête de modification de l'article
+            $sql = "UPDATE `article` SET `article_title`=?, `article_slug`=?, `article_text`=?, `article_user_id`=?, `article_visibility`=?, `article_date_publish`=? WHERE `article_id`=?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                html_entity_decode($article->getArticleTitle()),
+                $slug,
+                $article->getArticleText(),
+                $article->getArticleUserId(),
+                $article->getArticleVisibility(),
+                $article->getArticleDatePublish(),
+                $article->getArticleId()
+            ]);
+
+            // on supprime les anciennes catégories de l'article
+            $sql = "DELETE FROM `article_has_category` WHERE `article_article_id`=?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$article->getArticleId()]);
+
+            // on prépare la requête d'insertion des catégories
+            $sql = "INSERT INTO `article_has_category`(`article_article_id`, `category_category_id`) VALUES (?,?)";
+            $stmt = $this->db->prepare($sql);
+            // on boucle sur les catégories de l'article
+            if($article->getCategories()){
+                foreach ($article->getCategories() as $category) {
+                    $stmt->execute([
+                        $article->getArticleId(),
+                        $category->getCategoryId()
+                    ]);
+                }
+            }
+
+            // on valide la transaction
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            // on annule la transaction
+            $this->db->rollBack();
+            echo "Erreur lors de la modification de l'article : " . $e->getMessage();
+            return false;
+        }
+    }
+
 }

@@ -37,6 +37,11 @@
                             <textarea class="form-control" id="article_text" name="article_text" rows="10" required>{{ article.articleText }}</textarea>
                         </div>
                         <div class="mb-3">
+                            <label for="article_date_publish" class="form-label">Date de publication</label>
+                            <input type="datetime-local" class="form-control" id="article_date_publish" name="article_date_publish" value="{{ article.articleDatePublish|date('Y-m-d\\TH:i') }}" required>
+                        </div>
+                        <input type="hidden" name="article_id" value="{{ article.articleId }}">
+                        <div class="mb-3">
                             <label for="category_category_id" class="form-label">Catégories</label>
                             <select class="form-select" id="category_category_id" name="category_category_id[]" multiple>
                                 {% for category in categories %}
