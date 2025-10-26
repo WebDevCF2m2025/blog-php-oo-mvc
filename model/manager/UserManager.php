@@ -4,7 +4,7 @@ namespace model\manager;
 
 use PDO;
 use Exception;
-use model\Mapping\UserMapping;
+use model\mapping\UserMapping;
 use model\ManagerInterface;
 use model\UserInterface;
 
