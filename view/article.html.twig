@@ -1,7 +1,7 @@
 {% extends "template.front.html.twig" %}
 
-{% block title %}{{ parent() }} | Article : {{ article.getArticleTitle }} {% endblock %}
-{% block hero_title %}Article : <small>{{ article.getArticleTitle }}</small>{% endblock %}
+{% block title %}{{ parent() }} | Article : {{ article.getArticleTitle|raw }} {% endblock %}
+{% block hero_title %}Article : <small>{{ article.getArticleTitle|raw }}</small>{% endblock %}
 {% block hero_text %}{% endblock %}
 {% block main %}
     {% if comment == 'success_auto_approved' %}
@@ -20,7 +20,7 @@
             <div class="col-md-12 text-left">
                 <div class="card shadow-sm">
                     <div class="card-body py-5">
-                        <h3 class="text-muted mb-3">{{ article.getArticleTitle }}</h3>
+                        <h3 class="text-muted mb-3">{{ article.getArticleTitle|raw }}</h3>
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
 
