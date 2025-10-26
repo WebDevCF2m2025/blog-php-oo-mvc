@@ -6,24 +6,35 @@
 {% block hero_text %}{% endblock %}
 
 {% block main %}
-<!-- Header Section -->
-<div class="bg-success text-white py-4">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1 class="h2 mb-0">
-                    <i class="bi bi-kanban me-2"></i>Gestion des Articles
-                </h1>
-                <p class="mb-0 opacity-75">Administrez et gérez tous vos articles</p>
-            </div>
-            <div class="col-md-4 text-md-end">
-                <a href="{{ racineURL }}admin/article/add" class="btn btn-light btn-lg">
-                    <i class="bi bi-plus-circle me-2"></i>Créer un Article
-                </a>
+    {# on compte le nombre d'article #}
+    {% set nbArticles = articles|length %}
+    {# si on en a au mois 1 #}
+    {% if nbArticles !=0 %}
+    {# si plus qu'1 #}
+    {% if nbArticles > 1 %}
+        {# création d'une variable pour le pluriel #}
+        {% set pluriel = 's' %}
+    {% else %}
+        {% set pluriel = '' %}
+    {% endif %}
+    <!-- Header Section -->
+    <div class="bg-success text-white py-4">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="h2 mb-0">
+                        <i class="bi bi-kanban me-2"></i>Gestion des Articles
+                    </h1>
+                    <p class="mb-0 opacity-75">Administrez et gérez tous vos articles</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="{{ racineURL }}admin/article/add" class="btn btn-light btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>Créer un Article
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 <div class="container-fluid py-4">
     <!-- Stats et actions -->
@@ -36,7 +47,7 @@
                             <i class="bi bi-journal-text fs-4"></i>
                         </div>
                         <div>
-                            <h4 class="mb-1">4 Articles</h4>
+                            <h4 class="mb-1">{{ nbArticles }} Article{{ pluriel }}</h4>
                             <p class="text-muted mb-0">Total des articles publiés</p>
                         </div>
                     </div>
@@ -57,7 +68,9 @@
             </div>
         </div>
     </div>
-
+    {% endif %}
+    {% endblock %}
+    {% block aside %}
     <!-- Tableau des articles -->
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-white border-0 py-3">
@@ -80,174 +93,81 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                            <span class="badge bg-light text-success">#4</span>
-                        </td>
-                        <td>
-                            <div class="fw-semibold text-success">
-                                Mon titre d&#039;article                                    </div>
-                        </td>
-                        <td>
-                            <code class="text-muted">57a0-mon-titre-d-article</code>
-                        </td>
-                        <td>
-                            <div class="text-truncate" style="max-width: 200px;">
-                                ezre rt erzta&#039;&quot;t  t(rezre rt erzta&#039;&quot;t  t(rezre rt erzta&#039...
-                            </div>
-                        </td>
-                        <td>
-                            <small class="text-muted">
-                                <i class="bi bi-calendar me-1"></i>
-                                2025-10-06 18:37:06                                    </small>
-                        </td>
-                        <td>
-                                                                            <span class="badge bg-success">
+                    {# tant que l'on a des articles #}
+                    {% for article in articles %}
+                        <tr>
+                            <td>
+                                <span class="badge bg-light text-success">{{ article.getArticleId }}</span>
+                            </td>
+                            <td>
+                                <div class="fw-semibold text-success">
+                                    {{ article.getArticleTitle|raw }}
+                                </div>
+                            </td>
+                            <td>
+                                <code class="text-muted">{{ article.getArticleSlug }}</code>
+                            </td>
+                            <td>
+                                <div class="text-truncate" style="max-width: 200px;">
+                                    {{ article.getArticleText|raw }}
+                                </div>
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar me-1"></i>
+                                    {{ article.getArticleDateCreate|date('d/m/H \à H\\hi') }}</small>
+                            </td>
+                            <td>
+                                {%  if article.getArticleVisibility < 2 %}
+                                        <span class="badge bg-warning">
+                                            <i class="bi bi-eye me-1"></i>brouillon
+                                        </span>
+                                {% elseif article.getArticleVisibility == 2 %}
+                                    <span class="badge bg-success">
                                             <i class="bi bi-eye me-1"></i>Publié
                                         </span>
-                        </td>
-                        <td class="text-center">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <a href="?p=update&id=4"
-                                   class="btn btn-outline-primary"
-                                   title="Modifier">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button type="button"
-                                        class="btn btn-outline-danger"
-                                        title="Supprimer"
-                                        onclick="confirmerSuppression('57a0-mon-titre-d-article', 4)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="badge bg-light text-primary">#3</span>
-                        </td>
-                        <td>
-                            <div class="fw-semibold text-primary">
-                                MongoDB                                    </div>
-                        </td>
-                        <td>
-                            <code class="text-muted">f7a0-mongodb</code>
-                        </td>
-                        <td>
-                            <div class="text-truncate" style="max-width: 200px;">
-                                MongoDB (de l&#039;anglais humongous qui peut être traduit par « énorme ») est un système d...
-                            </div>
-                        </td>
-                        <td>
-                            <small class="text-muted">
-                                <i class="bi bi-calendar me-1"></i>
-                                2025-09-09 08:36:54                                    </small>
-                        </td>
-                        <td>
-                                                                            <span class="badge bg-warning">
-                                            <i class="bi bi-eye-slash me-1"></i>Brouillon
+                                {% else %}
+                                    <span class="badge bg-danger">
+                                            <i class="bi bi-eye me-1"></i>Banni
                                         </span>
-                        </td>
-                        <td class="text-center">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <a href="?p=update&id=3"
-                                   class="btn btn-outline-primary"
-                                   title="Modifier">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button type="button"
-                                        class="btn btn-outline-danger"
-                                        title="Supprimer"
-                                        onclick="confirmerSuppression('f7a0-mongodb', 3)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="badge bg-light text-primary">#2</span>
-                        </td>
-                        <td>
-                            <div class="fw-semibold text-primary">
-                                Structured Query Language                                    </div>
-                        </td>
-                        <td>
-                            <code class="text-muted">77dc-structured-query-language</code>
-                        </td>
-                        <td>
-                            <div class="text-truncate" style="max-width: 200px;">
-                                SQL (sigle de Structured Query Language, en français langage de requête structurée) est un langag...
-                            </div>
-                        </td>
-                        <td>
-                            <small class="text-muted">
-                                <i class="bi bi-calendar me-1"></i>
-                                2025-08-20 11:10:02                                    </small>
-                        </td>
-                        <td>
-                                                                            <span class="badge bg-success">
-                                            <i class="bi bi-eye me-1"></i>Publié
-                                        </span>
-                        </td>
-                        <td class="text-center">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <a href="?p=update&id=2"
-                                   class="btn btn-outline-primary"
-                                   title="Modifier">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button type="button"
-                                        class="btn btn-outline-danger"
-                                        title="Supprimer"
-                                        onclick="confirmerSuppression('77dc-structured-query-language', 2)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="badge bg-light text-primary">#1</span>
-                        </td>
-                        <td>
-                            <div class="fw-semibold text-primary">
-                                Propriétés ACID                                    </div>
-                        </td>
-                        <td>
-                            <code class="text-muted">c688-proprietes-acid</code>
-                        </td>
-                        <td>
-                            <div class="text-truncate" style="max-width: 200px;">
-                                En informatique, les propriétés ACID (atomicité, cohérence, isolation et durabilité) sont un en...
-                            </div>
-                        </td>
-                        <td>
-                            <small class="text-muted">
-                                <i class="bi bi-calendar me-1"></i>
-                                2025-08-14 17:08:27                                    </small>
-                        </td>
-                        <td>
-                                                                            <span class="badge bg-success">
-                                            <i class="bi bi-eye me-1"></i>Publié
-                                        </span>
-                        </td>
-                        <td class="text-center">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <a href="?p=update&id=1"
-                                   class="btn btn-outline-primary"
-                                   title="Modifier">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button type="button"
-                                        class="btn btn-outline-danger"
-                                        title="Supprimer"
-                                        onclick="confirmerSuppression('c688-proprietes-acid', 1)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="?p=update&id=4"
+                                       class="btn btn-outline-primary"
+                                       title="Modifier">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button type="button"
+                                            class="btn btn-outline-danger"
+                                            title="Supprimer"
+                                            onclick="confirmerSuppression('57a0-mon-titre-d-article', 4)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">
+                                <!-- État vide avec style moderne -->
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8 text-center">
+                                        <div class="card border-0 shadow-sm">
+                                            <div class="card-body py-5">
+                                                <i class="bi bi-file-text display-1 text-muted mb-4"></i>
+                                                <h3 class="text-muted mb-3">Aucun article disponible</h3>
+                                                <p class="text-muted">Les premiers articles seront bientôt publiés !</p>
+                                                <a href="{{ racineURL }}" class="btn btn-primary mt-3">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -256,28 +176,37 @@
 </div>
 
 <!-- Modal de confirmation de suppression -->
-<div class="modal fade" id="deleteModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-danger">
-                    <i class="bi bi-exclamation-triangle me-2"></i>Confirmer la suppression
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>Êtes-vous sûr de vouloir supprimer l'article <strong id="articleName"></strong> ?</p>
-                <p class="text-muted small">Cette action est irréversible.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="bi bi-x-circle me-1"></i>Annuler
-                </button>
-                <a href="#" id="confirmDelete" class="btn btn-danger">
-                    <i class="bi bi-trash me-1"></i>Supprimer
-                </a>
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Confirmer la suppression
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer l'article <strong id="articleName"></strong> ?</p>
+                    <p class="text-muted small">Cette action est irréversible.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i>Annuler
+                    </button>
+                    <a href="#" id="confirmDelete" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i>Supprimer
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}
+{% block javascript %}{{ parent() }}
+<script>
+    function confirmerSuppression(slug, id) {
+    document.getElementById('articleName').textContent = slug;
+    document.getElementById('confirmDelete').href = '?p=delete&id=' + id;
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+</script>
 {% endblock %}

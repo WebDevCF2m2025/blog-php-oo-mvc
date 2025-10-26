@@ -85,7 +85,7 @@ class ArticleManager implements ManagerInterface
     {
         $sql = "SELECT 
                     -- articles
-                    a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,150) AS article_text,  a.`article_date_publish`, a.`article_date_create`,a.`article_visibility`,
+                    a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,100) AS article_text,  a.`article_date_publish`, a.`article_date_create`,a.`article_visibility`,
                     -- user
                         u.`user_login`,
                     -- comment
@@ -105,9 +105,9 @@ class ArticleManager implements ManagerInterface
             foreach ($articles as $article) {
                 // création d'un article
                 $art = new ArticleMapping($article);
-                // on coupe le texte de l'article à 140 caractères sans couper les mots
+                // on coupe le texte de l'article à 120 caractères sans couper les mots
                 // et on ajoute des points de suspension
-                $art->setArticleText($this->cutTheText($art->getArticleText(), 140));
+                $art->setArticleText($this->cutTheText($art->getArticleText(), 80));
                 // utilisateur
                 $user = new UserMapping($article);
                 $art->setUser($user);
