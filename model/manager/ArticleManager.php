@@ -260,4 +260,55 @@ class ArticleManager implements ManagerInterface
             return [];
         }
     }
+
+    // insertion d'un article
+    public function createArticle(ArticleMapping $article): bool
+    {
+        // on va utiliser une transaction pour insérer l'article et ses catégories
+        $this->db->beginTransaction();
+        try {
+            // on crée le slug de l'article
+            $slug = $this->slugify($article->getArticleTitle());
+
+            // on vérifie si l'article est publié ou non
+            if ($article->getArticleVisibility() == 2) {
+                // on ajoute la date du jour
+                $article->setArticleDatePublish(date("Y-m-d H:i:s"));
+            }
+
+
+            // on prépare la requête d'insertion de l'article
+            $sql = "INSERT INTO `article`(`article_title`, `article_slug`, `article_text`, `article_user_id`, `article_visibility`,`article_date_publish`) VALUES (?,?,?,?,?,?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                $article->getArticleTitle(),
+                $slug,
+                $article->getArticleText(),
+                $article->getArticleUserId(),
+                $article->getArticleVisibility(),
+                $article->getArticleDatePublish()
+            ]);
+            // on récupère l'id de l'article inséré
+            $articleId = $this->db->lastInsertId();
+
+            // on prépare la requête d'insertion des catégories
+            $sql = "INSERT INTO `article_has_category`(`article_article_id`, `category_category_id`) VALUES (?,?)";
+            $stmt = $this->db->prepare($sql);
+            // on boucle sur les catégories de l'article
+            foreach ($article->getCategories() as $category) {
+                $stmt->execute([
+                    $articleId,
+                    $category->getCategoryId()
+                ]);
+            }
+            // on valide la transaction
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            // on annule la transaction
+            $this->db->rollBack();
+            echo "Erreur lors de l'insertion de l'article : " . $e->getMessage();
+            return false;
+        }
+    }
 }
