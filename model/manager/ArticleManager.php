@@ -87,7 +87,7 @@ class ArticleManager implements ManagerInterface
                     -- articles
                     a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,100) AS article_text,  a.`article_date_publish`, a.`article_date_create`,a.`article_visibility`,
                     -- user
-                        u.`user_login`,
+                        u.`user_id`, u.`user_login`, u.`user_real_name`, 
                     -- comment
                        (SELECT COUNT(co.`comment_id`) FROM `comment` co WHERE co.`comment_article_id` = a.`article_id`) AS comment_count,
                     -- category
@@ -181,6 +181,7 @@ class ArticleManager implements ManagerInterface
 
         $sql = "SELECT a.*,
                        u.`user_id`, u.`user_login`, u.`user_real_name`,
+                       GROUP_CONCAT(c.`category_id` SEPARATOR '|||') AS category_id, 
                        GROUP_CONCAT(c.`category_slug` SEPARATOR '|||') AS category_slug, 
                        GROUP_CONCAT(c.`category_title` SEPARATOR '|||') AS category_title
                 FROM `article` a 
@@ -204,10 +205,12 @@ class ArticleManager implements ManagerInterface
             // gestion des catégories de l'article
             $cats = [];
             if (isset($article['category_slug'])) {
+                $arrId = explode("|||", $article['category_id']);
                 $arrSlug = explode("|||", $article['category_slug']);
                 $arrTitle = explode("|||", $article['category_title']);
                 for ($i = 0; $i < count($arrSlug); $i++) {
                     $c = new CategoryMapping([]);
+                    $c->setCategoryId($arrId[$i]);
                     $c->setCategorySlug($arrSlug[$i]);
                     $c->setCategoryTitle($arrTitle[$i]);
                     $cats[] = $c;
@@ -421,5 +424,56 @@ class ArticleManager implements ManagerInterface
 
     }
 
+
+    // mise à jour d'un article
+    public function updateArticle(ArticleMapping $article): bool
+    {
+        // on va utiliser une transaction pour modifier l'article et ses catégories
+        $this->db->beginTransaction();
+        try {
+            // on crée le slug de l'article
+            $slug = $this->slugify($article->getArticleTitle());
+
+            // on prépare la requête de modification de l'article
+            $sql = "UPDATE `article` SET `article_title`=?, `article_slug`=?, `article_text`=?, `article_user_id`=?, `article_visibility`=?, `article_date_publish`=? WHERE `article_id`=?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                html_entity_decode($article->getArticleTitle()),
+                $slug,
+                $article->getArticleText(),
+                $article->getArticleUserId(),
+                $article->getArticleVisibility(),
+                $article->getArticleDatePublish(),
+                $article->getArticleId()
+            ]);
+
+            // on supprime les anciennes catégories de l'article
+            $sql = "DELETE FROM `article_has_category` WHERE `article_article_id`=?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$article->getArticleId()]);
+
+            // on prépare la requête d'insertion des catégories
+            $sql = "INSERT INTO `article_has_category`(`article_article_id`, `category_category_id`) VALUES (?,?)";
+            $stmt = $this->db->prepare($sql);
+            // on boucle sur les catégories de l'article
+            if($article->getCategories()){
+                foreach ($article->getCategories() as $category) {
+                    $stmt->execute([
+                        $article->getArticleId(),
+                        $category->getCategoryId()
+                    ]);
+                }
+            }
+
+            // on valide la transaction
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            // on annule la transaction
+            $this->db->rollBack();
+            echo "Erreur lors de la modification de l'article : " . $e->getMessage();
+            return false;
+        }
+    }
 
 }

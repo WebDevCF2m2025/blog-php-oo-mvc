@@ -104,7 +104,31 @@ switch($action){
     case 'update':
         // si on a soumis le formulaire
         if(!empty($_POST)) {
-
+            try{
+                // on crée un nouvel article
+                $article = new ArticleMapping($_POST);
+                // si il existe au moins 1 catégorie
+                if(isset($_POST['category_category_id'])) {
+                    // on récupère les catégories
+                    $categories = [];
+                    foreach ($_POST['category_category_id'] as $id) {
+                        $categories[] = new CategoryMapping(['category_id' => $id]);
+                    }
+                    // on ajoute les catégories à l'article
+                    $article->setCategories($categories);
+                }
+                // on met à jour l'article
+                $update = $articleManager->updateArticle($article);
+                if($update){
+                    // on redirige vers la liste des articles
+                    header("Location: " . RACINE_URL . "admin/article/?comment=success");
+                    exit();
+                }else{
+                    $error = "Erreur lors de la modification de l'article";
+                }
+            }catch(Exception $e){
+                $error = $e->getMessage();
+            }
         }else{
             // on récupère l'id de l'article
             $id = $_GET['ident'];
@@ -115,6 +139,14 @@ switch($action){
             // on récupère tous les utilisateurs
             $users = $userManager->getAllUsers();
 
+            // on crée un tableau avec les id des catégories de l'article
+            $articleCategories = [];
+            if($article->getCategories()){
+                foreach($article->getCategories() as $category){
+                    $articleCategories[] = $category->getCategoryId();
+                }
+            }
+
             // on récupère la vue
             echo $twig->render("backend/update.article.back.html.twig", [
                 'racineURL' => RACINE_URL,
@@ -122,6 +154,7 @@ switch($action){
                 'categories' => $categories,
                 'users' => $users,
                 'session' => $_SESSION ?? [],
+                'articleCategories' => $articleCategories,
                 ]);
 
         }

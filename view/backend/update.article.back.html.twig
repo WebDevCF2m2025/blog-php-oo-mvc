@@ -1,9 +1,9 @@
 {% extends 'template.back.html.twig' %}
 
-{% block title %}{{ parent() }} | Modification d'un article{% endblock %}
+{% block title %}{{ parent() }} | Modification d'un article : {{ article.articleTitle|raw }}{% endblock %}
 
 {% block hero_title %}Modifier un article{% endblock %}
-{% block hero_text %}{% endblock %}
+{% block hero_text %}{{ article.articleTitle|raw }}{% endblock %}
 
 {% block main %}
     <div class="row">
@@ -24,23 +24,29 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Modification de l'article : {{ article.articleTitle }}</h5>
+                    <h5 class="card-title mb-0">Modification de l'article : {{ article.articleTitle|raw }}</h5>
                 </div>
                 <div class="card-body">
                     <form action="" method="post">
                         <div class="mb-3">
                             <label for="article_title" class="form-label">Titre</label>
-                            <input type="text" class="form-control" id="article_title" name="article_title" value="{{ article.articleTitle }}" required>
+                            <input type="text" class="form-control" id="article_title" name="article_title" value="{{ article.articleTitle|raw }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="article_text" class="form-label">Texte</label>
                             <textarea class="form-control" id="article_text" name="article_text" rows="10" required>{{ article.articleText }}</textarea>
                         </div>
                         <div class="mb-3">
+                            <label for="article_date_publish" class="form-label">Date de publication</label>
+                            <input type="datetime-local" class="form-control" id="article_date_publish" name="article_date_publish" value="{{ article.articleDatePublish|date('Y-m-d\\TH:i') }}" required>
+                        </div>
+                        <input type="hidden" name="article_id" value="{{ article.articleId }}">
+
+                        <div class="mb-3">
                             <label for="category_category_id" class="form-label">Catégories</label>
                             <select class="form-select" id="category_category_id" name="category_category_id[]" multiple>
                                 {% for category in categories %}
-                                    <option value="{{ category.categoryId }}" {% if category.categoryId in article.categories %}selected{% endif %}>{{ category.categoryTitle }}</option>
+                                    <option value="{{ category.categoryId }}" {% if category.categoryId in articleCategories %}selected{% endif %}>{{ category.categoryTitle }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -65,4 +71,5 @@
             </div>
         </div>
     </div>
+
 {% endblock %}
