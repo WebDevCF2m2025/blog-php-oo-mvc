@@ -30,10 +30,10 @@ Pour l'exemple, chargez la base de donnée `my_blog` depuis le fichier `data/my_
 
 Pour se connecter chaque mot de passe est haché. Pour l'exercice, il suffit d'utiliser le login comme login ET mdp :
 
-- admin : admin   | Rôle : Admin
-- editor : editor | Rôle : Editor
-- user1 : user1   | Rôle : User
-- user2 : user2   | Rôle : User
+- admin : admin   | Rôle : Admin (en cours de création)
+- editor : editor | Rôle : Editor (pas encore fait, peut juste poster des commentaires immédiatement affichés)
+- user1 : user1   | Rôle : User (peuvent poster des commentaires non affichés)
+- user2 : user2   | Rôle : User (peuvent poster des commentaires non affichés)
 
 
 ### Installation
