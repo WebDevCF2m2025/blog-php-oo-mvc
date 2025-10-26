@@ -100,6 +100,33 @@ switch($action){
             echo $twig->render("backend/error.404.back.html.twig", ['racineURL' => RACINE_URL, 'session' => $_SESSION ?? [], 'error' => $error]);
         }
         break;
+        // modification d'un article
+    case 'update':
+        // si on a soumis le formulaire
+        if(!empty($_POST)) {
+
+        }else{
+            // on récupère l'id de l'article
+            $id = $_GET['ident'];
+            // on récupère l'article
+            $article = $articleManager->getArticleById($id);
+            // on récupère toutes les catégories
+            $categories = $categoryManager->getAllCategories();
+            // on récupère tous les utilisateurs
+            $users = $userManager->getAllUsers();
+
+            // on récupère la vue
+            echo $twig->render("backend/update.article.back.html.twig", [
+                'racineURL' => RACINE_URL,
+                'article' => $article,
+                'categories' => $categories,
+                'users' => $users,
+                'session' => $_SESSION ?? [],
+                ]);
+
+        }
+        break;
+
 
     // par défaut, on affiche la liste des articles
     default:
