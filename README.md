@@ -26,12 +26,14 @@ const RACINE_URL = "http://chemin.vers.dossier.public";
 
 Pour l'exemple, chargez la base de donnée `my_blog` depuis le fichier `data/my_blog_v2.sql`
 
+### Permission des utilisateurs
+
 Pour se connecter chaque mot de passe est haché. Pour l'exercice, il suffit d'utiliser le login comme login ET mdp :
 
-- admin : admin
-- editor : editor
-- user1 : user1
-- user2 : user2
+- admin : admin   | Rôle : Admin
+- editor : editor | Rôle : Editor
+- user1 : user1   | Rôle : User
+- user2 : user2   | Rôle : User
 
 
 ### Installation
