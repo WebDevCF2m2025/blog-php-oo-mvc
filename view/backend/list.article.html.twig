@@ -88,6 +88,9 @@
                         <th class="fw-semibold">Slug</th>
                         <th class="fw-semibold">Contenu</th>
                         <th class="fw-semibold">Date</th>
+                        <th class="fw-semibold">User</th>
+                        <th class="fw-semibold">Nb categories</th>
+                        <th class="fw-semibold">Ne comments</th>
                         <th class="fw-semibold">Statut</th>
                         <th class="fw-semibold text-center">Actions</th>
                     </tr>
@@ -116,6 +119,21 @@
                                 <small class="text-muted">
                                     <i class="bi bi-calendar me-1"></i>
                                     {{ article.getArticleDateCreate|date('d/m/H \à H\\hi') }}</small>
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar me-1"></i>
+                                    {{ article.getUser.getUserLogin}}</small>
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar me-1"></i>
+                                    {{ article.getCategories.category_count}}</small>
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar me-1"></i>
+                                    {{ article.getComments.comment_count}}</small>
                             </td>
                             <td>
                                 {%  if article.getArticleVisibility < 2 %}

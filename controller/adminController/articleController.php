@@ -110,9 +110,22 @@ switch($action){
             $id = $_GET['ident'];
             // on récupère l'article
             $article = $articleManager->getArticleById($id);
-            var_dump($article);
+            // on récupère toutes les catégories
+            $categories = $categoryManager->getAllCategories();
+            // on récupère tous les utilisateurs
+            $users = $userManager->getAllUsers();
+
+            // on récupère la vue
+            echo $twig->render("backend/update.article.back.html.twig", [
+                'racineURL' => RACINE_URL,
+                'article' => $article,
+                'categories' => $categories,
+                'users' => $users,
+                'session' => $_SESSION ?? [],
+                ]);
 
         }
+        break;
 
 
     // par défaut, on affiche la liste des articles
