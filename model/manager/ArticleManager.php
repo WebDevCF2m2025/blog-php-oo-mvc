@@ -80,6 +80,53 @@ class ArticleManager implements ManagerInterface
         }
     }
 
+    // tous les articles pour l'administration
+    public function getAllArticles(): ?array
+    {
+        $sql = "SELECT 
+                    -- articles
+                    a.`article_id`, a.`article_title`, a.`article_slug`, LEFT(a.`article_text`,150) AS article_text,  a.`article_date_publish`, a.`article_date_create`,a.`article_visibility`,
+                    -- user
+                        u.`user_login`,
+                    -- comment
+                       (SELECT COUNT(co.`comment_id`) FROM `comment` co WHERE co.`comment_article_id` = a.`article_id`) AS comment_count,
+                    -- category
+                       (SELECT COUNT(ha.article_article_id) FROM `article_has_category` ha WHERE ha.article_article_id = a.`article_id`) AS category_count 
+
+                FROM `article` a 
+                INNER JOIN `user` u ON a.`article_user_id`=u.`user_id`
+                ORDER BY a.`article_date_publish` DESC;";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute();
+            $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            $listArticles = [];
+            foreach ($articles as $article) {
+                // création d'un article
+                $art = new ArticleMapping($article);
+                // on coupe le texte de l'article à 140 caractères sans couper les mots
+                // et on ajoute des points de suspension
+                $art->setArticleText($this->cutTheText($art->getArticleText(), 140));
+                // utilisateur
+                $user = new UserMapping($article);
+                $art->setUser($user);
+                // gestion du nombre de commentaires de l'article
+                $art->setComments(['comment_count' => $article['comment_count']]);
+                // gestion du nombre de catégories de l'article
+                $art->setCategories(['category_count' => $article['category_count']]);
+                $listArticles[] = $art;
+            }
+            return $listArticles;
+
+        }catch (Exception $e){
+            echo "Erreur lors de la récupération des articles : " . $e->getMessage();
+            return [];
+        }
+    }
+
+
+
     // Nous recherchons un article via son slug
     public function getArticleBySlug(string $slug): ?ArticleMapping
     {
@@ -136,7 +183,7 @@ class ArticleManager implements ManagerInterface
                 -- user
                 u.`user_id`, u.`user_login`, u.`user_real_name`,
                 -- comment
-                (SELECT COUNT(comment.`comment_id`) FROM `comment` WHERE comment.`comment_article_id` = a.`article_id` AND comment.`comment_visibility` = 1
+                (SELECT COUNT(co.`comment_id`) FROM `comment` co WHERE co.`comment_article_id` = a.`article_id` AND co.`comment_visibility` = 1
                 ) AS comment_count,
                 -- category
                 (SELECT GROUP_CONCAT(c.`category_slug`, '|||', c.`category_title` SEPARATOR '----')  FROM category c 

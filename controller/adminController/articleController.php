@@ -17,7 +17,21 @@ $userManager = new UserManager($connectPDO);
 
 $categoriesMenu = $categoryManager->getCategoriesPublicMenu();
 
+
+
 switch($action){
+    // liste des articles
+    case 'list':
+        // on récupère tous les articles
+        $articles = $articleManager->getAllArticles();
+        // on affiche la vue
+        echo $twig->render("backend/list.article.html.twig",[
+            'racineURL' => RACINE_URL,
+            'articles' => $articles,
+            'session' => $_SESSION,
+        ]);
+    break;
+    // ajout d'un article
     case 'add':
         // si on a soumis le formulaire
         if(!empty($_POST)){
