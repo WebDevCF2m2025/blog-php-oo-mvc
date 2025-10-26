@@ -281,7 +281,7 @@ class ArticleManager implements ManagerInterface
             $sql = "INSERT INTO `article`(`article_title`, `article_slug`, `article_text`, `article_user_id`, `article_visibility`,`article_date_publish`) VALUES (?,?,?,?,?,?)";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([
-                $article->getArticleTitle(),
+                html_entity_decode($article->getArticleTitle()),
                 $slug,
                 $article->getArticleText(),
                 $article->getArticleUserId(),
