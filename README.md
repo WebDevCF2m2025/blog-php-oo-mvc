@@ -75,6 +75,16 @@ La connexion `PDO` se fait dans `controller/routerController.php`, c'est lui qui
 - **publicController** servira à la partie publique du site, nous pourrons y accéder même connecté, par exemple pour poster des messages.
 - **adminController** servira à la partie administrateur du site, uniquement accessible aux administrateurs, éditeurs et rédacteurs.
 
+### Templates
+
+Nous gèrerons les templates en utilisant `Twig`.
+
+### Utilisation de Bootstrap
+
+Nous utiliserons `Bootstrap 5` et ses `incones` pour le template responsive :
+- https://getbootstrap.com/
+- https://icons.getbootstrap.com/
+
 
 ### Remerciements
 Merci à [Massine2k1](https://github.com/Massine2k1) pour son design que nous utiliserons dans ce projet :

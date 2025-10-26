@@ -40,12 +40,13 @@
                     {% if session.role_name == 'Admin' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ racineURL }}admin/">
-                               | <i class="bi bi-speedometer2 me-1"></i>Administration
+                               <i class="bi bi-speedometer2 me-1"></i>Administration
                             </a>
                         </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">- {% if session.user_real_name %}{{ session.user_real_name }}{% else %}{{ session.user_login }}{% endif %}
+                        <a class="nav-link" href="{{ racineURL }}user/{{ session.user_login }}">
+                            <i class="bi bi-person me-1"></i>{% if session.user_real_name %}{{ session.user_real_name }}{% else %}{{ session.user_login }}{% endif %}
                         </a>
                     </li>
                     <li class="nav-item">
