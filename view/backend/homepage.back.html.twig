@@ -1,15 +1,42 @@
 {% extends 'template.back.html.twig' %}
 {% block title %}{{ parent() }} | Tableau de bord {% endblock %}
 {% block hero_title %}Tableau de bord{% endblock %}
-{% block hero_text %}Bienvenue dans votre espace administrateur{% endblock %}
+{% block hero_text %}Bienvenue dans votre espace administrateur {% if session.user_real_name %}{{ session.user_real_name }}{% else %}{{ session.user_login }}{% endif %}{% endblock %}
 {% block main %}
     <div class="row">
         <div class="col-md-4 mb-4">
-            <div class="card text-white bg-primary h-100">
+            <div class="card text-white bg-success h-100">
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <i class="bi bi-journal-text display-4 mb-3"></i>
                     <h5 class="card-title">Articles</h5>
-                    <p class="card-text fs-4">{{ articleCount }}</p>
+                    <p class="card-text fs-5"><a class="nav-link" href="{{ racineURL }}admin/article">Liste des articles</a> <a class="nav-link" href="{{ racineURL }}admin/article/add">Ajout d'un article</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-tags display-4 mb-3"></i>
+                    <h5 class="card-title">Catégories</h5>
+                    <p class="card-text fs-5"><a class="nav-link" href="{{ racineURL }}admin/categorie">Liste des catégories</a> <a class="nav-link" href="{{ racineURL }}admin/categorie/add">Ajout d'une catégorie</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-chat-dots display-4 mb-3"></i>
+                    <h5 class="card-title">Commentaires</h5>
+                    <p class="card-text fs-5"><a class="nav-link" href="{{ racineURL }}admin/commentaire">Liste des commentaires</a> <a class="nav-link" href="{{ racineURL }}admin/commentaire/add">Ajout d'un commentaire</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-danger h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="bi bi-people display-4 mb-3"></i>
+                    <h5 class="card-title">Utilisateurs</h5>
+                    <p class="card-text fs-5"><a class="nav-link" href="{{ racineURL }}admin/user">Liste des utilisateurs</a> <a class="nav-link" href="{{ racineURL }}admin/user/add">Ajout d'un utilisateur</a></p>
                 </div>
             </div>
         </div>

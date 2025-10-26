@@ -26,12 +26,14 @@ const RACINE_URL = "http://chemin.vers.dossier.public";
 
 Pour l'exemple, chargez la base de donnée `my_blog` depuis le fichier `data/my_blog_v2.sql`
 
+### Permission des utilisateurs
+
 Pour se connecter chaque mot de passe est haché. Pour l'exercice, il suffit d'utiliser le login comme login ET mdp :
 
-- admin : admin
-- editor : editor
-- user1 : user1
-- user2 : user2
+- admin : admin   | Rôle : Admin (en cours de création)
+- editor : editor | Rôle : Editor (pas encore fait, peut juste poster des commentaires immédiatement affichés)
+- user1 : user1   | Rôle : User (peuvent poster des commentaires non affichés)
+- user2 : user2   | Rôle : User (peuvent poster des commentaires non affichés)
 
 
 ### Installation
@@ -74,6 +76,16 @@ La connexion `PDO` se fait dans `controller/routerController.php`, c'est lui qui
 
 - **publicController** servira à la partie publique du site, nous pourrons y accéder même connecté, par exemple pour poster des messages.
 - **adminController** servira à la partie administrateur du site, uniquement accessible aux administrateurs, éditeurs et rédacteurs.
+
+### Templates
+
+Nous gèrerons les templates en utilisant `Twig`.
+
+### Utilisation de Bootstrap
+
+Nous utiliserons `Bootstrap 5` et ses `incones` pour le template responsive :
+- https://getbootstrap.com/
+- https://icons.getbootstrap.com/
 
 
 ### Remerciements
