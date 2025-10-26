@@ -3,6 +3,10 @@
 
 **Avec Twig comme moteur de template**
 
+## Exemple en production
+
+https://demo-blog.cf2m.be/
+
 ### Configuration de la base de données
 
 Installez Workbench : https://dev.mysql.com/downloads/workbench/
