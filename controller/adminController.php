@@ -53,7 +53,7 @@ if (empty($_GET['slug'])) {
             // page 404
             $error = "Page non trouvée";
             // appel de la vue 404
-            echo $twig->render("error.404.html.twig", ['racineURL' => RACINE_URL, 'categories' => $categoriesMenu, 'session' => $_SESSION ?? [], 'error' => $error]);
+            echo $twig->render("backend/error.404.back.html.twig", ['racineURL' => RACINE_URL, 'session' => $_SESSION ?? [], 'error' => $error]);
 
     }
 }
