@@ -1,0 +1,54 @@
+{% extends 'template.back.html.twig' %}
+
+{% block title %}{{ parent() }} | Ajout d'un article{% endblock %}
+
+{% block hero_title %}Ajouter un nouvel article{% endblock %}
+{% block hero_text %}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Nouvel article</h5>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        <div class="mb-3">
+                            <label for="article_title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="article_title" name="article_title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="article_text" class="form-label">Texte</label>
+                            <textarea class="form-control" id="article_text" name="article_text" rows="10" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category_category_id" class="form-label">Catégories</label>
+                            <select class="form-select" id="category_category_id" name="category_category_id[]" multiple>
+                                {% for category in categories %}
+                                    <option value="{{ category.categoryId }}">{{ category.categoryTitle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="article_user_id" class="form-label">Auteur</label>
+                            <select class="form-select" id="article_user_id" name="article_user_id" required>
+                                {% for user in users %}
+                                    <option value="{{ user.userId }}" {% if session.user_id == user.userId %}selected{% endif %}>{{ user.userLogin }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="article_visibility" class="form-label">Visibilité</label>
+                            <select class="form-select" id="article_visibility" name="article_visibility" required>
+                                <option value="1">Privé</option>
+                                <option value="2" selected>Public</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Créer l'article</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
