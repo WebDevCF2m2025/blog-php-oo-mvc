@@ -20,6 +20,8 @@ switch($action){
             'racineURL' => RACINE_URL,
             'categories' => $categories,
             'session' => $_SESSION,
+            // couleur du template
+            'info' => 'info',
         ]);
     break;
     // ajout d\'une catégorie
@@ -47,6 +49,7 @@ switch($action){
         echo $twig->render('backend/add.category.back.html.twig', [
             'racineURL' => RACINE_URL,
             'session' => $_SESSION,
+            'info' => 'info',
         ]);
         break;
     // suppresion d\'une catégorie
@@ -103,6 +106,7 @@ switch($action){
                 'racineURL' => RACINE_URL,
                 'category' => $category,
                 'session' => $_SESSION ?? [],
+                'info' => 'info',
                 ]);
 
         }
