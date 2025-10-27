@@ -1,0 +1,45 @@
+{% extends 'template.back.html.twig' %}
+
+{% block title %}{{ parent() }} | Ajout d'une catégorie{% endblock %}
+
+{% block hero_title %}Ajouter une nouvelle catégorie{% endblock %}
+{% block hero_text %}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-info">Actions Rapides</h5>
+                    <a href="{{ racineURL }}admin/" class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à l'administration
+                    </a>
+                    <a href="{{ racineURL }}admin/categorie/" class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à la liste des catégories
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Nouvelle catégorie</h5>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        <div class="mb-3">
+                            <label for="category_title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="category_title" name="category_title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category_description" class="form-label">Texte</label>
+                            <textarea class="form-control" id="category_description" name="category_description" rows="10"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Créer la catégorie</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

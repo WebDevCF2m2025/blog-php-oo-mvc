@@ -13,7 +13,7 @@
     {% block content %}
         {% block hero %}
             <!-- Hero Section -->
-            <div class=" bg-success text-white py-5 mb-5">
+            <div class=" bg-{% if info %}{{ info }}{% else %}success{% endif %} text-white py-5 mb-5">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-8">
