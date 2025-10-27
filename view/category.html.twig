@@ -2,7 +2,7 @@
 
 {% block title %}{{ parent() }} | Catégorie : {{ category.getCategoryTitle }} {% endblock %}
 {% block hero_title %}Catégorie : <small>{{ category.getCategoryTitle }}</small>{% endblock %}
-{% block hero_text %}{{ category.getCategoryDescription }}{% endblock %}
+{% block hero_text %}{{ category.getCategoryDescription|raw }}{% endblock %}
 {% block main %}
     {# on compte le nombre d'article #}
     {% set nbArticles = articles|length %}

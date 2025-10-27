@@ -57,7 +57,7 @@ class CategoryMapping extends AbstractMapping
 
     public function getCategoryDescription(): ?string
     {
-        return $this->category_description;
+        return html_entity_decode($this->category_description);
     }
 
     public function setCategoryDescription(?string $category_description): void
