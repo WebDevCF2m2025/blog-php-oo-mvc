@@ -6,6 +6,7 @@ use model\ManagerInterface;
 use PDO;
 use Exception;
 use model\mapping\CategoryMapping;
+use model\StringTrait;
 
 class CategoryManager implements ManagerInterface
 {
@@ -15,6 +16,9 @@ class CategoryManager implements ManagerInterface
     {
         $this->db = $connect;
     }
+
+    // utilisation du trait
+    use StringTrait;
 
     // Récupération de toutes les catégories, pour le menu public
     public function getCategoriesPublicMenu(): array
@@ -91,12 +95,13 @@ class CategoryManager implements ManagerInterface
 
     public function createCategory(CategoryMapping $category): bool
     {
-        $sql = "INSERT INTO `category` (`category_title`, `category_slug`) VALUES (?,?)";
+        $sql = "INSERT INTO `category` (`category_title`, `category_slug`,`category_description`) VALUES (?,?,?)";
         $stmt = $this->db->prepare($sql);
         try {
             $stmt->execute([
                 html_entity_decode($category->getCategoryTitle()),
-                $this->slugify($category->getCategoryTitle())
+                $this->slugify($category->getCategoryTitle()),
+                $category->getCategoryDescription(),
             ]);
             return true;
         }catch (Exception $e){
@@ -107,12 +112,13 @@ class CategoryManager implements ManagerInterface
 
     public function updateCategory(CategoryMapping $category): bool
     {
-        $sql = "UPDATE `category` SET `category_title`=?, `category_slug`=? WHERE `category_id`=?";
+        $sql = "UPDATE `category` SET `category_title`=?, `category_slug`=?, `category_description`=? WHERE `category_id`=?";
         $stmt = $this->db->prepare($sql);
         try {
             $stmt->execute([
                 html_entity_decode($category->getCategoryTitle()),
                 $this->slugify($category->getCategoryTitle()),
+                $category->getCategoryDescription(),
                 $category->getCategoryId()
             ]);
             return true;
@@ -137,7 +143,7 @@ class CategoryManager implements ManagerInterface
 
     public function getCategoryById(int $id): ?CategoryMapping
     {
-        $sql = "SELECT c.`category_id`, c.`category_title`, c.`category_slug`
+        $sql = "SELECT c.`category_id`, c.`category_title`, c.`category_slug`, c.`category_description`
                 FROM `category` c
                 WHERE c.`category_id` = ?";
         $stmt = $this->db->prepare($sql);
