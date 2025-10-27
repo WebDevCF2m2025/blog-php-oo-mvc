@@ -63,14 +63,14 @@ switch($action){
             }else{
                 // message d\'erreur
                 $error = "Erreur lors de la suppression de la catégorie";
-                echo $twig->render("backend/error.404.back.html.twig", [\'racineURL\' => RACINE_URL, \'session\' => $_SESSION ?? [], \'error\' => $error]);
+                echo $twig->render("backend/error.404.back.html.twig", ['racineURL' => RACINE_URL, 'session' => $_SESSION ?? [], 'error' => $error]);
             }
 
         }else{
             // message d\'erreur
             $error = "Erreur lors de la suppression de la catégorie";
 
-            echo $twig->render("backend/error.404.back.html.twig", [\'racineURL\' => RACINE_URL, \'session\' => $_SESSION ?? [], \'error\' => $error]);
+            echo $twig->render("backend/error.404.back.html.twig", ['racineURL' => RACINE_URL, 'session' => $_SESSION ?? [], 'error' => $error]);
         }
         break;
         // modification d\'une catégorie

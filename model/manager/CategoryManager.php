@@ -89,4 +89,70 @@ class CategoryManager implements ManagerInterface
 
     }
 
+    public function createCategory(CategoryMapping $category): bool
+    {
+        $sql = "INSERT INTO `category` (`category_title`, `category_slug`) VALUES (?,?)";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute([
+                html_entity_decode($category->getCategoryTitle()),
+                $this->slugify($category->getCategoryTitle())
+            ]);
+            return true;
+        }catch (Exception $e){
+            echo "Erreur lors de l'insertion de la catégorie : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function updateCategory(CategoryMapping $category): bool
+    {
+        $sql = "UPDATE `category` SET `category_title`=?, `category_slug`=? WHERE `category_id`=?";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute([
+                html_entity_decode($category->getCategoryTitle()),
+                $this->slugify($category->getCategoryTitle()),
+                $category->getCategoryId()
+            ]);
+            return true;
+        }catch (Exception $e){
+            echo "Erreur lors de la modification de la catégorie : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function deleteCategory(int $id): bool
+    {
+        $sql = "DELETE FROM `category` WHERE `category_id`=?";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute([$id]);
+            return true;
+        }catch (Exception $e){
+            echo "Erreur lors de la suppression de la catégorie : " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getCategoryById(int $id): ?CategoryMapping
+    {
+        $sql = "SELECT c.`category_id`, c.`category_title`, c.`category_slug`
+                FROM `category` c
+                WHERE c.`category_id` = ?";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute([$id]);
+            $category = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            if(empty($category))
+                return null;
+            $cat = new CategoryMapping($category);
+            return $cat;
+        }catch (Exception $e){
+            echo "Erreur lors de la récupération de la catégorie par son id : " . $e->getMessage();
+            return null;
+        }
+    }
+
 }
