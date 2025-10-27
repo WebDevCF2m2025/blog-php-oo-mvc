@@ -1,0 +1,43 @@
+{% extends 'template.back.html.twig' %}
+
+{% block title %}{{ parent() }} | Modification d'une catégorie : {{ category.categoryTitle|raw }}{% endblock %}
+
+{% block hero_title %}Modifier une catégorie{% endblock %}
+{% block hero_text %}{{ category.categoryTitle|raw }}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success">Actions Rapides</h5>
+                    <a href="{{ racineURL }}admin/" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à l'administration
+                    </a>
+                    <a href="{{ racineURL }}admin/categorie/" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à la liste des catégories
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Modification de la catégorie : {{ category.categoryTitle|raw }}</h5>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        <div class="mb-3">
+                            <label for="category_title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="category_title" name="category_title" value="{{ category.categoryTitle|raw }}" required>
+                        </div>
+                        <input type="hidden" name="category_id" value="{{ category.categoryId }}">
+                        <button type="submit" class="btn btn-primary">Modifier la catégorie</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

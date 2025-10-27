@@ -1,0 +1,185 @@
+{% extends 'template.back.html.twig' %}
+
+{% block title %}{{ parent() }} | Administration des catégories{% endblock %}
+
+{% block hero_title %}Liste des catégories{% endblock %}
+{% block hero_text %}{% endblock %}
+
+{% block main %}
+    {# on compte le nombre de catégories #}
+    {% set nbCategories = categories|length %}
+    {# si on en a au mois 1 #}
+    {% if nbCategories !=0 %}
+    {# si plus qu'1 #}
+    {% if nbCategories > 1 %}
+        {# création d'une variable pour le pluriel #}
+        {% set pluriel = 's' %}
+    {% else %}
+        {% set pluriel = '' %}
+    {% endif %}
+    <!-- Header Section -->
+    <div class="bg-success text-white py-4">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="h2 mb-0">
+                        <i class="bi bi-tags me-2"></i>Gestion des Catégories
+                    </h1>
+                    <p class="mb-0 opacity-75">Administrez et gérez toutes vos catégories</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="{{ racineURL }}admin/categorie/add" class="btn btn-light btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>Créer une Catégorie
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="container-fluid py-4">
+    <!-- Stats et actions -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-success text-white rounded-3 p-3 me-3">
+                            <i class="bi bi-journal-text fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1">{{ nbCategories }} Catégorie{{ pluriel }}</h4>
+                            <p class="mb-0 opacity-75">Total des catégories disponibles</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success">Actions Rapides</h5>
+                    <a href="{{ racineURL }}admin/" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-plus me-1"></i>Retour à l'administation
+                    </a>
+                    <a href="{{ racineURL }}admin/categorie/add" class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-plus me-1"></i>Nouvelle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endblock %}
+    {% block aside %}
+    <!-- Tableau des catégories -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 py-3">
+            <h5 class="mb-0 text-success">
+                <i class="bi bi-table me-2"></i>Liste des Catégories
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-success">
+                    <tr>
+                        <th class="fw-semibold"># ID</th>
+                        <th class="fw-semibold">Titre</th>
+                        <th class="fw-semibold">Slug</th>
+                        <th class="fw-semibold text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# tant que l'on a des catégories #}
+                    {% for category in categories %}
+                        <tr>
+                            <td>
+                                <span class="badge bg-light text-success">{{ category.getCategoryId }}</span>
+                            </td>
+                            <td>
+                                <div class="fw-semibold text-success">
+                                    {{ category.getCategoryTitle|raw }}
+                                </div>
+                            </td>
+                            <td>
+                                <code class="text-muted">{{ category.getCategorySlug }}</code>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{{ racineURL }}admin/categorie/update/{{ category.getCategoryId }}"
+                                       class="btn btn-outline-primary"
+                                       title="Modifier">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button type="button"
+                                            class="btn btn-outline-danger"
+                                            title="Supprimer"
+                                            onclick="confirmerSuppression('{{ category.getCategorySlug }}', {{ category.getCategoryId }})">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">
+                                <!-- État vide avec style moderne -->
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8 text-center">
+                                        <div class="card border-0 shadow-sm">
+                                            <div class="card-body py-5">
+                                                <i class="bi bi-file-text display-1 text-muted mb-4"></i>
+                                                <h3 class="text-muted mb-3">Aucune catégorie disponible</h3>
+                                                <p class="text-muted">Les premières catégories seront bientôt ajoutées !</p>
+                                                <a href="{{ racineURL }}admin/categorie/add" class="btn btn-primary mt-3">
+                                                    <i class="bi bi-plus-circle me-2"></i>Ajouter une catégorie
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmation de suppression -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Confirmer la suppression
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer la catégorie <strong id="categoryName"></strong> ?</p>
+                    <p class="text-muted small">Cette action est irréversible.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i>Annuler
+                    </button>
+                    <a href="#" id="confirmDelete" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i>Supprimer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}{{ parent() }}
+<script>
+    function confirmerSuppression(slug, id) {
+    document.getElementById('categoryName').textContent = slug;
+    document.getElementById('confirmDelete').href = '{{ racineURL }}admin/categorie/delete/' + id;
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+</script>
+{% endblock %}
