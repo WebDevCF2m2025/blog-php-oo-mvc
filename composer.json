@@ -1,6 +1,7 @@
 {
     "require": {
         "twig/twig": "^3.21",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "symfony/mailer": "^7.3"
     }
 }
