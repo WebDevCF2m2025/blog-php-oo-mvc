@@ -253,6 +253,8 @@ if(empty($_GET['pg'])){
                     'error' => $error,
                     // redirection
                     'redirect' => $_GET['redirect'] ?? null,
+                    // inscription réussie
+                    'register' => $_GET['register'] ?? null,
                 ]);
             break;
 
@@ -271,14 +273,14 @@ if(empty($_GET['pg'])){
             // message d'erreur
             $error = "";
             // si on tente de s'inscrire
-            if(isset($_POST['user_login'],$_POST['user_email'],$_POST['user_pwd'],$_POST['user_pwd_confirm'])){
+            if(isset($_POST['user_login'], $_POST['user_mail'], $_POST['user_pwd'], $_POST['user_pwd_confirm'], $_POST['user_real_name'])){
                 // on tente de s'inscrire
                 try {
                     $inscription = $userManager->register($_POST);
                     // si on est inscrit
                     if($inscription===true){
                         // redirection vers la page de connexion
-                        header("Location: ".RACINE_URL."connection/");
+                        header("Location: ".RACINE_URL."connection/?register=success");
                         exit();
                     }else{
                         // sinon création d'un message d'erreur

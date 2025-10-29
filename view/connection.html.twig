@@ -17,6 +17,9 @@
                         </h4>
                     </div>
                     <div class="card-body p-4">
+                        {% if register is defined and register == 'success' %}
+                            <div class="alert alert-success">Votre inscription a été effectuée avec succès. Vous devez cliquer sur le lien envoyé dans votre mail pour activer votre compte endéans les 24 h.</div>
+                        {% endif %}
                         <form action="" method="post" class="needs-validation" novalidate>
                             {% if redirect is defined and redirect is not null %}
                                 <input type="hidden" name="redirect" value="{{ redirect }}">
@@ -70,7 +73,7 @@
                                 </a>
                             </div>
                             <div class="d-flex gap-3 pt-3 border-top">
-                                <a href="{{ racineURL }}/inscription" class="btn btn-outline-success btn-lg">
+                                <a href="{{ racineURL }}inscription" class="btn btn-outline-success btn-lg">
                                     <i class="bi bi-arrow-right me-1"></i>Pas encore inscrit ? Inscrivez-vous !
                                 </a>
                             </div>
