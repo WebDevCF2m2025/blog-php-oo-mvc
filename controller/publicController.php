@@ -266,6 +266,41 @@ if(empty($_GET['pg'])){
             }
             break;
 
+        // on veut s'inscrire
+        case "inscription":
+            // message d'erreur
+            $error = "";
+            // si on tente de s'inscrire
+            if(isset($_POST['user_login'],$_POST['user_email'],$_POST['user_pwd'],$_POST['user_pwd_confirm'])){
+                // on tente de s'inscrire
+                try {
+                    $inscription = $userManager->register($_POST);
+                    // si on est inscrit
+                    if($inscription===true){
+                        // redirection vers la page de connexion
+                        header("Location: ".RACINE_URL."connection/");
+                        exit();
+                    }else{
+                        // sinon création d'un message d'erreur
+                        $error = "Erreur lors de l'inscription !";
+                    }
+                }catch (Exception $e){
+                    // sinon on récupère le message d'erreur
+                    $error = $e->getMessage();
+                }
+            }
+
+            // vue Twig de la page d'inscription
+            echo $twig->render('inscription.html.twig',
+                [
+                    // racine URL pour les liens
+                    'racineURL' => RACINE_URL,
+                    // mes catégories pour le menu
+                    'categories' => $categoriesMenu,
+                    // message d'erreur
+                    'error' => $error,
+                ]);
+            break;
         default:
             // page 404
             $error = "Page non trouvée";

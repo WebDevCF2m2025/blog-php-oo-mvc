@@ -90,6 +90,18 @@ $twig->addExtension(new DebugExtension());
 echo $twig->render('index.html.twig', ['name' => 'Fabien']);
 ```
 
+### Installation d'un gestionnaire de mail
+
+Nous utiliserons `symfony/mailer` pour l'envoi de mails.
+
+Documentation : https://packagist.org/packages/symfony/mailer#v7.3.5
+Installation via composer :
+
+```bash
+composer require symfony/mailer
+```
+
+
 ### Création des modèles
 
 Créez les classes dans le dossier model. Un fichier par table, ces classes doivent hériter de `AbstractMapping.php`.
