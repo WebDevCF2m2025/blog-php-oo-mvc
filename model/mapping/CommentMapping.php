@@ -18,6 +18,7 @@ class CommentMapping extends AbstractMapping
     protected ?int $comment_article_id = null;
     protected ?int $comment_user_id = null;
     protected ?UserMapping $user = null;
+    protected ?ArticleMapping $article = null;
 
     public function getCommentId(): ?int
     {
