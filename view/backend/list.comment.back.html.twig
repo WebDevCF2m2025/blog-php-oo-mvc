@@ -1,0 +1,35 @@
+{% extends "template.back.html.twig" %}
+
+{% block title %}Administration - Gestion des commentaires{% endblock %}
+
+{% block hero_title %}Gestion des commentaires{% endblock %}
+{% block hero_text %}Validez ou invalidez les commentaires des utilisateurs{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Liste des commentaires</h2>
+            {% for comment in comments %}
+                <div class="alert alert-warning p-3 mb-3">
+                    <p><strong>Auteur :</strong> {{ comment.user.userLogin }}</p>
+                    <p><strong>Date :</strong> {{ comment.commentCreate|date('d/m/Y à H:i') }}</p>
+                    <p><strong>Article :</strong> <a href="{{ racineURL }}article/{{ comment.article.articleSlug }}">{{ comment.article.articleTitle }}</a></p>
+                    <p><strong>Commentaire :</strong></p>
+                    <div class="p-2 bg-light border rounded">
+                        {{ comment.commentText|raw }}
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-end">
+                        {% if comment.commentVisibility == 1 %}
+                            <a href="?pg=admin&slug=commentaire&action=update&id={{ comment.commentId }}&status=0" class="btn btn-danger">Invalider</a>
+                        {% else %}
+                            <a href="?pg=admin&slug=commentaire&action=update&id={{ comment.commentId }}&status=1" class="btn btn-success">Valider</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info">Aucun commentaire à afficher.</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

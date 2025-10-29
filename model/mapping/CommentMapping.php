@@ -18,6 +18,7 @@ class CommentMapping extends AbstractMapping
     protected ?int $comment_article_id = null;
     protected ?int $comment_user_id = null;
     protected ?UserMapping $user = null;
+    protected ?ArticleMapping $article = null;
 
     public function getCommentId(): ?int
     {
@@ -107,6 +108,16 @@ class CommentMapping extends AbstractMapping
     public function setUser(?UserMapping $user): void
     {
         $this->user = $user;
+    }
+
+    public function getArticle(): ?ArticleMapping
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?ArticleMapping $article): void
+    {
+        $this->article = $article;
     }
 
 }

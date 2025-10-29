@@ -22,6 +22,53 @@ class CommentManager implements ManagerInterface
     // Récupération des Traits
     use StringTrait;
 
+    // récupération de tous les commentaires
+    public function getAllComments(): array
+    {
+        $sql = "SELECT c.*, u.`user_id`, u.`user_login`, u.`user_real_name`, a.`article_id`, a.`article_title` , a.`article_slug`
+                FROM `comment` c
+                INNER JOIN `user` u ON c.`comment_user_id` = u.`user_id`
+                INNER JOIN `article` a ON c.`comment_article_id` = a.`article_id`
+                ORDER BY c.`comment_create` DESC";
+        $prepare = $this->db->prepare($sql);
+        try {
+            $prepare->execute();
+            $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+            $prepare->closeCursor();
+
+            $comments = [];
+            foreach ($result as $row) {
+                $comment = new CommentMapping($row);
+                $user = new UserMapping($row);
+                $article = new ArticleMapping($row);
+                $comment->setUser($user);
+                $comment->setArticle($article);
+                $comments[] = $comment;
+            }
+            return $comments;
+
+        } catch (Exception $e) {
+            echo "Erreur lors de la récupération des commentaires : " . $e->getMessage();
+            return [];
+        }
+    }
+
+    // mise à jour de la visibilité d'un commentaire
+    public function updateCommentVisibility(int $commentId, int $visibility): bool
+    {
+        $sql = "UPDATE `comment` SET `comment_visibility` = :visibility WHERE `comment_id` = :id";
+        $prepare = $this->db->prepare($sql);
+        try {
+            $prepare->bindValue(':visibility', $visibility, PDO::PARAM_INT);
+            $prepare->bindValue(':id', $commentId, PDO::PARAM_INT);
+            $prepare->execute();
+            return true;
+        } catch (Exception $e) {
+            echo "Erreur lors de la mise à jour du commentaire : " . $e->getMessage();
+            return false;
+        }
+    }
+
     // récupération de tous les commentaires validés pour un article via son id
     public function getAllCommentsByArticleId(int $articleId): array
     {
