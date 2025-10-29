@@ -110,4 +110,14 @@ class CommentMapping extends AbstractMapping
         $this->user = $user;
     }
 
+    public function getArticle(): ?ArticleMapping
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?ArticleMapping $article): void
+    {
+        $this->article = $article;
+    }
+
 }
