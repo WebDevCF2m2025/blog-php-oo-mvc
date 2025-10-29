@@ -18,13 +18,25 @@
                     </div>
                     <div class="card-body p-4">
                         <form action="" method="post" class="needs-validation" novalidate>
-                            {% if redirect is defined and redirect is not null %}
-                                <input type="hidden" name="redirect" value="{{ redirect }}">
-                            {% endif %}
-                            <!-- Titre de l'article -->
+                            <!-- real name -->
+                            <div class="mb-4">
+                                <label for="user_real_name" class="form-label fw-semibold">
+                                    <i class="bi bi-person-badge me-1 text-primary"></i>Votre nom complet
+                                </label>
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="user_real_name"
+                                       name="user_real_name"
+                                       placeholder="Saisissez votre nom et prénom..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez saisir votre nom complet.
+                                </div>
+                            </div>
+                            <!-- login -->
                             <div class="mb-4">
                                 <label for="user_login" class="form-label fw-semibold">
-                                    <i class="bi bi-fonts me-1 text-primary"></i>Login
+                                    <i class="bi bi-person-circle me-1 text-primary"></i>Login
                                 </label>
                                 <input type="text"
                                        class="form-control form-control-lg"
@@ -33,18 +45,29 @@
                                        placeholder="Saisissez votre login..."
                                        required>
                                 <div class="invalid-feedback">
-                                    Veuillez saisir votre mot de passe
+                                    Veuillez saisir votre login.
                                 </div>
-                                <div class="form-text">
-                                    <i class="bi bi-info-circle me-1"></i>
+                            </div>
+                            <!-- email -->
+                            <div class="mb-4">
+                                <label for="user_email" class="form-label fw-semibold">
+                                    <i class="bi bi-envelope-at me-1 text-primary"></i>Email
+                                </label>
+                                <input type="email"
+                                       class="form-control form-control-lg"
+                                       id="user_email"
+                                       name="user_email"
+                                       placeholder="Saisissez votre email..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez saisir un email valide.
                                 </div>
                             </div>
 
-                            <!-- Contenu de l'article -->
+                            <!-- password -->
                             <div class="mb-4">
                                 <label for="user_pwd" class="form-label fw-semibold">
-                                    <i class="bi bi-textarea-t me-1 text-primary"></i>Votre mot de passe (le même que le
-                                    login pour cet exercice !)
+                                    <i class="bi bi-lock me-1 text-primary"></i>Votre mot de passe
                                 </label>
                                 <input type="password"
                                        class="form-control form-control-lg"
@@ -53,9 +76,23 @@
                                        placeholder="Saisissez votre mot de passe..."
                                        required>
                                 <div class="invalid-feedback">
-                                    Veuillez saisir le contenu de votre mot de passe.
+                                    Veuillez saisir votre mot de passe.
                                 </div>
-
+                            </div>
+                            <!-- password confirm -->
+                            <div class="mb-4">
+                                <label for="user_pwd_confirm" class="form-label fw-semibold">
+                                    <i class="bi bi-lock-fill me-1 text-primary"></i>Confirmez votre mot de passe
+                                </label>
+                                <input type="password"
+                                       class="form-control form-control-lg"
+                                       id="user_pwd_confirm"
+                                       name="user_pwd_confirm"
+                                       placeholder="Confirmez votre mot de passe..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez confirmer votre mot de passe.
+                                </div>
                             </div>
                             {% if error %}
                                 <div class="alert alert-danger">{{ error }}</div>
@@ -63,7 +100,7 @@
                             <!-- Boutons d'action -->
                             <div class="d-flex gap-3 pt-3 border-top">
                                 <button type="submit" class="btn btn-primary btn-lg flex-fill">
-                                    <i class="bi bi-check-circle me-2"></i>Se connecter
+                                    <i class="bi bi-check-circle me-2"></i>S'inscrire
                                 </button>
                                 <a href="{{ racineURL }}" class="btn btn-outline-secondary btn-lg">
                                     <i class="bi bi-arrow-left me-2"></i>Retour
