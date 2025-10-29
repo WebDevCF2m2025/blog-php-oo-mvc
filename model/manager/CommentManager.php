@@ -25,11 +25,11 @@ class CommentManager implements ManagerInterface
     // récupération de tous les commentaires
     public function getAllComments(): array
     {
-        $sql = "SELECT c.*, u.user_id, u.user_login, u.user_real_name, a.article_id, a.article_title 
+        $sql = "SELECT c.*, u.`user_id`, u.`user_login`, u.`user_real_name`, a.`article_id`, a.`article_title` , a.`article_slug`
                 FROM `comment` c
-                INNER JOIN `user` u ON c.comment_user_id = u.user_id
-                INNER JOIN `article` a ON c.comment_article_id = a.article_id
-                ORDER BY c.comment_create DESC";
+                INNER JOIN `user` u ON c.`comment_user_id` = u.`user_id`
+                INNER JOIN `article` a ON c.`comment_article_id` = a.`article_id`
+                ORDER BY c.`comment_create` DESC";
         $prepare = $this->db->prepare($sql);
         try {
             $prepare->execute();

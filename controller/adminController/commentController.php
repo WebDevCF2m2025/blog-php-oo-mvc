@@ -28,6 +28,8 @@ switch ($action) {
             'racineURL' => RACINE_URL,
             'session' => $_SESSION ?? [],
             'comments' => $comments,
+            // couleur du template
+            'info' => 'warning',
         ]);
         break;
 }
