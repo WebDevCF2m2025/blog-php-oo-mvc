@@ -4,6 +4,10 @@
 // typage strict
 declare(strict_types=1);
 
+// Autoload de composer (pour Twig, mais aussi toutes
+// les bibliothèques tierces en PHP)
+require_once "../vendor/autoload.php";
+
 // démarrage de la session
 session_start();
 
@@ -11,6 +15,9 @@ use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 // pour le debug de Twig
 use Twig\Extension\DebugExtension;
+
+// gestion du mailer avec Mailjet
+use Symfony\Component\Mailer\Transport;
 
 // inclusion du fichier de configuration si config.php existe
 if(file_exists("../config.php")){
@@ -21,18 +28,6 @@ if(file_exists("../config.php")){
 }
 
 
-// Autoload fonctionnel avec les namespaces personnels,
-// ne fonctionne qu'en PHP Orienté Objet (fait main, on pourrait
-// utiliser Composer pour y ajouter nos dépendances)
-// et avec une arborescence de fichiers respectant les namespaces
-spl_autoload_register(function ($class) {
-    $class = str_replace('\\', '/', $class);
-    require RACINE_PATH.'/' .$class . '.php';
-});
-
-// Autoload de composer (pour Twig, mais aussi toutes
-// les bibliothèques tierces en PHP)
-require_once RACINE_PATH."/vendor/autoload.php";
 
 // on définit où se trouve nos templates
 $loader = new FilesystemLoader(RACINE_PATH.'/view'); // dans view
@@ -47,8 +42,19 @@ $twig = new Environment($loader, [
 $twig->addExtension(new DebugExtension());
 
 
+
+$transport = Transport::fromDsn(DSN);
 // exemple d'un template simple
 //echo $twig->render('index.html.twig', ['name' => 'Fabien']);
+
+// Autoload fonctionnel avec les namespaces personnels,
+// ne fonctionne qu'en PHP Orienté Objet (fait main, on pourrait
+// utiliser Composer pour y ajouter nos dépendances)
+// et avec une arborescence de fichiers respectant les namespaces
+spl_autoload_register(function ($class) {
+    $class = str_replace('\\', '/', $class);
+    require RACINE_PATH.'/' .$class . '.php';
+});
 
 // chargement du router
 require_once RACINE_PATH."/controller/routerController.php";
