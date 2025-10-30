@@ -140,10 +140,70 @@ class UserManager implements ManagerInterface, UserInterface
                 }
             }
 
-        
+            public function register(array $data): bool
+            {
+                // check if passwords match
+                if ($data['user_pwd'] !== $data['user_pwd_confirm']) {
+                    throw new Exception("Les mots de passe ne correspondent pas.");
+                }
+
+                // check if user exists
+                if ($this->userExists($data['user_login'], $data['user_mail'])) {
+                    throw new Exception("Ce login ou cet email est déjà utilisé.");
+                }
+
+                // create a new user mapping
+                $user = new UserMapping($data);
+
+                // generate hidden id
+                $user->setUserHiddenId($this->generateHiddenId());
+
+                // hash password
+                $user->setUserPwd(password_hash($data['user_pwd'], PASSWORD_DEFAULT));
+
+                // set role to user
+                $user->setUserRoleId(3);
+
+                // set user to inactive
+                $user->setUserActivate(0);
+
+                // prepare request
+                $sql = "INSERT INTO `user` (`user_login`, `user_pwd`, `user_mail`, `user_real_name`, `user_hidden_id`, `user_role_id`, `user_activate`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $this->connect->prepare($sql);
+
+                try {
+                    $stmt->execute([
+                        $user->getUserLogin(),
+                        $user->getUserPwd(),
+                        $user->getUserMail(),
+                        $user->getUserRealName(),
+                        $user->getUserHiddenId(),
+                        $user->getUserRoleId(),
+                        $user->getUserActivate(),
+                    ]);
+                    return true;
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                    return false;
+                }
+            }
+
+            public function userExists(string $login, string $email): bool
+            {
+                $sql = "SELECT `user_id` FROM `user` WHERE `user_login` = ? OR `user_mail` = ?";
+                $stmt = $this->connect->prepare($sql);
+                try {
+                    $stmt->execute([$login, $email]);
+                    return $stmt->rowCount() > 0;
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                    return false;
+                }
+            }
+
             function generateHiddenId(): string
             {
-                // TODO: Implement generateHiddenId() method.
+                return uniqid('user_', true);
             }
         }
         

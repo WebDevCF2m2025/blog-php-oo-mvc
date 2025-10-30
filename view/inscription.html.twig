@@ -1,0 +1,116 @@
+{% extends "template.front.html.twig" %}
+
+{% block title %}{{ parent() }} | Inscription {% endblock %}
+
+    {% block hero_title %}Inscription{% endblock %}
+    {% block hero_text %}Merci de vous inscrire{% endblock %}
+
+{% block main %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="bi bi-pencil-square me-2"></i>Formulaire d'inscription
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="" method="post" class="needs-validation" novalidate>
+                            <!-- real name -->
+                            <div class="mb-4">
+                                <label for="user_real_name" class="form-label fw-semibold">
+                                    <i class="bi bi-person-badge me-1 text-primary"></i>Votre nom complet
+                                </label>
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="user_real_name"
+                                       name="user_real_name"
+                                       placeholder="Saisissez votre nom et prénom..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez saisir votre nom complet.
+                                </div>
+                            </div>
+                            <!-- login -->
+                            <div class="mb-4">
+                                <label for="user_login" class="form-label fw-semibold">
+                                    <i class="bi bi-person-circle me-1 text-primary"></i>Login
+                                </label>
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="user_login"
+                                       name="user_login"
+                                       placeholder="Saisissez votre login..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez saisir votre login.
+                                </div>
+                            </div>
+                            <!-- email -->
+                            <div class="mb-4">
+                                <label for="user_mail" class="form-label fw-semibold">
+                                    <i class="bi bi-envelope-at me-1 text-primary"></i>Email
+                                </label>
+                                <input type="email"
+                                       class="form-control form-control-lg"
+                                       id="user_mail"
+                                       name="user_mail"
+                                       placeholder="Saisissez votre email..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez saisir un email valide.
+                                </div>
+                            </div>
+
+                            <!-- password -->
+                            <div class="mb-4">
+                                <label for="user_pwd" class="form-label fw-semibold">
+                                    <i class="bi bi-lock me-1 text-primary"></i>Votre mot de passe
+                                </label>
+                                <input type="password"
+                                       class="form-control form-control-lg"
+                                       id="user_pwd"
+                                       name="user_pwd"
+                                       placeholder="Saisissez votre mot de passe..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez saisir votre mot de passe.
+                                </div>
+                            </div>
+                            <!-- password confirm -->
+                            <div class="mb-4">
+                                <label for="user_pwd_confirm" class="form-label fw-semibold">
+                                    <i class="bi bi-lock-fill me-1 text-primary"></i>Confirmez votre mot de passe
+                                </label>
+                                <input type="password"
+                                       class="form-control form-control-lg"
+                                       id="user_pwd_confirm"
+                                       name="user_pwd_confirm"
+                                       placeholder="Confirmez votre mot de passe..."
+                                       required>
+                                <div class="invalid-feedback">
+                                    Veuillez confirmer votre mot de passe.
+                                </div>
+                            </div>
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endif %}
+                            <!-- Boutons d'action -->
+                            <div class="d-flex gap-3 pt-3 border-top">
+                                <button type="submit" class="btn btn-primary btn-lg flex-fill">
+                                    <i class="bi bi-check-circle me-2"></i>S'inscrire
+                                </button>
+                                <a href="{{ racineURL }}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-arrow-left me-2"></i>Retour
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -60,6 +60,48 @@ Voir : https://twig.symfony.com/doc/3.x/intro.html#installation
 
 et Packagist : https://packagist.org/packages/twig/twig
 
+### Dans le contrôleur frontal on instancie Twig
+
+```php
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
+// pour le debug de Twig
+use Twig\Extension\DebugExtension;
+
+// ...
+
+// Autoload de composer (pour Twig, mais aussi toutes
+// les bibliothèques tierces en PHP)
+require_once RACINE_PATH."/vendor/autoload.php";
+
+// on définit où se trouve nos templates
+$loader = new FilesystemLoader(RACINE_PATH.'/view'); // dans view
+// On lance le système de template de
+// Twig en instanciant son environment
+$twig = new Environment($loader, [
+    // mode de débogage activé
+    'debug' => true,
+    //'cache' => '/path/to/compilation_cache',
+]);
+// on ajoute l'extension de debug
+$twig->addExtension(new DebugExtension());
+// ...
+// exemple d'un template simple
+echo $twig->render('index.html.twig', ['name' => 'Fabien']);
+```
+
+### Installation d'un gestionnaire de mail
+
+Nous utiliserons `symfony/mailer` pour l'envoi de mails.
+
+Documentation : https://packagist.org/packages/symfony/mailer#v7.3.5
+Installation via composer :
+
+```bash
+composer require symfony/mailer
+```
+
+
 ### Création des modèles
 
 Créez les classes dans le dossier model. Un fichier par table, ces classes doivent hériter de `AbstractMapping.php`.
