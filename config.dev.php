@@ -18,3 +18,6 @@ const RACINE_PATH = __DIR__;
 // évite les problèmes de chemins relatifs si on utilise Twig ou des redirections
 // qui sont liés à la réécriture des URLs
 const RACINE_URL = "http://web2025/blog-php-perm-comment/public/";
+
+// API de mailjet
+const DSN="mailjet+api://public:private@default";

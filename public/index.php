@@ -15,9 +15,10 @@ use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 // pour le debug de Twig
 use Twig\Extension\DebugExtension;
-
-// gestion du mailer avec Mailjet
+// gestion du mailer avec Mailer
 use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mime\Email;
 
 // inclusion du fichier de configuration si config.php existe
 if(file_exists("../config.php")){
@@ -42,8 +43,11 @@ $twig = new Environment($loader, [
 $twig->addExtension(new DebugExtension());
 
 
-
+// création du transport des mails
 $transport = Transport::fromDsn(DSN);
+// instantiation d'un objet de type mail
+$mailer = new Mailer($transport);
+
 // exemple d'un template simple
 //echo $twig->render('index.html.twig', ['name' => 'Fabien']);
 

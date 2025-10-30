@@ -120,6 +120,38 @@ class UserManager implements ManagerInterface, UserInterface
                 }
             }
 
+            // validation d'un utilisateur
+    public function validateUser(string $unique_id): bool
+    {
+        $validate = $this->connect->prepare("SELECT user_activate, user_date_inscription
+         FROM `user`
+         WHERE user_hidden_id=?");
+        try{
+            $validate->execute([$unique_id]);
+            $datas = $validate->fetch(PDO::FETCH_ASSOC);
+            $validate->closeCursor();
+        }catch (Exception $e){
+            echo $e->getMessage();
+            error_log("user_hidden_id invalide: {$e->getMessage()}");
+            return false;
+        }
+        try{
+            if($datas['user_activate']==0
+                && strtotime($datas['user_date_inscription'])+(60*60*24)
+                <time()){
+                $ok = $this->connect->prepare("UPDATE `user` SET user_activate = 1 WHERE user_hidden_id = ? ");
+                $ok->execute([$unique_id]);
+
+                return true;
+            }else{
+                return false;
+            }
+        }catch (Exception $e){
+            error_log("utilisateur banni ou mail trop ancien: {$e->getMessage()}");
+            return false;
+        }
+    }
+
             // récupération de tous les utilisateurs
             public function getAllUsers(): array
             {
@@ -140,7 +172,7 @@ class UserManager implements ManagerInterface, UserInterface
                 }
             }
 
-            public function register(array $data): bool
+            public function register(array $data): UserMapping|bool
             {
                 // check if passwords match
                 if ($data['user_pwd'] !== $data['user_pwd_confirm']) {
@@ -181,7 +213,7 @@ class UserManager implements ManagerInterface, UserInterface
                         $user->getUserRoleId(),
                         $user->getUserActivate(),
                     ]);
-                    return true;
+                    return $user;
                 } catch (Exception $e) {
                     echo $e->getMessage();
                     return false;

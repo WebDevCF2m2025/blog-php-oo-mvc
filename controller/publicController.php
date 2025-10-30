@@ -7,6 +7,7 @@ use model\manager\ArticleManager;
 use model\manager\UserManager;
 use model\manager\CommentManager;
 use model\mapping\CommentMapping;
+use Symfony\Component\Mime\Email;
 
 // création des managers utiles
 $categoryManager = new CategoryManager($connectPDO);
@@ -17,6 +18,14 @@ $commentManager = new CommentManager($connectPDO);
 
 // récupération des catégories pour le menu public
 $categoriesMenu = $categoryManager->getCategoriesPublicMenu();
+
+// on veut valider son compte
+if(isset($_GET['validation'])){
+    $validateUser = $userManager->validateUser($_GET['validation']);
+    if($validateUser===true){
+        header("Location: " . RACINE_URL . "connection/?");
+    }
+}
 
 // homepage
 if(empty($_GET['pg'])){
@@ -278,7 +287,21 @@ if(empty($_GET['pg'])){
                 try {
                     $inscription = $userManager->register($_POST);
                     // si on est inscrit
-                    if($inscription===true){
+                    if(is_object($inscription)){
+                        $userInscrit = $inscription;
+                        $email = (new Email())
+                            ->from('gitweb@cf2m.be')
+                            ->to($userInscrit->getUserMail())
+                            //->cc('cc@example.com')
+                            //->bcc('bcc@example.com')
+                            //->replyTo('fabien@example.com')
+                            //->priority(Email::PRIORITY_HIGH)
+                            ->subject('Validez votre inscription')
+                            ->text('Bienvenue sur notre site, '.$userInscrit->getUserLogin().' Merci de valider votre inscription sur notre blog '.RACINE_URL.'?validation='.$userInscrit->getUserHiddenId().' avant le '.date("Y-m-d H:i:s",$userInscrit->getUserDateInscription())+(60*60*24))
+
+                                    ->html('<h3>Bienvenue sur notre site, '.$userInscrit->getUserLogin().'</h3><p>Merci de valider votre inscription sur notre blog dans les 24 h</p><a href="'.RACINE_URL.'?validation='.$userInscrit->getUserHiddenId().'">valider</a>');
+
+                        $mailer->send($email);
                         // redirection vers la page de connexion
                         header("Location: ".RACINE_URL."connection/?register=success");
                         exit();
@@ -303,6 +326,7 @@ if(empty($_GET['pg'])){
                     'error' => $error,
                 ]);
             break;
+
         default:
             // page 404
             $error = "Page non trouvée";
