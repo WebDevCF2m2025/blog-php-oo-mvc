@@ -23,7 +23,7 @@ $categoriesMenu = $categoryManager->getCategoriesPublicMenu();
 if(isset($_GET['validation'])){
     $validateUser = $userManager->validateUser($_GET['validation']);
     if($validateUser===true){
-        header("Location: " . RACINE_URL . "connection/?");
+        header("Location: " . RACINE_URL . "connection/?register=success");
     }
 }
 
