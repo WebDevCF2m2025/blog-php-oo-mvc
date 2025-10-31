@@ -136,9 +136,7 @@ class UserManager implements ManagerInterface, UserInterface
             return false;
         }
         try{
-            if($datas['user_activate']==0
-                && strtotime($datas['user_date_inscription'])+(60*60*24)
-                <time()){
+            if($datas['user_activate']==0){
                 $ok = $this->connect->prepare("UPDATE `user` SET user_activate = 1 WHERE user_hidden_id = ? ");
                 $ok->execute([$unique_id]);
 
