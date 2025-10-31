@@ -101,6 +101,19 @@ Installation via composer :
 composer require symfony/mailer
 ```
 
+Le fichier `.json` de composer pour faire fonctionner le mailer (ici mailjet)
+
+```json
+{
+    "require": {
+        "twig/twig": "^3.21",
+        "ext-pdo": "*",
+        "symfony/mailer": "^7.3",
+        "symfony/mailjet-mailer": "^7.3",
+        "symfony/http-client": "^7.3"
+    }
+}
+```
 
 ### Création des modèles
 
